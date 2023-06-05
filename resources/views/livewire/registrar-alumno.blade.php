@@ -207,7 +207,7 @@
     <!-- Parte de UNICA -->
     <div class="mt-4 md:flex md:space-x-2">
         <!-- INTERNO -->
-        <div class="{{ $show_unica ? "md:w-1/2" : "md:w-full" }} w-full mt-4 md:mt-0">
+        <div class="{{ $pertenencia_unica == "1" ? "md:w-1/2" : "md:w-full" }} w-full mt-4 md:mt-0">
             <x-input-label for="pertenencia_unica" :value="__('¿Formas parte de UNICA?')" />
             <x-select-input
                 id="interno_unica"
@@ -215,14 +215,13 @@
                 wire:model.lazy="pertenencia_unica"
                 required
             >
-                <option wire:click="$set('show_unica', false)"  >Seleccione una opción</option>
-                <option id="pertenencia_unica_si" wire:click="$set('show_unica', true)" value="1">Sí</option>
-                <option id="pertenencia_unica_no" wire:click="$set('show_unica', false)" value="0">No</option>
+                <option>Seleccione una opción</option>
+                <option id="pertenencia_unica_si" value="1">Sí</option>
+                <option id="pertenencia_unica_no" value="0">No</option>
             </x-select-input>
             <x-input-error :messages="$errors->get('pertenencia_unica')" class="mt-2" />
         </div>
-        <!--  -->
-        @if($show_unica)
+        @if($pertenencia_unica == "1")
             <div class="w-full md:w-1/2 mt-4 md:mt-0">
                 <x-input-label for="departamento_id" :value="__('Interno de UNICA')" />
                 <x-select-input
