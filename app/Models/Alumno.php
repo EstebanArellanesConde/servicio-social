@@ -43,6 +43,7 @@ class Alumno extends Authenticatable implements MustVerifyEmail
         'pertenencia_unica',
 
         'departamento_id',
+        'estado_id',
     ];
 
     /**
@@ -65,7 +66,11 @@ class Alumno extends Authenticatable implements MustVerifyEmail
     ];
 
     public function user(){
-        return $this->hasOne(User::class, 'user_id');
+        return $this->belongsTo(User::class);
+    }
+
+    public function estado(){
+        return $this->belongsTo(Estado::class);
     }
 
 }

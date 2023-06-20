@@ -30,11 +30,12 @@ class RegistrarAlumno extends Component
     public $curp;
     public $numero_cuenta;
     public $fecha_nacimiento;
-    public $genero;
-    public $telefono_casa;
+    public $sexo;
+    public $telefono_alternativo;
     public $telefono_celular;
     public $interno;
     public $carrera;
+    public $escuela;
     public $fecha_ingreso_facultad;
     public $creditos_pagados;
     public $avance_porcentaje;
@@ -48,9 +49,9 @@ class RegistrarAlumno extends Component
     public $show_unica = false;
 
     protected $rules = [
-        'name' => ['required', 'string', 'max:255'],
-        'apellido_paterno' => ['required', 'string', 'max:255'],
-        'apellido_materno' => ['required', 'string', 'max:255'],
+        'name' => ['required', 'string', 'max:255', 'alpha'],
+        'apellido_paterno' => ['required', 'string', 'max:255', "alpha"],
+        'apellido_materno' => ['required', 'string', 'max:255', "alpha"],
         'email' => ['required', 'string', 'email', 'max:255'],
         'password' => ['required', 'confirmed'],
 
@@ -58,13 +59,13 @@ class RegistrarAlumno extends Component
         'curp' => ['required', 'unique:alumnos,curp'],
         'numero_cuenta' => 'required|unique:alumnos,numero_cuenta|digits:9',
         'fecha_nacimiento' => 'required',
-        'genero' => 'required',
+        'sexo' => 'required',
 
-        'telefono_casa' => 'required|digits:10',
+        'telefono_alternativo' => 'required|digits:10',
         'telefono_celular' => 'required|digits:10',
 
         'interno' => ['required', "in:0,1"],
-        'carrera' => ['required'],
+        'carrera' => [],
         'fecha_ingreso_facultad' => ["required"],
 
         'creditos_pagados' => 'required',
@@ -74,7 +75,7 @@ class RegistrarAlumno extends Component
         'duracion_servicio' => 'required',
 
         'hora_inicio' => 'required',
-        'hora_fin' => 'required', // quitar y calcular automaticamente
+        'hora_fin' => ['required'],
         'pertenencia_unica' => 'required',
 
         'departamento_id' => 'required',
@@ -104,22 +105,22 @@ class RegistrarAlumno extends Component
     protected function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'apellido_paterno' => ['required', 'string', 'max:255'],
-            'apellido_materno' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'alpha'],
+            'apellido_paterno' => ['required', 'string', 'max:255', "alpha"],
+            'apellido_materno' => ['required', 'string', 'max:255', "alpha"],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', Rules\Password::min(12)->letters()->numbers()->symbols()],
 
             // Alumno
             'curp' => ['required', 'unique:alumnos,curp', new CurpRule()],
             'numero_cuenta' => 'required|unique:alumnos,numero_cuenta|digits:9',
-            'genero' => ['required', "in:H,M,O"],
+            'sexo' => ['required', "in:H,M,O"],
 
-            'telefono_casa' => 'required|digits:10',
+            'telefono_alternativo' => 'required|digits:10',
             'telefono_celular' => 'required|digits:10',
 
             'interno' => 'required',
-            'carrera' => ['required'],
+            'carrera' => [],
             'fecha_ingreso_facultad' => ["required", "after:".$this->get_fecha_nacimiento($this->curp), "before:".Carbon::now()],
 
             'creditos_pagados' => 'required|min:1',
@@ -128,10 +129,10 @@ class RegistrarAlumno extends Component
             'promedio' => 'required|min:0.00|max:10',
             'duracion_servicio' => 'required',
 
-            'hora_inicio' => ['required'],
-            'hora_fin' => 'required',
+            'hora_inicio' => ['required', new HoraInicioRule($this->hora_inicio, $this->duracion_servicio, $this->get_hora_fin($this->hora_inicio, $this->duracion_servicio))],
+            'hora_fin' => ['required'],
             'pertenencia_unica' => ['required', "in:0,1"],
-            'departamento_id' => ["numeric", "nullable"]
+            'departamento_id' => ["numeric", "nullable"],
         ];
     }
 
@@ -144,7 +145,6 @@ class RegistrarAlumno extends Component
             $hora_fin = $hora_inicio->addHours(4);
         }
 
-
         return $hora_fin->format("H:i");
     }
 
@@ -152,15 +152,20 @@ class RegistrarAlumno extends Component
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName, [
+            'name' => ['required', 'string', 'max:255', 'alpha'],
+            'apellido_paterno' => ['required', 'string', 'max:255', "alpha"],
+            'apellido_materno' => ['required', 'string', 'max:255', "alpha"],
             'curp' => [new CurpRule()],
             'email' => ['email'],
             'numero_cuenta' => ["digits:9"],
-            'telefono_casa' => ["digits:10"],
+            'telefono_alternativo' => ["digits:10"],
             'telefono_celular' => ["digits:10"],
             'fecha_ingreso_facultad' => ["required", "after:".$this->get_fecha_nacimiento($this->curp), "before:".Carbon::now()->toDateString()],
-            'hora_inicio' => ['required', "before:".$this->get_hora_fin($this->hora_inicio, $this->duracion_servicio)],
+            'hora_inicio' => ['required', new HoraInicioRule($this->hora_inicio, $this->duracion_servicio, $this->get_hora_fin($this->hora_inicio, $this->duracion_servicio))],
+            'hora_fin' => ['required'],
             'creditos_pagados' => ['required', 'numeric', 'min:1'],
             'avance_porcentaje' => ['required', 'numeric', 'min:35', 'max:120'],
+            'password' => ['required', 'confirmed', Rules\Password::min(12)->letters()->numbers()->symbols()],
         ]);
     }
 
@@ -197,9 +202,9 @@ class RegistrarAlumno extends Component
                 'numero_cuenta' => $data["numero_cuenta"],
                 'curp' => strtoupper($data["curp"]),
                 'fecha_nacimiento' => $fecha_nacimiento,
-                'genero' => $data["genero"], // verificar genero con rule
+                'sexo' => $data["sexo"], // verificar sexo con rule
 
-                'telefono_casa' => $data["telefono_casa"], // verificar celular
+                'telefono_alternativo' => $data["telefono_alternativo"], // verificar celular
                 'telefono_celular' => $data["telefono_celular"],
 
                 'interno' => $data["interno"],
@@ -220,9 +225,19 @@ class RegistrarAlumno extends Component
                  * Si es parte de unica se asigna el que quiere, en caso contrario se asigna el DSA
                  */
                 'departamento_id' => $departamento_id,
+                'estado_id' => "3", // pendiente
             ]);
 
             DB::commit();
+
+            $user->assignRole('alumno');
+
+
+            event(new Registered($user));
+
+            Auth::login($user);
+
+            return redirect(RouteServiceProvider::HOME . "alumno");
         }
         catch (\Exception $e)
         {
@@ -230,14 +245,6 @@ class RegistrarAlumno extends Component
             dd($e);
         }
 
-        $user->assignRole('alumno');
-
-
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect(RouteServiceProvider::HOME . "alumno");
     }
 
     public function render()

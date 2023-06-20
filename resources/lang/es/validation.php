@@ -93,7 +93,12 @@ return [
     'not_in'               => 'El campo :attribute seleccionado es inválido.',
     'not_regex'            => 'El formato del campo :attribute es inválido.',
     'numeric'              => 'El campo :attribute debe ser un número.',
-    'password'             => 'La contraseña es incorrecta.',
+    'password' => [
+        'mixed' => 'La contraseña debe tener al menos una letra minúscula y mayúscula.',
+        'letters' => 'La contraseña debe tener al menos una letra.',
+        'symbols' => 'La contraseña debe tener al menos un caracter especial.',
+        'numbers' => 'La contraseña debe tener al menos un número.',
+    ],
     'present'              => 'El campo :attribute debe estar presente.',
     'regex'                => 'El formato del campo :attribute es inválido.',
     'required'             => 'El campo :attribute es obligatorio.',
@@ -134,6 +139,7 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------
