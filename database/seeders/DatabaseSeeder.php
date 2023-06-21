@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call(JefeSeeder::class); // debe estar antes de users o alumnos
         $this->call(DepartamentoSeeder::class);
         $this->call(CarreraSeeder::class);
+        $this->call(EstadoSeeder::class);
         $this->call(AlumnoSeeder::class);
+        $this->call(HistoricoEstadoSeeder::class);
     }
 }

@@ -25,7 +25,7 @@ Route::middleware(['auth', 'verified', 'role:jefe'])->prefix('jefe')->group(func
     Route::get('/', [JefeController::class, 'index'])->name('jefe.index');
     Route::get('/inscritos', [JefeController::class, 'inscritos'])->name('jefe.inscritos');
     Route::get('/rechazados', [JefeController::class, 'rechazados'])->name('jefe.rechazados');
-    Route::get('/estadisticas', [JefeController::class, 'estadisticas'])->name('jefe.estadisticas');
+    Route::get('/estadisticas', [JefeController::class, 'estadisticas'])->name('jefe.estadisticas')->middleware(['role:jefe_dsa|coordinador']);
 });
 
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

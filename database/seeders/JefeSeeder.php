@@ -18,8 +18,8 @@ class JefeSeeder extends Seeder
     {
         DB::table('users')->insert([ //1
             'name' => 'Bety',
-            'apellido_paterno' => 'Lopez',
-            'apellido_materno' => 'Perez',
+            'apellido_paterno' => '',
+            'apellido_materno' => '',
             'email' => 'bety@ingenieria.unam.edu',
             'email_verified_at' => now(),
             'created_at' => now(),
@@ -34,7 +34,7 @@ class JefeSeeder extends Seeder
             'titulo' => 'Ing',
         ]);
 
-        $user_1->assignRole('jefe');
+        $user_1->assignRole('jefe', 'jefe_dsa');
 
         DB::table('users')->insert([ //2
             'name' => 'Chary',
@@ -66,6 +66,7 @@ class JefeSeeder extends Seeder
         ]);
 
         $user_3 = User::find(3);
+
         DB::table('jefes')->insert([
             'user_id' => $user_3->id,
             'titulo' => 'Ing',
@@ -74,24 +75,6 @@ class JefeSeeder extends Seeder
         $user_3->assignRole('jefe');
 
         DB::table('users')->insert([ //4
-            'name' => 'Prueba4',
-            'apellido_paterno' => 'Prueba4',
-            'apellido_materno' => 'Prueba4',
-            'email' => 'prueba20@gmail.com',
-            'email_verified_at' => now(),
-            'created_at' => now(),
-            'updated_at' => now(),
-            'password' => Hash::make('prueba123456789')
-        ]);
-
-        $user_4 = User::find(4);
-        DB::table('jefes')->insert([
-            'user_id' => $user_4->id,
-            'titulo' => 'Ing',
-        ]);
-
-        $user_4->assignRole('jefe');
-        DB::table('users')->insert([ //5
             'name' => 'Ibeth Graciela',
             'apellido_paterno' => 'Flores',
             'apellido_materno' => 'Muñoz',
@@ -102,12 +85,15 @@ class JefeSeeder extends Seeder
             'password' => Hash::make('ibeth_flores')
         ]);
 
+        $user_4 = User::find(4);
 
-        $user_5 = User::find(5);
         DB::table('jefes')->insert([
-            'user_id' => $user_5->id,
+            'user_id' => $user_4->id,
             'titulo' => 'Ing',
         ]);
-        $user_5->assignRole('jefe');
+
+        $user_4->assignRole('jefe', 'coordinador');
+
+
     }
 }

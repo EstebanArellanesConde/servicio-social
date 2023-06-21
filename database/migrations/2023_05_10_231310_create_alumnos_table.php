@@ -26,9 +26,9 @@ return new class extends Migration
 
 
             $table->date('fecha_nacimiento');
-            $table->char('genero');
+            $table->char('sexo');
 
-            $table->string('telefono_casa');
+            $table->string('telefono_alternativo');
             $table->string('telefono_celular');
 
             $table->boolean('interno');
@@ -40,7 +40,7 @@ return new class extends Migration
                     ->onDelete('restrict')
                     ->onUpdate('cascade');
 
-            $table->date('fecha_ingreso_facultad');
+            $table->date('fecha_ingreso_facultad')->default('2021-06-01');
             $table->integer('creditos_pagados')->unsigned();
             $table->integer('avance_porcentaje')->unsigned();
             $table->decimal('promedio', $precision=4, $scale=2);
@@ -52,6 +52,7 @@ return new class extends Migration
             $table->date('fecha_fin')->nullable();
 
             $table->boolean('pertenencia_unica');
+
 
             /*
              *
@@ -67,6 +68,9 @@ return new class extends Migration
                 ->on('departamentos')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+
+            $table->integer('estado_id')->unsigned();
+            $table->foreign('estado_id')->references('id')->on('estados');
 
             $table->timestamps();
         });

@@ -93,7 +93,12 @@ return [
     'not_in'               => 'El campo :attribute seleccionado es inválido.',
     'not_regex'            => 'El formato del campo :attribute es inválido.',
     'numeric'              => 'El campo :attribute debe ser un número.',
-    'password'             => 'La contraseña es incorrecta.',
+    'password' => [
+        'mixed' => 'La contraseña debe tener al menos una letra minúscula y mayúscula.',
+        'letters' => 'La contraseña debe tener al menos una letra.',
+        'symbols' => 'La contraseña debe tener al menos un caracter especial.',
+        'numbers' => 'La contraseña debe tener al menos un número.',
+    ],
     'present'              => 'El campo :attribute debe estar presente.',
     'regex'                => 'El formato del campo :attribute es inválido.',
     'required'             => 'El campo :attribute es obligatorio.',
@@ -135,6 +140,7 @@ return [
         ],
     ],
 
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes
@@ -145,6 +151,7 @@ return [
     | of "email". This simply helps us make messages a little cleaner.
     |
     */
+    'alpha_spaces' => 'El :attribute debe contener solo letras y espacios',
 
     'attributes' => [],
 

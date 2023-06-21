@@ -13,9 +13,10 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        $alumno = DB::table('alumnos')->where('user_id', auth()->user()->id)->first();
+        $alumno = Alumno::firstWhere("user_id", auth()->user()->id);
+
         return view('alumno.index', [
-            'alumno' => $alumno
+            'alumno' => $alumno,
         ]);
     }
 

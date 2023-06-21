@@ -29,7 +29,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $role = auth()->user()->getRoleNames()[0];
+        // verifica si es jefe o alumno para asignarle su respectiva ruta
+        $role = auth()->user()->hasRole('jefe') ? 'jefe' : 'alumno';
 
         return redirect()->intended(RouteServiceProvider::HOME . $role);
     }
