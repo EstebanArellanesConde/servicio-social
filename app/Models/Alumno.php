@@ -23,8 +23,8 @@ class Alumno extends Authenticatable implements MustVerifyEmail
         'curp',
         'numero_cuenta',
         'fecha_nacimiento',
-        'genero',
-        'telefono_casa',
+        'sexo',
+        'telefono_alternativo',
         'telefono_celular',
 
         'interno',

@@ -151,6 +151,7 @@ return [
     | of "email". This simply helps us make messages a little cleaner.
     |
     */
+    'alpha_spaces' => 'El :attribute debe contener solo letras y espacios',
 
     'attributes' => [],
 

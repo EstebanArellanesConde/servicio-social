@@ -46,12 +46,11 @@ class RegistrarAlumno extends Component
     public $pertenencia_unica;
     public $departamento_id;
 
-    public $show_unica = false;
 
     protected $rules = [
-        'name' => ['required', 'string', 'max:255', 'alpha'],
-        'apellido_paterno' => ['required', 'string', 'max:255', "alpha"],
-        'apellido_materno' => ['required', 'string', 'max:255', "alpha"],
+        'name' => ['required', 'string', 'max:255', 'alpha_spaces'],
+        'apellido_paterno' => ['required', 'string', 'max:255', "alpha_spaces"],
+        'apellido_materno' => ['required', 'string', 'max:255', "alpha_spaces"],
         'email' => ['required', 'string', 'email', 'max:255'],
         'password' => ['required', 'confirmed'],
 
@@ -105,9 +104,9 @@ class RegistrarAlumno extends Component
     protected function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'alpha'],
-            'apellido_paterno' => ['required', 'string', 'max:255', "alpha"],
-            'apellido_materno' => ['required', 'string', 'max:255', "alpha"],
+            'name' => ['required', 'string', 'max:255', 'alpha_spaces'],
+            'apellido_paterno' => ['required', 'string', 'max:255', "alpha_spaces"],
+            'apellido_materno' => ['required', 'string', 'max:255', "alpha_spaces"],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::min(12)->letters()->numbers()->symbols()],
 
@@ -152,9 +151,10 @@ class RegistrarAlumno extends Component
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName, [
-            'name' => ['required', 'string', 'max:255', 'alpha'],
-            'apellido_paterno' => ['required', 'string', 'max:255', "alpha"],
-            'apellido_materno' => ['required', 'string', 'max:255', "alpha"],
+            /* alpha_spaces es una regla personalizada para solo aceptar letras y espacios */
+            'name' => ['required', 'string', 'max:255', 'alpha_spaces'],
+            'apellido_paterno' => ['required', 'string', 'max:255', "alpha_spaces"],
+            'apellido_materno' => ['required', 'string', 'max:255', "alpha_spaces"],
             'curp' => [new CurpRule()],
             'email' => ['email'],
             'numero_cuenta' => ["digits:9"],

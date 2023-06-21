@@ -18,9 +18,6 @@
             </svg>
         </button>
     </div>
-    <div class="flex justify-center">
-        <p class="text-md font-light inline">{{ auth()->user()->getRoleNames()[0] }}</p>
-    </div>
 
     {{--  OPCIONES  --}}
     <nav :class="{'block': open, 'hidden': !open}" class="flex-grow px-4 md:block pb-4 md:pb-0 md:overflow-y-auto">

@@ -21,7 +21,13 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                /*
+                 * si es jefe o alumno y quiere regresar al login sin haber
+                 * cerrado sesión antes, se vuelve a redirigir a su respectivo
+                 * dashboard
+                 */
+                $role = auth()->user()->hasRole('jefe') ? 'jefe' : 'alumno';
+                return redirect(RouteServiceProvider::HOME . $role);
             }
         }
 
