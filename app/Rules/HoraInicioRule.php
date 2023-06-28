@@ -44,7 +44,8 @@ class HoraInicioRule implements ValidationRule
             //
         }
         else {
-            $fail("La hora de entrada es las " . App::HORA_ENTRADA . " y de salida a las " . App::HORA_SALIDA);
+
+            $fail("La hora de entrada es a las " . Carbon::parse(App::HORA_ENTRADA)->format("h:i A") . " y de salida a las " . Carbon::parse(App::HORA_SALIDA)->format("h:i A"));
         }
     }
 }

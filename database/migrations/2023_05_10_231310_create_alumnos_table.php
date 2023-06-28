@@ -21,9 +21,8 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->integer('numero_cuenta')->unique()->unsigned();
+            $table->integer('numero_cuenta')->unique()->unsigned()->nullable();
             $table->string('curp', 18)->unique();
-
 
             $table->date('fecha_nacimiento');
             $table->char('sexo');
@@ -31,38 +30,47 @@ return new class extends Migration
             $table->string('telefono_alternativo');
             $table->string('telefono_celular');
 
-            $table->boolean('interno');
+            $table->unsignedBigInteger('escuela_id');
+            $table->foreign('escuela_id')
+                ->references('id')
+                ->on('escuelas')
+                ->onDelete('restrict')
+                ->onUpdate('cascade');
 
-            $table->unsignedBigInteger('carrera_id');
+            // interno facultad de ingenieria
+            /* diseno de nueva tabla */
+            //$table->boolean('interno'); // ya no necesario si se registra la escuela el id 1
+            $table->unsignedBigInteger('carrera_id')->nullable();
             $table->foreign('carrera_id')
                     ->references('id')
                     ->on('carreras')
                     ->onDelete('restrict')
                     ->onUpdate('cascade');
 
-            $table->date('fecha_ingreso_facultad')->default('2021-06-01');
-            $table->integer('creditos_pagados')->unsigned();
-            $table->integer('avance_porcentaje')->unsigned();
-            $table->decimal('promedio', $precision=4, $scale=2);
+
+            // Puede ser null si no pertenence a la FI
+            $table->date('fecha_ingreso_facultad')->nullable();
+
+            // Son null cuando no son de la UNAM
+            $table->integer('creditos_pagados')->unsigned()->nullable();
+            $table->integer('avance_porcentaje')->unsigned()->nullable();
+
+            // 4 dígitos, 2 de ellos son decimales
+            $table->decimal('promedio', $precision=4, $scale=2)->unsigned();
             $table->integer('duracion_servicio')->unsigned();
 
             $table->time('hora_inicio');
             $table->time('hora_fin');
+
+            // null ya que se asigna despues de registrarse
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
 
             $table->boolean('pertenencia_unica');
 
-
-            /*
-             *
-            $table->integer('estado_id')->unsigned();
-            $table->foreign('estado_id')->references('id')->on('estado');
-
-            */
-
-
+            // valor por defecto el DSA en caso de que no haya colocado departamento
             $table->unsignedBigInteger('departamento_id')->default(1);
+
             $table->foreign('departamento_id')
                 ->references('id')
                 ->on('departamentos')

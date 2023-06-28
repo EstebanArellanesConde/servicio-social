@@ -109,11 +109,5 @@ class CarreraSeeder extends Seeder
             "carrera" => "Ingeniería Mecánica Eléctrica",
             "division_id" => 3
         ]);
-
-        DB::table('carreras')->insert([ //17
-            "clave_carrera" => "999",
-            "carrera" => "Otra",
-            "division_id" => 3
-        ]);
     }
 }

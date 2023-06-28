@@ -38,7 +38,7 @@ class AlumnoSeeder extends Seeder
             'telefono_alternativo' => '5588414988',
             'telefono_celular' => '5523052838',
 
-            'interno' => 0,
+            'escuela_id' => 1,
             'carrera_id' => 1,
             'fecha_ingreso_facultad' => '2021-06-01',
 

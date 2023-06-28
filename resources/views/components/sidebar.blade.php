@@ -44,12 +44,12 @@
 
         <!-- Authentication -->
         <form
-            class="transition ease-in cursor-pointer block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-red-500 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-white focus:text-gray-900 hover:bg-red-500 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+            class="transition ease-in cursor-pointer block mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-red-500 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-white focus:text-gray-900 hover:bg-red-500 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
             method="POST" action="{{ route('logout') }}">
             @csrf
 
             <button
-                class="flex gap-2 items-center"
+                class="flex gap-2 items-center w-full px-4 py-2 "
                 onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

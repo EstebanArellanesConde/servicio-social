@@ -153,6 +153,10 @@ return [
     */
     'alpha_spaces' => 'El :attribute debe contener solo letras y espacios',
 
-    'attributes' => [],
+    'attributes' => [
+        'password' => 'contraseña',
+        'name' => 'nombre',
+        'email' => 'correo',
+    ],
 
 ];
