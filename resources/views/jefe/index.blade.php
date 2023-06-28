@@ -1,6 +1,7 @@
 @extends('layouts.jefe')
 
 @section('main')
+    <h1 class="mt-2 ml-2 mb-6">Alumnos Pendientes</h1>
     <div class="flex justify-between items-center">
         <div class="buscador w-2/4">
             <x-text-input class="p-2 w-full" placeholder="Ingresa el nombre del alumno"/>
@@ -20,8 +21,38 @@
             </x-primary-button>
         </div>
     </div>
-    <div class="mt-8">
-
+    <div class="mt-12 overflow-auto rounded-lg shadow">
+        <table class="w-full">
+            <thead class="bg-gray-100 border-b-2 border-gray-200">
+                <tr>
+                    <th class="p-3">Número de Cuenta</th>
+                    <th class="p-3">Nombre</th>
+                    <th class="p-3">Fecha inicio</th>
+                    <th class="p-3">Fecha fin</th>
+                    <th class="p-3">Carrera</th>
+                    <th class="p-3">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                @foreach($alumnosPendientes as $alumnos)
+                <tr class="{{ $loop->iteration % 2 === 0 ? 'even:bg-gray-50' : 'odd:bg-white' }}">
+                    <td class="text-center p-3 text-gray-700">{{ $alumnos->numero_cuenta }}</td>
+                    <td class="text-center p-3 text-gray-700">{{ $alumnos->name . ' ' . $alumnos->apellido_paterno . ' ' . $alumnos->apellido_materno }}</td>
+                    <td class="text-center p-3 text-gray-700">{{ $alumnos->fecha_inicio ? $alumnos->fecha_inicio : 'Pendiente' }}</td>
+                    <td class="text-center p-3 text-gray-700">{{ $alumnos->fecha_fin ? $alumnos->fecha_fin : 'Pendiente' }}</td>
+                    <td class="text-center p-3 text-gray-700">{{ $alumnos->carrera}}</td>
+                    <td class="text-center p-3 text-gray-700">
+                        <div className="inline-flex rounded-md " role="group">
+                            <ButtonGroup>
+                                <button type="button" class="text-white bg-green-700 hover:bg-green-800  font-medium rounded-lg text-sm px-2.5 py-2">Aceptar</button>
+                                <button type="button" class="text-white bg-sky-500 hover:bg-sky-600  font-medium rounded-lg text-sm px-2.5 py-2">Datos</button>
+                                <button type="button" class="text-white bg-red-700 hover:bg-red-800  font-medium rounded-lg text-sm px-2.5 py-2">Rechazar</button>
+                            </ButtonGroup>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 @endsection
-
