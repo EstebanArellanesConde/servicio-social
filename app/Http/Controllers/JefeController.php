@@ -12,23 +12,72 @@ class JefeController extends Controller
      */
     public function index()
     {
-        return view('jefe.index');
+        $alumnosPendientes = $this->alumnosPendientes();
+        return view('jefe.index', ['alumnosPendientes' => $alumnosPendientes]);
     }
 
 
     public function inscritos(){
-        return view('jefe.inscritos');
+        $alumnosInscritos = $this->alumnosInscritos();
+        return view('jefe.inscritos', ['alumnosInscritos' => $alumnosInscritos]);
     }
 
 
     public function rechazados(){
-        return view('jefe.rechazados');
+        $alumnosRechazados = $this->alumnosRechazados();
+        return view('jefe.rechazados', ['alumnosRechazados' => $alumnosRechazados]);
     }
+
 
     public function estadisticas(){
         return view('jefe.estadisticas');
     }
 
+
+    /**
+     * Functions to obtain alumnos
+     */
+    
+    public function alumnosInscritos()
+    {
+        $alumnosInscritos = \DB::table('alumnos')
+                    ->select('alumnos.numero_cuenta', 'users.name', 'users.apellido_paterno', 'users.apellido_materno', 'alumnos.fecha_inicio', 'alumnos.fecha_fin', 'carreras.carrera')
+                    ->join('users', 'alumnos.user_id', '=', 'users.id')
+                    ->join('carreras', 'alumnos.carrera_id', '=', 'carreras.id')
+                    ->where('alumnos.estado_id', '=', 1)
+                    ->orderBy('alumnos.id', 'ASC')
+                    ->get();
+ 
+        return $alumnosInscritos;
+    }
+
+
+    public function alumnosRechazados()
+    {
+        $alumnosRechazados = \DB::table('alumnos')
+                    ->select('alumnos.numero_cuenta', 'users.name', 'users.apellido_paterno', 'users.apellido_materno', 'alumnos.fecha_inicio', 'alumnos.fecha_fin', 'carreras.carrera')
+                    ->join('users', 'alumnos.user_id', '=', 'users.id')
+                    ->join('carreras', 'alumnos.carrera_id', '=', 'carreras.id')
+                    ->where('alumnos.estado_id', '=', 2)
+                    ->orderBy('alumnos.id', 'ASC')
+                    ->get();
+
+        return $alumnosRechazados;
+    }
+
+
+    public function alumnosPendientes()
+    {
+        $alumnosPendientes = \DB::table('alumnos')
+                    ->select('alumnos.numero_cuenta', 'users.name', 'users.apellido_paterno', 'users.apellido_materno', 'alumnos.fecha_inicio', 'alumnos.fecha_fin', 'carreras.carrera')
+                    ->join('users', 'alumnos.user_id', '=', 'users.id')
+                    ->join('carreras', 'alumnos.carrera_id', '=', 'carreras.id')
+                    ->where('alumnos.estado_id', '=', 3)
+                    ->orderBy('alumnos.id', 'ASC')
+                    ->get();
+
+        return $alumnosPendientes;
+    }
 
     /**
      * Show the form for creating a new resource.
