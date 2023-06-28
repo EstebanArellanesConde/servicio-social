@@ -9,6 +9,7 @@ use App\Models\Escuela;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use App\Rules\CurpRule;
+use App\Rules\EscuelaExternaRule;
 use App\Rules\HoraInicioRule;
 use App\Rules\NombreRule;
 use Illuminate\Auth\Events\Registered;
@@ -56,7 +57,7 @@ class RegistrarAlumno extends Component
                     'escuela' => [],
                     'escuela_text' => [],
                     'carrera' => ['required'],
-                    'numero_cuenta' => ['unique:alumnos,numero_cuenta', 'digits:9'],
+                    'numero_cuenta' => ['digits:9'],
                     'creditos_pagados' => ['required', 'min:1'],
                     'avance_porcentaje' => ['required', 'max:100'],
                 ];
@@ -67,7 +68,7 @@ class RegistrarAlumno extends Component
                     'escuela' => ['required'],
                     'escuela_text' => [],
                     'carrera' => [],
-                    'numero_cuenta' => ['unique:alumnos,numero_cuenta', 'digits:9'],
+                    'numero_cuenta' => ['digits:9'],
                     'creditos_pagados' => ['required', 'min:1'],
                     'avance_porcentaje' => ['required', 'max:100'],
                 ];
@@ -77,7 +78,7 @@ class RegistrarAlumno extends Component
             case "2":
                 $rules_procedencia = [
                     'escuela' => [],
-                    'escuela_text' => ['required'],
+                    'escuela_text' => ['required', new EscuelaExternaRule()],
                     'carrera' => [],
                     'numero_cuenta' => [],
                     'creditos_pagados' => [],

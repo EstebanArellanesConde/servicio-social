@@ -1,5 +1,5 @@
 {{-- Verifica si es alumno o jefe para mostrar el sidebar indicado --}}
-@extends( (auth()->user()->getRoleNames()[0] == "jefe") ? 'layouts.jefe' : 'layouts.alumno')
+@extends( (auth()->user()->hasRole('jefe') ? 'layouts.jefe' : 'layouts.alumno') )
 
 @section('main')
     <div>
