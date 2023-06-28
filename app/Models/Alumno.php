@@ -20,24 +20,21 @@ class Alumno extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'user_id',
-        'curp',
         'numero_cuenta',
+        'curp',
         'fecha_nacimiento',
         'sexo',
         'telefono_alternativo',
         'telefono_celular',
-
-        'interno',
+        'escuela_id',
         'carrera_id',
-        'fecha_ingreso_facultad',
-
+        //'fecha_ingreso_facultad',
         'creditos_pagados',
         'avance_porcentaje',
 
         'promedio',
         'duracion_servicio',
 
-        'horas_semana',
         'hora_inicio',
         'hora_fin',
         'pertenencia_unica',

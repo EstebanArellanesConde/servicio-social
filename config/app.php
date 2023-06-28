@@ -182,7 +182,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'App' => App\app::class,
+        //
     ])->toArray(),
 
 ];
