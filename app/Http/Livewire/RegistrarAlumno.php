@@ -33,7 +33,6 @@ class RegistrarAlumno extends Component
     public $sexo;
     public $telefono_alternativo;
     public $telefono_celular;
-
     public $creditos_pagados;
     public $promedio;
     public $avance_porcentaje;
@@ -48,9 +47,50 @@ class RegistrarAlumno extends Component
     public $departamento_id;
     public $aviso_de_privacidad;
 
+    public function getCustomRules($procedencia){
+        $rules_procedencia = [];
+        switch ($procedencia){
+            // si es de la fi
+            case "1":
+                $rules_procedencia = [
+                    'escuela' => [],
+                    'escuela_text' => [],
+                    'carrera' => ['required'],
+                    'numero_cuenta' => ['unique:alumnos,numero_cuenta', 'digits:9'],
+                    'creditos_pagados' => ['required', 'min:1'],
+                    'avance_porcentaje' => ['required', 'max:100'],
+                ];
+                break;
+            // si es de la unam
+            case "0":
+                $rules_procedencia = [
+                    'escuela' => ['required'],
+                    'escuela_text' => [],
+                    'carrera' => [],
+                    'numero_cuenta' => ['unique:alumnos,numero_cuenta', 'digits:9'],
+                    'creditos_pagados' => ['required', 'min:1'],
+                    'avance_porcentaje' => ['required', 'max:100'],
+                ];
+                break;
+
+            // si es externo a la UNAM
+            case "2":
+                $rules_procedencia = [
+                    'escuela' => [],
+                    'escuela_text' => ['required'],
+                    'carrera' => [],
+                    'numero_cuenta' => [],
+                    'creditos_pagados' => [],
+                    'avance_porcentaje' => [],
+                ];
+                break;
+        }
+        return $rules_procedencia;
+    }
+
     protected function rules()
     {
-        return [
+        return array_merge([
             // Usuario
             'name' => ['required', 'string', 'max:255', new NombreRule()],
             'apellido_paterno' => ['required', 'string', 'max:255', new NombreRule()],
@@ -60,20 +100,10 @@ class RegistrarAlumno extends Component
 
             // Alumno
             'curp' => ['required', 'unique:alumnos,curp', new CurpRule()],
-            //'numero_cuenta' => 'unique:alumnos,numero_cuenta|digits:9',
-            'numero_cuenta' => '',
             'sexo' => ['required', "in:H,M,O"],
             'telefono_alternativo' => 'required|digits:10',
             'telefono_celular' => 'required|digits:10',
             'procedencia' => 'required',
-            'escuela' => [],
-            'escuela_text' => [],
-            'carrera' => [],
-            // 'fecha_ingreso_facultad' => ["required", "after:".$this->get_fecha_nacimiento($this->curp), "before:".Carbon::now()],
-            //'creditos_pagados' => 'required|min:1',
-            'creditos_pagados' => [],
-            //'avance_porcentaje' => 'required|max:120',
-            'avance_porcentaje' => [],
             'promedio' => 'required|min:0.00|max:10',
             'duracion_servicio' => 'required',
             'hora_inicio' => ['required', new HoraInicioRule($this->hora_inicio, $this->duracion_servicio, $this->get_hora_fin($this->hora_inicio, $this->duracion_servicio))],
@@ -81,6 +111,20 @@ class RegistrarAlumno extends Component
             'pertenencia_unica' => ['required', "in:0,1"],
             'departamento_id' => ["numeric", "nullable"],
             'aviso_de_privacidad' => ['accepted'],
+            // 'fecha_ingreso_facultad' => ["required", "after:".$this->get_fecha_nacimiento($this->curp), "before:".Carbon::now()],
+        ], $this->getCustomRules($this->procedencia));
+    }
+
+    /**
+     * Permite mensajes de error personalizados
+     *
+     * @return array
+     */
+    protected function messages(){
+        return [
+            'aviso_de_privacidad' => [
+                'accepted' => 'Debes aceptar el aviso de privacidad para continuar',
+            ],
         ];
     }
 
@@ -129,7 +173,7 @@ class RegistrarAlumno extends Component
      */
     public function updated($propertyName)
     {
-       $this->validateOnly($propertyName, [
+       $this->validateOnly($propertyName, array_merge([
             'name' => ['required', 'string', 'max:255', new NombreRule()],
             'apellido_paterno' => ['required', 'string', 'max:255', new NombreRule()],
             'apellido_materno' => ['required', 'string', 'max:255', new NombreRule()],
@@ -146,7 +190,7 @@ class RegistrarAlumno extends Component
             //'avance_porcentaje' => ['required', 'numeric', 'min:35', 'max:120'],
             'password' => ['required', 'confirmed', Rules\Password::min(8)->mixedCase()->numbers()->symbols()],
             'aviso_de_privacidad' => ['accepted'],
-        ]);
+        ], $this->getCustomRules($this->procedencia)));
     }
 
     public function store()
