@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Alumno;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -27,5 +29,11 @@ class DatabaseSeeder extends Seeder
         $this->call(EscuelaSeeder::class);
         $this->call(AlumnoSeeder::class);
         $this->call(HistoricoEstadoSeeder::class);
+
+        for($i = 0; $i < 1000; $i++){
+            $user = User::factory()->create();
+            Alumno::factory()->for($user)->create();
+            $user->assignRole('alumno');
+        }
     }
 }
