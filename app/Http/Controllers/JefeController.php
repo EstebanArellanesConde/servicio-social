@@ -69,7 +69,7 @@ class JefeController extends Controller
     public function alumnosPendientes()
     {
         $alumnosPendientes = \DB::table('alumnos')
-                    ->select('alumnos.numero_cuenta', 'users.name', 'users.apellido_paterno', 'users.apellido_materno', 'alumnos.fecha_inicio', 'alumnos.fecha_fin', 'carreras.carrera')
+                    ->select('alumnos.id','alumnos.curp','alumnos.sexo','alumnos.numero_cuenta','users.email','alumnos.telefono_celular','alumnos.telefono_alternativo','alumnos.promedio','alumnos.duracion_servicio','alumnos.hora_inicio','alumnos.hora_fin','alumnos.pertenencia_unica','users.name', 'users.apellido_paterno', 'users.apellido_materno', 'alumnos.fecha_inicio', 'alumnos.fecha_fin', 'carreras.carrera')
                     ->join('users', 'alumnos.user_id', '=', 'users.id')
                     ->join('carreras', 'alumnos.carrera_id', '=', 'carreras.id')
                     ->where('alumnos.estado_id', '=', 3)

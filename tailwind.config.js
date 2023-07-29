@@ -1,6 +1,8 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 
+const scrollbar = require('tailwind-scrollbar');
+
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
@@ -21,5 +23,8 @@ export default {
         },
     },
 
-    plugins: [forms],
+    plugins: [
+        forms,
+        scrollbar,
+    ],
 };
