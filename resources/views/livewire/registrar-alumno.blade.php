@@ -193,7 +193,7 @@
             <x-select-input
                 id="duracion_servicio"
                 class="block mt-1 w-full"
-                wire:change="verificar_duracion"
+                wire:change="verificarDuracion"
                 wire:model.lazy="duracion_servicio"
             >
                 <option>Seleccione la duración</option>
@@ -209,7 +209,7 @@
                 id="hora_inicio"
                 class="block mt-1 w-full"
                 type="time"
-                wire:change="verificar_duracion"
+                wire:change="verificarDuracion"
                 wire:model.lazy="hora_inicio"
                 :value="old('hora_inicio')"
             />

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Alumno;
-use App\Models\User;
+use App\Models\Escuela;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,12 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
         $this->call(DivisionSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(JefeSeeder::class); // debe estar antes de users o alumnos
@@ -30,10 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AlumnoSeeder::class);
         $this->call(HistoricoEstadoSeeder::class);
 
-        for($i = 0; $i < 1000; $i++){
-            $user = User::factory()->create();
-            Alumno::factory()->for($user)->create();
-            $user->assignRole('alumno');
-        }
+        Alumno::factory(20)->create();
+        Escuela::factory(20)->create();
     }
 }
