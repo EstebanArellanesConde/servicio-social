@@ -25,7 +25,7 @@ class CurpRule implements ValidationRule
      * @param  string  $curp
      * @return bool
      */
-    private function isCurp( $curp = '' ){
+    public function isCurp( $curp = '' ){
         $curp = trim($curp);
         if (strlen($curp) != 18) {
             return false;

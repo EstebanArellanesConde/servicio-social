@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,28 +17,36 @@ class AlumnoFactory extends Factory
      */
     public function definition(): array
     {
+        $pertenencia_unica = $this->faker->boolean;
+        if ($pertenencia_unica){
+            $departamento_id = $this->faker->numberBetween(1,5);
+        } else {
+            $departamento_id = 1;
+        }
+
+
         return [
+            'user_id' => User::factory()->create()->id,
             'numero_cuenta' => $this->faker->numberBetween(310000000, 410000000),
             'curp' => $this->faker->regexify("[A-Z]{18}"),
-            'fecha_nacimiento' => $this->faker->date(),
+            'fecha_nacimiento' => $this->faker->dateTimeBetween('1970-01-01', '2005-01-01'),
             'sexo' => $this->faker->randomElement(['H', 'M', 'O']),
             'telefono_alternativo' => $this->faker->phoneNumber(),
             'telefono_celular' => $this->faker->phoneNumber(),
-            'fecha_ingreso_facultad' => $this->faker->date(),
+            'fecha_ingreso_facultad' => $this->faker->dateTimeBetween('1990-01-01', '2023-06-01'),
             'creditos_pagados' => $this->faker->numberBetween(100, 800),
             'avance_porcentaje' => $this->faker->numberBetween(10, 100),
             'promedio' => $this->faker->randomFloat(2, 5.0, 10.0),
             'duracion_servicio' => $this->faker->randomElement([6, 12]),
             'hora_inicio' => $this->faker->time(),
             'hora_fin' => $this->faker->time(),
-            'fecha_inicio' => $this->faker->date(),
-            'fecha_fin' => $this->faker->date(),
-            'pertenencia_unica' => $this->faker->boolean(),
+            'fecha_inicio' => $this->faker->optional()->date(),
+            'fecha_fin' => $this->faker->optional()->date(),
+            'pertenencia_unica' => $pertenencia_unica,
             'escuela_id' => $this->faker->numberBetween(1, 99),
             'carrera_id' => $this->faker->optional(0.7)->numberBetween(1,16),
-            'departamento_id' => $this->faker->numberBetween(1,5),
+            'departamento_id' => $departamento_id,
             'estado_id' => $this->faker->numberBetween(1,3)
-
         ];
     }
 }
