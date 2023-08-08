@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AlumnoSeeder::class);
         $this->call(HistoricoEstadoSeeder::class);
 
-        Alumno::factory(20)->create();
+        Alumno::factory(500)->create();
         Escuela::factory(20)->create();
     }
 }

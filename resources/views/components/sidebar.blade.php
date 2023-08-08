@@ -6,10 +6,10 @@
             <img
                 width="70"
                 src="https://www.ingenieria.unam.mx/unica/img/logo_unicaA.png"
-                alt="Logo UNICA"
+                alt="Logo"
                 class="dark:filter dark:brightness-0 dark:invert"
             >
-            <a href="#" class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">UNICA</a>
+            <a href="#" class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">{{ env('APP_NAME') }}</a>
         </div>
         <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
             <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">

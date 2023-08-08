@@ -1,3 +1,3 @@
 <x-guest-layout>
-    <livewire:registrar-alumno></livewire:registrar-alumno>
+    <livewire:auth.registrar-alumno></livewire:auth.registrar-alumno>
 </x-guest-layout>

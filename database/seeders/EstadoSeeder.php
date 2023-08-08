@@ -29,5 +29,10 @@ class EstadoSeeder extends Seeder
             'estado' => 'PENDIENTE',
             'fecha_estado' => now(),
         ]);
+
+        DB::table('estados')->insert([ //4
+            'estado' => 'FINALIZADO',
+            'fecha_estado' => now(),
+        ]);
     }
 }
