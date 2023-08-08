@@ -3,10 +3,6 @@
 @section('main')
     <x-jefe.opciones />
     <x-crud
-        :alumnos="$alumnosInscritos"
-        :acciones="[
-            'finalizar'
-        ]"
+        :alumnos="$alumnosFinalizados"
     />
 @endsection
-

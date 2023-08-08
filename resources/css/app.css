@@ -2,4 +2,147 @@
 @tailwind components;
 @tailwind utilities;
 
+/*Overrides for Tailwind CSS */
+/*Estilos del buscador y del selector*/
+.dataTables_wrapper select,
+.dataTables_wrapper .dataTables_filter input {
+    font-size: 15px;
+    color: #4a5568;
+    padding-left: 1rem;
+    padding-right: 2rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    line-height: 1.25;
+    border-width: 2px;
+    border-radius: .25rem;
+    border-color: #edf2f7;
+    background-color: #edf2f7;
+}
+
+/* Posicionamiento del selector y del buscador de la tabla responsive */
+.top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem /* 20px */;
+}
+
+@media (min-width: 960px) {
+    .top {
+        justify-content: space-between;
+        flex-direction: row;
+    }
+}
+
+/* Posicionamiento de la informacion y de la paginacion de la tabla responsive */
+.bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem /* 20px */;
+    text-align: center;
+    margin-top: 10px;
+}
+.dataTables_wrapper .dataTables_paginate {
+    text-align: center;
+}
+@media (min-width: 960px) {
+    .bottom {
+        justify-content: space-between;
+        flex-direction: row;
+    }
+}
+
+/*Fila - Hover*/
+table.dataTable.hover tbody tr:hover,
+table.dataTable.display tbody tr:hover {
+    background-color: #E8E8E8;
+}
+
+/*Botones de la paginacion*/
+.dataTables_paginate{
+    font-weight: 100;
+    color: #dee2e6;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    margin: 0;
+    border-radius: 5px;
+}
+
+/*Botones de la paginacion - El seleccionado*/
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    color: #fff !important;
+    background: #007bff !important;
+    border-left: none;
+    border-right: none;
+}
+
+/*Botones de la paginacion - Hover*/
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: #fff !important;
+    background: #007bff !important;
+    border-left: none;
+    border-right: none;
+}
+
+/*Botones de la paginacion - Hover*/
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: #0257B2 !important;
+    background: #dee2e6 !important;
+    border: 0.5px solid #D1D1D1;
+}
+
+/*Padding inferior del borde */
+table.dataTable.no-footer {
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/*Change colour of responsive icon*/
+table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before,
+table.dataTable.dtr-inline.collapsed>tbody>tr>th:first-child:before {
+    background-color: #0C79CE !important;
+}
+/* Estilos del boton al ser una pantalla pequeña */
+table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child:before, table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child:before {
+    top: 9px;
+    left: 4px;
+    height: 16px;
+    width: 16px;
+    display: block;
+    position: absolute;
+    color: white;
+    border: 2px solid white;
+    border-radius: 15px;
+    box-shadow: 0 0 3px #444;
+    box-sizing: border-box;
+    text-align: center;
+    text-indent: 0 !important;
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 14px;
+    content: '+';
+}
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 8px 10px; /* Añadir paddin a cada celda de la tabla */
+}
+table.dataTable tbody tr {
+    text-align: center; /* Centrar el texto de toda la tabla */
+}
+table.dataTable thead tr th,
+table.dataTable tbody tr td {
+    font-size: 15px; /* Tamaño de fuente de la tabla asi como su interlineado */
+    line-height: 1;
+}
+table.dataTable tbody tr td button {
+    font-size: 13px; /* Tamaño de fuente del boton */
+}
+table.dataTable>tbody>tr.child span.dtr-title {
+    margin-left: -6px; /* Margen corregido al ser responsive en una pantalla pequeña  */
+    margin-bottom: 5px;
+}
+.dataTables_scrollHeadInner {
+    margin-top: 10px; /* Agrega un margen superior de 10px por encima del buscador y de los filtros */
+}
+.dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
+    font-size: 15px;
+}
 

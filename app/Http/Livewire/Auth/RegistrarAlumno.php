@@ -203,7 +203,8 @@ class RegistrarAlumno extends Component
         $carreras = Carrera::all();
         $departamentos = Departamento::all();
 
-        return view('livewire.registrar-alumno', [
+
+        return view('livewire.auth.registrar-alumno', [
             'escuelas' => $escuelas,
             'carreras' => $carreras,
             'departamentos' => $departamentos,
