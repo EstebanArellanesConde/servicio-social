@@ -3,10 +3,10 @@
 ## Instalación - Desarrollo
 
 ### Dependencias
-* `npm`
 * `node`
+    * `npm`
 * `php`
-* `composer`
+    * `composer`
 * `docker`
 ---
 
@@ -16,18 +16,21 @@
   git clone https://github.com/LuisQuintana23/servicio-social.git
   cd servicio-social
   ```
-
-2. Agrega el directorio `vendor` con `composer` (se puede obtener de manera externa copiando y pegando vendor/ de algún proyecto laravel)
+2. Cambia a la rama de desarrollo
   ```sh
-  composer install
+  git switch develop
   ```
 
-3. Instala los modulos de `npm`
+3. Instala dependencias del proyecto
   ```sh
+  composer install
   npm install
   ```
 
-4. Configura el archivo de configuracion `.env`
+4. Configura el archivo de configuracion `.env` o simplemente copia y pega `.env.example`
+  ```sh
+  cp .env.example .env
+  ```
 
 5. Inicia los contenedores con `sail`
   ```sh
@@ -37,7 +40,7 @@ _NOTA_: Agrega un alias para ejecutar solo ``sail`` y no la ruta completa ``./ve
 
 6. Ejecuta las migraciones
   ```sh
-  sail artisan migrate:fresh --seed
+  sail artisan migrate --seed
   ```
 
 7. Inicia el servidor de desarrollo de `vite`
@@ -46,4 +49,32 @@ _NOTA_: Agrega un alias para ejecutar solo ``sail`` y no la ruta completa ``./ve
   ```
 * Si no se está realizando desarrollo front-end ejecuta `npm run build`
 * En caso de que vite no cargue los estilos limpiar el cache
+* Si se cambia alguna ruta ejecutar `sail artisan route:cache`
+
+### Uso de Git Flow
+
+1. Instalar gitflow desde el siguiente [repositorio](https://github.com/nvie/gitflow#git-flow) y ejecutar
+  ```
+  git flow -d
+  ```
+2. Cada que se inicia una funcionalidad ejecutar un feature de git flow
+  ```
+  git flow feature start <nombre_funcionalidad>
+  ```
+3. Realizar commits con normalidad hasta que la funcionalidad sea estable, para finalizar la
+rama y realizar un merge con la rama develop utilizar
+  ```
+  git flow feature finish <nombre_funcionalidad>
+  ```
+
+4. Cuando se esté seguro de los cambios realizar un push
+  ```
+  git push
+  ```
+
+[Más información](https://www.atlassian.com/es/git/tutorials/comparing-workflows/gitflow-workflow)
+
+
+
+
 
