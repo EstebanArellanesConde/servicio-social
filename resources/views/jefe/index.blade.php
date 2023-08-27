@@ -57,7 +57,7 @@
                         </td>
                         <!-- Modal -->
                             <div class="modal w-full h-screen fixed left-0 top-0 justify-center items-center bg-black bg-opacity-50 hidden z-50" id="modal_{{ $alumno->id }}">
-                                <div class="bg-white w-4/5 md:w-2/5 h-3/4 rounded-tl-2xl rounded-bl-2xl overflow-auto scrollbar-thin scrollbar-thumb-slate-700">
+                                <div class="bg-white w-4/5 md:w-2/5 h-3/4 rounded-tl-2xl rounded-bl-2xl overflow-auto scrollbar-thin scrollbar-thumb-slate-700 modal--bg">
                                     <div class="grid grid-cols-10">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="closeModal col-start-11 col-end-11 mr-5 mt-5 mb-[-10] h-6 w-6 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none hover:cursor-pointer">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
@@ -168,6 +168,113 @@
     <!--Contenedor de la tabla-->
 
     <style>
+
+        /*  Modo Oscuro  */
+        @media (prefers-color-scheme: dark) {
+            
+            .modal--bg {
+                background-color: rgb(31 41 55);
+                box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            }
+
+            #recipients {
+                background-color: rgb(31 41 55);
+            }
+
+            table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd, table.dataTable.stripe tbody tr.child, table.dataTable.display tbody tr.child {
+                background-color: #1c2532;
+            }
+
+            table.dataTable.stripe tbody tr.even, table.dataTable.display tbody tr.even {
+                background-color: #1F2937;
+            }
+
+            .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
+                color: white;
+            }
+
+            table.dataTable.stripe tbody tr.odd:hover, table.dataTable.display tbody tr.odd:hover, table.dataTable.stripe tbody tr.even:hover, table.dataTable.display tbody tr.even:hover{
+                background-color: #151c26;
+            }
+
+            .dataTables_wrapper select, .dataTables_wrapper .dataTables_filter input {
+                border-color: #29374a !important;
+                background-color: #29374a !important;
+                color: white !important;
+            }
+
+            /* Paginacion Modo Oscuro*/
+
+            /*Botones de la paginacion*/
+            .dataTables_wrapper .dataTables_paginate .paginate_button {
+                color: white !important;
+            }
+
+            /*Botones de la paginacion - El seleccionado*/
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+                color: #fff !important;
+                background: #007bff !important;
+                border: none;
+            }
+
+            /*Botones de la paginacion - El seleccionado - Hover*/
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+                color: #fff !important;
+                background: #007bff !important;
+                border: none;
+            }
+
+            /*Botones de la paginacion - Hover*/
+            .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+                color: white !important;
+                background: #005bbd !important;
+                border: 0.5px solid #005bbd;
+            }
+
+            /*Botones de la paginacion - desactivado*/
+            .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+                background: transparent !important;
+            }
+
+        }
+
+        @media (prefers-color-scheme: light) {
+
+            /* Paginacion modo claro */
+
+            /*Botones de la paginacion*/
+            .dataTables_wrapper .dataTables_paginate .paginate_button {
+                color: black !important;
+            }
+
+            /*Botones de la paginacion - El seleccionado*/
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+                color: #fff !important;
+                background: #007bff !important;
+                border: none;
+            }
+            
+            /*Botones de la paginacion - El seleccionado - Hover*/
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+                color: #fff !important;
+                background: #007bff !important;
+                border: none;
+            }
+
+            /*Botones de la paginacion - Hover*/
+            .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+                    color: white !important;
+                    background: #005bbd !important;
+                    border: 0.5px solid #005bbd;
+                }
+
+            /*Botones de la paginacion - desactivado*/
+            .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+                background: transparent !important;
+            }
+
+        }
+
         /*Overrides for Tailwind CSS */
 		/*Estilos del buscador y del selector*/
 		.dataTables_wrapper select,
@@ -224,39 +331,6 @@
 			background-color: #E8E8E8;
 		}
 
-		/*Botones de la paginacion*/
-        .dataTables_paginate{
-            font-weight: 100;
-            color: #dee2e6;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button { 
-            margin: 0;
-            border-radius: 5px;
-        }
-
-        /*Botones de la paginacion - El seleccionado*/
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-            color: #fff !important;
-            background: #007bff !important;
-            border-left: none;
-            border-right: none;
-        }
-
-        /*Botones de la paginacion - Hover*/
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-            color: #fff !important;
-            background: #007bff !important;
-            border-left: none;
-            border-right: none;
-        }
-
-        /*Botones de la paginacion - Hover*/
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-            color: #0257B2 !important;
-            background: #dee2e6 !important;
-            border: 0.5px solid #D1D1D1;
-        }
 
 		/*Padding inferior del borde */
 		table.dataTable.no-footer {
@@ -288,7 +362,7 @@
             content: '+';   
         }
         table.dataTable tbody th, table.dataTable tbody td {
-            padding: 8px 10px; /* Añadir paddin a cada celda de la tabla */
+            padding: 8px 10px; /* Añadir padding a cada celda de la tabla */
         }
         table.dataTable tbody tr {
         text-align: center; /* Centrar el texto de toda la tabla */
@@ -311,6 +385,7 @@
         .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
             font-size: 15px;
         }
+
     </style>
     
     @push("scripts")
@@ -325,6 +400,7 @@
     <script>
 
         $(document).ready(function() {
+
             // Inicializar la tabla con el complemento DataTables
             var table = $('#example').DataTable({
                 responsive: true, // Opción para hacer la tabla responsive
@@ -376,6 +452,8 @@
                 }
             });
         });
+
     </script>
+    
 @endpush
 @endsection
