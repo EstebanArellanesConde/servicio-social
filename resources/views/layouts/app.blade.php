@@ -12,14 +12,15 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet"/>
 
     <!-- Scripts -->
+    @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+    @stack('styles')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     @livewireStyles
 </head>
 <body class="font-sans antialiased">
-<div class="flex-col min-h-screen bg-gray-100 dark:bg-gray-900 w-full md:flex md:flex-row md:min-h-screen">
-    @yield('content')
-</div>
+    <div class="flex-col min-h-screen bg-gray-100 dark:bg-gray-900 w-full md:flex md:flex-row md:min-h-screen">
+        @yield('content')
+    </div>
     @livewireScripts
     @stack("scripts")
 </body>
