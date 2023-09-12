@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AlumnoController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\JefeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -31,7 +32,7 @@ Route::middleware(['auth', 'verified', 'role:jefe'])->prefix('jefe')->group(func
     Route::get('/aceptar/{id}', [JefeController::class, 'aceptar'])->name('jefe.aceptar');
     Route::get('/rechazar/{id}', [JefeController::class, 'rechazar'])->name('jefe.rechazar');
     Route::get('/finalizar/{id}', [JefeController::class, 'finalizar'])->name('jefe.finalizar');
-    Route::get('/download/{type}', [JefeController::class, 'download'])->name('jefe.download');
+    Route::post('/download', [ExportController::class, 'store'])->name('jefe.download');
 });
 
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

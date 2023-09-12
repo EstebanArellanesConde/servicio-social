@@ -43,7 +43,7 @@ class AlumnoFactory extends Factory
             'fecha_inicio' => $this->faker->optional()->date(),
             'fecha_fin' => $this->faker->optional()->date(),
             'pertenencia_unica' => $pertenencia_unica,
-            'escuela_id' => $this->faker->numberBetween(1, 99),
+            'escuela_id' => $this->faker->numberBetween(1, 119),
             'carrera_id' => $this->faker->optional(0.7)->numberBetween(1,16),
             'departamento_id' => $departamento_id,
             'estado_id' => $this->faker->numberBetween(1,4)

@@ -67,19 +67,4 @@ class JefeController extends Controller
         $alumno->estado_id = $idEstado;
         $alumno->save();
     }
-
-    public function download($filetype){
-        $alumno = Alumno::with([
-            'user',
-            'escuela',
-
-        ])->first();
-        if ($filetype === "pdf"){
-            $pdf = Pdf::loadView('pdf.tabla_alumnos', ['alumnos' => $alumnos]);
-            return $pdf->download("document.pdf");
-        } else{
-            dd("No pdf");
-        }
-    }
-
 }

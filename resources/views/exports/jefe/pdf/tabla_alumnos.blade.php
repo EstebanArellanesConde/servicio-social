@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="es">
 <head>
     <!-- Se copiaron y pegaron estilos por compatibilidad-->
     <style>
@@ -7,9 +7,6 @@
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{-webkit-text-size-adjust:100%;line-height:1.15}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}[hidden],template{display:none}html{box-sizing:border-box;font-size:62.5%}*,:after,:before{box-sizing:inherit;margin:0;padding:0}body{font-family:Open Sans,sans-serif,Arial;font-size:1.6rem}p{color:#191919;font-size:2rem}a{text-decoration:none}h1{font-size:4rem}h2{font-size:3.6rem}h3{font-size:3rem}.container{display:flex;height:100vh;margin:0;width:100%}img{display:block;max-width:100%}
 /*# sourceMappingURL=alumnosEstadisticas.css.map */
-
-
-
     </style>
 </head>
 <body>
@@ -39,51 +36,30 @@
             <tr>
                 <td class="header__datos">
                     <p class="header__datos-title">Periodo:</p>
-{{--                    <p class="header__datos-info">Semestre {{ $periodo }}</p>--}}
                     <p class="header__datos-info">Semestre 2024-1</p>
                 </td>
             </tr>
         </table>
 
-
-
         <table class="table" id="TablaAlumnos">
         <thead class="table__campos">
             <tr>
-                <th>Número de cuenta</th>
-                <th>Nombre</th>
-                <th>Fecha de inicio</th>
-                <th>Fecha de terminación</th>
-                <th>Carrera</th>
-{{--                @if ($departamento == 'DSA')--}}
-{{--                    <th>Depto.</th>--}}
-{{--                @endif--}}
-                <th>Depto</th>
-                <th>Estado</th>
-                <th>Becario</th>
+                @foreach($columnas as $columna)
+                    <th>
+                        {{ $columna }}
+                    </th>
+                @endforeach
             </tr>
         </thead>
         <tbody class="table__registros">
-            @foreach($alumnos as $alumno)
-            <tr>
-                <td>{{$alumno['numero_cuenta']}}</td>
-                <td>{{$alumno->name}}</td>
-                <td>{{$alumno->fecha_inicio}}</td>
-                <td>{{$alumno->fecha_fin}}</td>
-{{--                <td>{{$alumno->carrera->carrera}}</td>--}}
-{{--                @if($departamento == 'DSA')--}}
-{{--                    <td>{{$alumno->abreviatura_departamento}}</td>--}}
-{{--                @endif--}}
-                <td>"Ingenieria en Computacion"</td>
-                <td>"DSA"</td>
-{{--                <td>{{ucfirst(strtolower($alumno->estado->estado))}}</td>--}}
-                <td>"PENDIENTE"</td>
-                @if($alumno->becario_unica == 1)
-                    <td>Verdadero</td>
-                @else
-                    <td>Falso</td>
-                @endif
-            </tr>
+            @foreach($alumnos->toArray() as $alumno)
+                <tr>
+                    @foreach($alumno as $valor)
+                        <td>
+                            {{ $valor }}
+                        </td>
+                    @endforeach
+                </tr>
             @endforeach
         </tbody>
         </table>
