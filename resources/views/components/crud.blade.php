@@ -23,6 +23,9 @@
             </thead>
             <tbody>
             @foreach($alumnos as $alumno)
+                @php
+                    $data_modal_id = "modal_" .  $alumno->id
+                @endphp
                 <tr>
                     <td>{{ $alumno->numero_cuenta }}</td>
                     <td>{{ $alumno->user->name . ' ' . $alumno->user->apellido_paterno . ' ' . $alumno->user->apellido_materno }}</td>
@@ -53,109 +56,100 @@
                         </div>
                     </td>
                     <!-- Modal -->
-                    <div class="modal w-full h-screen fixed left-0 top-0 justify-center items-center bg-black bg-opacity-50 hidden z-50" id="modal_{{ $alumno->id }}">
-                        <div class="bg-white w-4/5 md:w-2/5 h-3/4 rounded-tl-2xl rounded-bl-2xl overflow-auto scrollbar-thin scrollbar-thumb-slate-700">
-                            <div class="grid grid-cols-10">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="closeModal col-start-11 col-end-11 mr-5 mt-5 mb-[-10] h-6 w-6 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none hover:cursor-pointer">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                                </svg>
+                    <x-modal
+                        :dataId="$data_modal_id"
+                    >
+                        <form>
+                            <div class="grid xl:grid-cols-3">
+                                <div class="pt-4 px-6">
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre(s)</label>
+                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->user->name }}" disabled>
+                                </div>
+                                <div class="pt-4 px-6">
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Paterno</label>
+                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->user->apellido_paterno }}" disabled>
+                                </div>
+                                <div class="pt-4 px-6">
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Materno</label>
+                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->user->apellido_materno }}" disabled>
+                                </div>
                             </div>
-                            <form>
-                                <div class="grid xl:grid-cols-3">
-                                    <div class="pt-4 px-6">
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre(s)</label>
-                                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->user->name }}" disabled>
-                                    </div>
-                                    <div class="pt-4 px-6">
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Paterno</label>
-                                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->user->apellido_paterno }}" disabled>
-                                    </div>
-                                    <div class="pt-4 px-6">
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Materno</label>
-                                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->user->apellido_materno }}" disabled>
-                                    </div>
+                            <div class="pt-5 px-6">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CURP</label>
+                                <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->curp }}" disabled>
+                            </div>
+                            <div class="pt-5 px-6">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Numero de cuenta</label>
+                                <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->numero_cuenta }}" disabled>
+                            </div>
+                            <div class="pt-5 px-6">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sexo</label>
+                                @php
+                                    $sexualidad = $alumno->sexo;
+                                    if($sexualidad == 'H') {
+                                        $sexualidad = "Hombre";
+                                    } else if ($sexualidad == "M") {
+                                        $sexualidad = "Mujer";
+                                    } else {
+                                        $sexualidad = "Otro";
+                                    }
+                                @endphp
+                                <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"  value="{{ $sexualidad }}" disabled>
+                            </div>
+                            <div class="pt-5 px-6">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                <input type="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->user->email }}" disabled>
+                            </div>
+                            <div class="grid xl:grid-cols-2">
+                                <div class="pt-5 px-6">
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono Celular</label>
+                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->telefono_celular }}" disabled>
                                 </div>
                                 <div class="pt-5 px-6">
-                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CURP</label>
-                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->curp }}" disabled>
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono Alternativo</label>
+                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->telefono_alternativo }}" disabled>
+                                </div>
+                            </div>
+                            <div class="grid xl:grid-cols-2">
+                                <div class="pt-5 px-6">
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Procedencia</label>
+                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->escuela->is_unam == 1 ? 'Interno' : 'Externo' }}" disabled>
                                 </div>
                                 <div class="pt-5 px-6">
-                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Numero de cuenta</label>
-                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->numero_cuenta }}" disabled>
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Escuela</label>
+                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->escuela->escuela }}" disabled>
+                                </div>
+                            </div>
+                            <div class="grid xl:grid-cols-2">
+                                <div class="pt-5 px-6">
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Forma parte de UNICA</label>
+                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->pertenencia_unica == 1 ? 'Si' : 'No' }}" disabled>
                                 </div>
                                 <div class="pt-5 px-6">
-                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sexo</label>
-                                    @php
-                                        $sexualidad = $alumno->sexo;
-                                        if($sexualidad == 'H') {
-                                            $sexualidad = "Hombre";
-                                        } else if ($sexualidad == "M") {
-                                            $sexualidad = "Mujer";
-                                        } else {
-                                            $sexualidad = "Otro";
-                                        }
-                                    @endphp
-                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"  value="{{ $sexualidad }}" disabled>
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Departamento</label>
+                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->departamento->abreviatura_departamento}}" disabled>
+                                </div>
+                            </div>
+                            <div class="pt-5 px-6">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Promedio</label>
+                                <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->promedio }}" disabled>
+                            </div>
+                            <div class="grid xl:grid-cols-3">
+                                <div class="pt-5 px-6">
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Duración en Meses</label>
+                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->duracion_servicio }}" disabled>
                                 </div>
                                 <div class="pt-5 px-6">
-                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                                    <input type="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->user->email }}" disabled>
-                                </div>
-                                <div class="grid xl:grid-cols-2">
-                                    <div class="pt-5 px-6">
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono Celular</label>
-                                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->telefono_celular }}" disabled>
-                                    </div>
-                                    <div class="pt-5 px-6">
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono Alternativo</label>
-                                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->telefono_alternativo }}" disabled>
-                                    </div>
-                                </div>
-                                <div class="grid xl:grid-cols-2">
-                                    <div class="pt-5 px-6">
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Procedencia</label>
-                                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->escuela->is_unam == 1 ? 'Interno' : 'Externo' }}" disabled>
-                                    </div>
-                                    <div class="pt-5 px-6">
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Escuela</label>
-                                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->escuela->escuela }}" disabled>
-                                    </div>
-                                </div>
-                                <div class="grid xl:grid-cols-2">
-                                    <div class="pt-5 px-6">
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Forma parte de UNICA</label>
-                                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->pertenencia_unica == 1 ? 'Si' : 'No' }}" disabled>
-                                    </div>
-                                    <div class="pt-5 px-6">
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Departamento</label>
-                                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->departamento->abreviatura_departamento}}" disabled>
-                                    </div>
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hora Inicio</label>
+                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->hora_inicio }}" disabled>
                                 </div>
                                 <div class="pt-5 px-6">
-                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Promedio</label>
-                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->promedio }}" disabled>
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hora Fin</label>
+                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->hora_fin }}" disabled>
                                 </div>
-                                <div class="grid xl:grid-cols-3">
-                                    <div class="pt-5 px-6">
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Duración en Meses</label>
-                                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->duracion_servicio }}" disabled>
-                                    </div>
-                                    <div class="pt-5 px-6">
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hora Inicio</label>
-                                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->hora_inicio }}" disabled>
-                                    </div>
-                                    <div class="pt-5 px-6">
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hora Fin</label>
-                                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->hora_fin }}" disabled>
-                                    </div>
-                                </div>
-                                <div class="grid xl:grid-cols-8 m-6">
-                                    <button type="button" class="xl:col-start-7 xl:col-end-9 closeModal text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-2.5 py-2">Cerrar</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- Modal -->
+                            </div>
+                        </form>
+                    </x-modal>
                 </tr>
             @endforeach
             </tbody>
