@@ -23,35 +23,40 @@ services:
         networks:
             - sail
         depends_on:
-            - mysql
+            - pgsql
             - redis
             - meilisearch
             - mailpit
             - selenium
-    mysql:
-        image: 'mysql/mysql-server:8.0'
+    pgsql:
+        image: postgres:15
+        container_name: pgsql
+        restart: unless-stopped
+        expose:
+            - 5432
         ports:
-            - '${FORWARD_DB_PORT:-3306}:3306'
-        environment:
-            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_ROOT_HOST: '%'
-            MYSQL_DATABASE: '${DB_DATABASE}'
-            MYSQL_USER: '${DB_USERNAME}'
-            MYSQL_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+            - ${DB_PORT:-5432}:5432
         volumes:
-            - 'sail-mysql:/var/lib/mysql'
-            - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+            - sail-psql:/docker-entrypoint-initdb.d/
+        environment:
+            POSTGRES_USER: ${DB_USERNAME:-homestead}
+            POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
+            POSTGRES_DB: ${DB_DATABASE:-homestead}
         networks:
             - sail
-        healthcheck:
-            test:
-                - CMD
-                - mysqladmin
-                - ping
-                - '-p${DB_PASSWORD}'
-            retries: 3
-            timeout: 5s
+    pgadmin:
+        image: dpage/pgadmin4
+        container_name: pgadmin
+        restart: always
+        ports:
+            - ${PGADMIN_PORT_DB:-8080}:80
+        depends_on:
+            - pgsql
+        environment:
+            PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+            PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+        networks:
+            - sail
     redis:
         image: 'redis:alpine'
         ports:
@@ -104,6 +109,8 @@ networks:
         driver: bridge
 volumes:
     sail-mysql:
+        driver: local
+    sail-psql:
         driver: local
     sail-redis:
         driver: local
