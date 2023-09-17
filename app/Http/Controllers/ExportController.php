@@ -14,7 +14,6 @@ use function Pest\Laravel\instance;
 
 class ExportController extends Controller{
 
-    public $campos;
     public $allowHeadings;
 
     public $filtros;
@@ -27,6 +26,7 @@ class ExportController extends Controller{
         $this->allowHeadings = [
             'ID' => 'alumnos.id',
             'Curp' => 'curp',
+            'Correo Electronico' => 'users.email',
             'Fecha Nacimiento' => 'fecha_nacimiento',
             'Sexo' => 'sexo',
             'Telefono Celular' => 'telefono_celular',
@@ -37,17 +37,6 @@ class ExportController extends Controller{
             'Promedio' => 'promedio',
             'Procedencia' => 'is_unam',
             'Departamento' => 'abreviatura_departamento',
-        ];
-
-        $this->campos = [
-            'numero_cuenta' => 'numero_cuenta',
-            'curp' => 'curp',
-            'apellido_paterno' => 'apellido_paterno',
-            'correo' => 'email',
-            'escuela' => 'escuela',
-            'departamento' => 'abreviatura_departamento',
-            'sexo' => 'sexo',
-            'procedencia' => 'is_unam',
         ];
 
         $this->filtros = [

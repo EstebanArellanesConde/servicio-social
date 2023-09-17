@@ -1,10 +1,7 @@
 <!-- Modal -->
 <div class="p-8 modal w-full h-full fixed left-0 top-0 justify-center items-center bg-black bg-opacity-50 hidden z-50" id="{{ $dataId }}">
     <div
-        {{ $attributes->merge([
-            'class' => "bg-white p-4 w-4/5 md:w-2/5 h-auto max-h-full rounded-tl-2xl rounded-bl-2xl overflow-auto scrollbar-thin scrollbar-thumb-slate-700 transition"
-            ])
-        }}
+        {{ $attributes->merge([ 'class' => "bg-white p-4 h-auto max-h-full overflow-auto scrollbar-thin scrollbar-thumb-slate-700 transition" ]) }}
     >
         <div class="grid grid-cols-10">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="closeModal col-start-11 col-end-11 mb-[-10] h-6 w-6 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none hover:cursor-pointer">
