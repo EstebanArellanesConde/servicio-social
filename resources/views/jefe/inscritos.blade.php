@@ -166,7 +166,7 @@
                         >
                             <div class="flex flex-row w-full">
                                 <div class="w-1/2">
-                                    <img src="{{ asset('img/hoja_prueba.png') }}" alt="" width="800">
+                                    <img src="{{ asset('assets/img/hoja_prueba.png') }}" alt="" width="800">
                                 </div>
                                 <div class="w-1/2 flex flex-col items-center gap-4 justify-center">
                                     <!-- Name -->
