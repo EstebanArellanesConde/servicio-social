@@ -71,6 +71,7 @@ class AlumnosExport implements FromQuery, Responsable, WithHeadings
             ->join('users', 'users.id', '=', 'alumnos.user_id')
             ->join('escuelas', 'escuelas.id', '=', 'alumnos.escuela_id')
             ->join('departamentos', 'departamentos.id', '=', 'alumnos.departamento_id')
+            ->leftJoin('carreras', 'carreras.id', '=', 'alumnos.carrera_id')
             ->when(!$this->containsOnlyNull($this->sexo) ,function ($q){
                 return $q->whereIn('sexo', $this->sexo);
             })

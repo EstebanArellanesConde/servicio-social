@@ -24,13 +24,13 @@
                 </th>
                 <td class="header__datos">
                     <p class="header__datos-title">Responsable:</p>
-                    <p class="header__datos-info">Beatriz Barrera Hernández</p>
+                    <p class="header__datos-info">{{ $nombreResponsable }}</p>
                 </td>
             </tr>
             <tr>
                 <td class="header__datos">
                     <p class="header__datos-title">Departamento:</p>
-                    <p class="header__datos-info">Servicios Académicos</p>
+                    <p class="header__datos-info">{{ $abreviaturaDepartamento }}</p>
                 </td>
             </tr>
             <tr>

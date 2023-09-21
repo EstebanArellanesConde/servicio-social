@@ -1,36 +1,37 @@
 {{--  NAVBAR  --}}
 <div @click.away="open = false" class="flex flex-col flex-shrink-0 w-full text-white bg-gray-800 md:w-64" x-data="{ open: false }">
-    {{--  ENCABEZADO (LOGO e IMAGEN)  --}}
-    <div class="flex flex-row items-center justify-between flex-shrink-0 px-5 py-4">
-        <div class="flex gap-2 items-center">
-            <img
-                width="70"
-                src="https://www.ingenieria.unam.mx/unica/img/logo_unicaA.png"
-                alt="Logo"
-                class="filter brightness-0 invert"
-            >
-            <a
-                href="/"
-                class="text-lg font-semibold tracking-widest text-white uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
-                {{ env('APP_NAME') }}
-            </a>
-        </div>
-        <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
-            <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
-                <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-                <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-            </svg>
-        </button>
-    </div>
-
-    {{--  OPCIONES  --}}
-    <nav :class="{'block': open, 'hidden': !open}" class="flex-grow px-4 md:block pb-4 md:pb-0 md:overflow-y-auto">
-
-        <div @click.away="open = false" class="relative" x-data="{ open: false }">
-            <button @click="open = !open" class="flex w-full px-4 py-2 mt-2 text-sm font-semibold text-left rounded-sm md:block  focus:bg-gray-600 hover:bg-gray-600 active:bg-gray-600 focus:outline-none focus:shadow-outline ">
-                <p class="text-lg font-bold inline">{{ auth()->user()->name . " " . auth()->user()->apellido_paterno }}</p>
-                <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+    <div class="md:fixed md:w-64">
+        {{--  ENCABEZADO (LOGO e IMAGEN)  --}}
+        <div class="flex flex-row items-center justify-between flex-shrink-0 px-5 py-4">
+            <div class="flex gap-2 items-center">
+                <img
+                    width="70"
+                    src="https://www.ingenieria.unam.mx/unica/img/logo_unicaA.png"
+                    alt="Logo"
+                    class="filter brightness-0 invert"
+                >
+                <a
+                    href="/"
+                    class="text-lg font-semibold tracking-widest text-white uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
+                    {{ env('APP_NAME') }}
+                </a>
+            </div>
+            <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
+                <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
+                    <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                    <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
             </button>
+        </div>
+
+        {{--  OPCIONES  --}}
+        <nav :class="{'block': open, 'hidden': !open}" class="flex-grow px-4 md:block pb-4 md:pb-0 md:overflow-y-auto">
+
+            <div @click.away="open = false" class="relative" x-data="{ open: false }">
+                <button @click="open = !open" class="flex w-full px-4 py-2 mt-2 text-sm font-semibold text-left rounded-sm md:block  focus:bg-gray-600 hover:bg-gray-600 active:bg-gray-600 focus:outline-none focus:shadow-outline ">
+                    <p class="text-lg font-bold inline">{{ auth()->user()->name . " " . auth()->user()->apellido_paterno }}</p>
+                    <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
 
             <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95"
                  class="absolute right-0 w-full origin-top-right rounded-md shadow-lg">
@@ -46,20 +47,21 @@
                         method="POST" action="{{ route('logout') }}">
                         @csrf
 
-                        <button
-                            class="flex gap-2 items-center w-full px-4 py-2 "
-                            onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-                            </svg>
+                            <button
+                                class="flex gap-2 items-center w-full px-4 py-2 "
+                                onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                                </svg>
 
-                            {{ __('Cerrar Sesión') }}
-                        </button>
-                    </form>
+                                {{ __('Cerrar Sesión') }}
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        {{ $slot }}
-    </nav>
+            {{ $slot }}
+        </nav>
+    </div>
 </div>

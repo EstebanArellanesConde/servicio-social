@@ -32,7 +32,7 @@
                     <div class="grid grid-flow-col gap-2 w-full">
                         <button
                             type="button"
-                            class="btn-accion text-white bg-green-500 hover:bg-green-600 font-medium rounded-lg text-sm px-2.5 py-1.5"
+                            class="btn-accion text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-2.5 py-1.5"
                             onclick="aceptar('{{$alumno->id}}', '{{$alumno->user->apellido_paterno}} {{ $alumno->user->apellido_materno }} {{ $alumno->user->name }}')"
                         >
                             Aceptar

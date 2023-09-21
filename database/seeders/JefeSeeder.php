@@ -17,9 +17,9 @@ class JefeSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([ //1
-            'name' => 'Bety',
-            'apellido_paterno' => '',
-            'apellido_materno' => '',
+            'name' => 'Beatriz',
+            'apellido_paterno' => 'Barrera',
+            'apellido_materno' => 'Hernández',
             'email' => 'bety@ingenieria.unam.edu',
             'email_verified_at' => now(),
             'created_at' => now(),
