@@ -177,6 +177,7 @@ class ExportController extends Controller{
         $filterHeadings = [
             // valores por defecto de columnas
             'ID' => $this->allowHeadings['ID'],
+            'Nombre' => 'users.name',
         ];
 
         foreach($userData as $key => $value){
