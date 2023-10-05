@@ -53,6 +53,8 @@ class RegistrarAlumno extends Component
      *
      * @return array
      */
+
+
     protected function messages(){
         return [
             'aviso_de_privacidad' => [

@@ -13,24 +13,23 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('historico_estado', function (Blueprint $table) {
+        Schema::create('historico_estado_alumno', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('fecha_estado');
-            $table->integer('estado_id')->unsigned();
-            $table->foreign('estado_id')->references('id')->on('estados');
-            $table->unsignedBigInteger('departamento_id');
-            $table->foreign('departamento_id')
+            $table->dateTime('fecha_estado');
+
+            $table->unsignedBigInteger('estado_id');
+            $table->foreign('estado_id')
                 ->references('id')
-                ->on('departamentos')
-                ->onDelete('cascade')
+                ->on('estado_alumno')
+                ->onDelete('restrict')
                 ->onUpdate('cascade');
+
             $table->unsignedBigInteger('alumno_id');
             $table->foreign('alumno_id')
                 ->references('id')
                 ->on('alumnos')
-                ->onDelete('cascade')
+                ->onDelete('restrict')
                 ->onUpdate('cascade');
-            $table->timestamps();
         });
     }
 
@@ -41,6 +40,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('historico_estado');
+        Schema::dropIfExists('historico_estado_alumno');
     }
 };

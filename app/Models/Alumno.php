@@ -3,10 +3,13 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\ModelStatus\HasStatuses;
 use Spatie\Permission\Traits\HasRoles;
 
 class Alumno extends Authenticatable implements MustVerifyEmail
@@ -18,6 +21,7 @@ class Alumno extends Authenticatable implements MustVerifyEmail
      *
      * @var array<int, string>
      */
+
     protected $fillable = [
         'user_id',
         'numero_cuenta',
@@ -40,8 +44,9 @@ class Alumno extends Authenticatable implements MustVerifyEmail
         'pertenencia_unica',
 
         'departamento_id',
-        'estado_id',
         'domicilio_id',
+        'estado_id',
+        'fecha_estado',
     ];
 
     /**
@@ -67,10 +72,6 @@ class Alumno extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(User::class);
     }
 
-    public function estado(){
-        return $this->belongsTo(Estado::class);
-    }
-
     public function escuela(){
         return $this->belongsTo(Escuela::class);
     }
@@ -81,5 +82,90 @@ class Alumno extends Authenticatable implements MustVerifyEmail
 
     public function domicilio(){
         return $this->belongsTo(Domicilio::class);
+    }
+
+    public function estado(){
+        return $this->hasOne(EstadoAlumno::class, 'id', 'estado_id');
+    }
+
+    public function estados(){
+        return $this->hasMany(HistoricoEstadoAlumno::class);
+    }
+
+    public function domiclio(){
+        return $this->hasOne(Domicilio::class);
+    }
+
+    protected function direccion(): Attribute
+    {
+        $calle = $this->domicilio->calle;
+        $numeroExterno = $this->domicilio->numero_externo;
+        $codigoPostal = $this->domicilio->colonia->codigo_postal;
+        $colonia = $this->domicilio->colonia->nombre;
+        $municipio = $this->domicilio->colonia->municipio->nombre;
+        $estado = $this->domicilio->colonia->municipio->estado->nombre;
+        return Attribute::make(
+            get: fn (mixed $value, array $attributes) => $calle . ' ' . $numeroExterno . ' ' . $codigoPostal . ' ' .
+                                                         $colonia . ' ' . $municipio . ' ' . $estado
+        );
+    }
+
+    public function setEstado(string $estado)
+    {
+        DB::beginTransaction();
+        try{
+            // verificar estado
+            if (! $this->isEstadoValido($estado)) throw new \ValueError("Estado " . $estado . " invalido");
+
+            // Asignar nuevo id
+            $estadoId = $this->getEstadoId($estado);
+            $this->estado_id = $estadoId;
+            // Actualizar fecha
+            $fechaEstadoNueva = now();
+            $this->fecha_estado = $fechaEstadoNueva;
+
+
+            // crear nuevo historico
+            $nuevoHistorico = new HistoricoEstadoAlumno;
+            $nuevoHistorico->alumno_id = $this->id;
+            $nuevoHistorico->estado_id = $this->estado_id;
+            $nuevoHistorico->fecha_estado = $fechaEstadoNueva;
+
+            // guardar alumno e historico
+            $this->save();
+            $nuevoHistorico->save();
+            DB::commit();
+        } catch (\Exception $e){
+            DB::rollBack();
+            dd($e->getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getEstado(){
+        return $this->estado->nombre;
+    }
+
+    public function hasEstado(string $estado){
+        if (! $this->isEstadoValido($estado)){
+            return false;
+        } else if ($this->getEstado() === strtoupper($estado)){
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public function getEstadoId(string $estadoString)
+    {
+        return EstadoAlumno::where('nombre', '=', strtoupper($estadoString))->first()->id;
+    }
+
+    public function isEstadoValido($estado): bool
+    {
+        return EstadoAlumno::where('nombre', '=', strtoupper($estado))->exists();
     }
 }

@@ -23,12 +23,12 @@ class ColoniaSeeder extends Seeder
                 'nombre' => $estado,
             ]);
             foreach ($municipios as $municipio => $colonias){
-                $municipioId = DB::table('municipios')->insertGetId([
+                $municipioId = DB::table('municipio')->insertGetId([
                     'nombre' => $municipio,
                     'estado_id' => $estadoId,
                 ]);
                 foreach ($colonias as $colonia){
-                    DB::table('colonias')->insert([
+                    DB::table('colonia')->insert([
                         'municipio_id' => $municipioId,
                         'nombre' => $colonia['colonia'],
                         'codigo_postal' => $colonia['codigo_postal'],

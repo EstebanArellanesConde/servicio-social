@@ -15,24 +15,29 @@ class EstadoSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('estados')->insert([ //1
-            'estado' => 'ACEPTADO',
-            'fecha_estado' => now(),
+        DB::table('estado_alumno')->insert([ //1
+            'nombre' => 'ACEPTADO',
+            'activo' => true,
         ]);
 
-        DB::table('estados')->insert([ //2
-            'estado' => 'RECHAZO',
-            'fecha_estado' => now(),
+        DB::table('estado_alumno')->insert([ //2
+            'nombre' => 'RECHAZO',
+            'activo' => true,
         ]);
 
-        DB::table('estados')->insert([ //3
-            'estado' => 'PENDIENTE',
-            'fecha_estado' => now(),
+        DB::table('estado_alumno')->insert([ //3
+            'nombre' => 'PENDIENTE',
+            'activo' => true,
         ]);
 
-        DB::table('estados')->insert([ //4
-            'estado' => 'FINALIZADO',
-            'fecha_estado' => now(),
+        DB::table('estado_alumno')->insert([ //4
+            'nombre' => 'FINALIZADO',
+            'activo' => true,
+        ]);
+
+        DB::table('estado_alumno')->insert([ //4
+            'nombre' => 'ACEPTADO SIN DATOS',
+            'activo' => true,
         ]);
     }
 }

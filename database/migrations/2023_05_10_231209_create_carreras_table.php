@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('carreras', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('division_id')->nullable()->references('id')->on('divisiones')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->string('clave_carrera')->nullable();
+            $table->string('clave_carrera')->unique();
             $table->string('carrera')->unique();
+            $table->foreignId('division_id')->references('id')->on('divisiones')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

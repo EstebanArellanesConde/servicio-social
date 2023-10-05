@@ -16,13 +16,34 @@
                             @include('profile.partials.update-password-form')
                         </div>
                     </div>
-                @else
+                @endrole
+                @if(auth()->user()->alumno->hasEstado("ACEPTADO SIN DATOS"))
+                    @role('alumno')
+                    {{-- ALERTA --}}
+                    <x-alert type="warn">
+                        <x-slot:title>
+                            Ingresa tus datos
+                        </x-slot:title>
+                        <x-slot:message>
+                            Para continuar con el proceso del servicio social, es importante que ingreses tu
+                            domicilio y las fechas dadas por tu encargado de servicio social
+                        </x-slot:message>
+                        <span class="text-sm italic">Nota: No es necesario que actualices tu contraseña</span>
+                    </x-alert>
+                    <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                        <div class="">
+                            <livewire:alumno.formulario-domicilio>
+
+                            </livewire:alumno.formulario-domicilio>
+                        </div>
+                    </div>
+                    @endrole
+                @endif
                     <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                         <div class="max-w-xl">
                             @include('profile.partials.update-password-form')
                         </div>
                     </div>
-                @endrole
             </div>
         </div>
     </div>

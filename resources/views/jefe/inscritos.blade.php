@@ -38,13 +38,6 @@
                             </button>
                             <button
                                 type="button"
-                                class="btn-accion text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-2.5 py-1.5"
-                                onclick="aceptar('{{$alumno->id}}', '{{$alumno->user->apellido_paterno}} {{ $alumno->user->apellido_materno }} {{ $alumno->user->name }}')"
-                            >
-                                Aceptar
-                            </button>
-                            <button
-                                type="button"
                                 class="text-white bg-amber-500 hover:bg-amber-600 font-medium rounded-lg text-sm px-4 py-1.5 showModal"
                                 data-modal-id="modal_reporte_{{ $alumno->id }}"
                             >
