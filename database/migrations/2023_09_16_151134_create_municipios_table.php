@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('municipios', function (Blueprint $table) {
             $table->id();
-            $table->string('municipio');
-            $table->string('estado');
+            $table->string('nombre');
+            $table->unsignedBigInteger('estado_id');
+            $table->foreign('estado_id')
+                ->references('id')
+                ->on('estado_mexico')
+                ->onDelete('restrict')
+                ->onUpdate('cascade');
         });
     }
 

@@ -17,15 +17,14 @@ return new class extends Migration
             $table->unsignedMediumInteger('numero_externo');
             $table->unsignedMediumInteger('numero_interno')->nullable();
 
-            $table->unsignedBigInteger('id_colonia');
-            $table->foreign('id_colonia')
+            $table->unsignedBigInteger('colonia_id');
+            $table->foreign('colonia_id')
                 ->references('id')
                 ->on('colonias')
-                ->onDelete('cascade')
+                ->onDelete('restrict')
                 ->onUpdate('cascade');
 
             $table->timestamps();
-
         });
     }
 

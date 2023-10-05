@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             // agregar zero fill
             $table->unsignedInteger('codigo_postal');
-            $table->string('colonia');
-            $table->unsignedBigInteger('id_municipio');
-            $table->foreign('id_municipio')
+            $table->string('nombre');
+            $table->unsignedBigInteger('municipio_id');
+            $table->foreign('municipio_id')
                 ->references('id')
                 ->on('municipios')
-                ->onDelete('cascade')
+                ->onDelete('restrict')
                 ->onUpdate('cascade');
 
         });
