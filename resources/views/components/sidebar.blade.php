@@ -25,7 +25,7 @@
         </div>
 
         {{--  OPCIONES  --}}
-        <nav :class="{'block': open, 'hidden': !open}" class="flex-grow px-4 md:block pb-4 md:pb-0 md:overflow-y-auto">
+        <nav :class="{'block': open, 'hidden': !open}" class="flex-grow px-4 md:block pb-4 md:pb-0">
 
             <div @click.away="open = false" class="relative" x-data="{ open: false }">
                 <button @click="open = !open" class="flex w-full px-4 py-2 mt-2 text-sm font-semibold text-left rounded-sm md:block  focus:bg-gray-600 hover:bg-gray-600 active:bg-gray-600 focus:outline-none focus:shadow-outline ">
