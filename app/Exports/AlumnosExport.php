@@ -113,8 +113,9 @@ class AlumnosExport implements FromQuery, Responsable, WithHeadings
                 return $query;
             })
             ->select(array_values($this->queryColumns))
-
+            ->selectRaw("(CASE WHEN is_unam = true THEN 'UNAM' ELSE 'EXTERNO' END) as procedencia")
         ;
+
 
         return $alumnos;
     }
@@ -136,6 +137,7 @@ class AlumnosExport implements FromQuery, Responsable, WithHeadings
         } else {
             // en caso de que no este vacia colocar las columnas seleccionadas
             $this->heading = array_keys($heading);
+            $this->heading[] = 'Procedencia';
         }
     }
     public function headings(): array

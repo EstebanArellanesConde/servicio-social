@@ -66,6 +66,9 @@
             <table class="table" id="TablaAlumnos">
             <thead class="table__campos">
                 <tr>
+                        <th>
+                            ID
+                        </th>
                     @foreach($columnas as $columna)
                         <th>
                             {{ $columna }}
@@ -74,14 +77,23 @@
                 </tr>
             </thead>
             <tbody class="table__registros">
-                @foreach($alumnos->toArray() as $alumno)
+                @php
+                    $rowCounter = 1;
+                @endphp
+                @foreach($alumnos as $alumno)
                     <tr>
-                        @foreach($alumno as $valor)
+                            <td>
+                                {{ $rowCounter }}
+                            </td>
+                        @foreach($alumno->toArray() as $clave => $valor)
                             <td>
                                 {{ $valor }}
                             </td>
                         @endforeach
                     </tr>
+                    @php
+                        $rowCounter++;
+                    @endphp
                 @endforeach
             </tbody>
             </table>
