@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Jefe;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,8 @@ class JefeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([ //1
+        // DSA
+        $jefeDSA = User::create([
             'name' => 'Beatriz',
             'apellido_paterno' => 'Barrera',
             'apellido_materno' => 'Hernández',
@@ -24,19 +26,19 @@ class JefeSeeder extends Seeder
             'email_verified_at' => now(),
             'created_at' => now(),
             'updated_at' => now(),
-            'password' => Hash::make('prueba123456789')
+            'password' => Hash::make('password')
         ]);
 
-        $user_1 = User::find(1);
-
-        DB::table('jefes')->insert([
-            'user_id' => $user_1->id,
+        Jefe::create([
+            'user_id' => $jefeDSA->id,
             'titulo' => 'Ing',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        $user_1->assignRole('jefe', 'jefe_dsa');
+        $jefeDSA->assignRole('jefe', 'dsa');
 
-        DB::table('users')->insert([ //2
+        $jefeDID = User::create([ //2
             'name' => 'Chary',
             'apellido_paterno' => 'Barragan',
             'apellido_materno' => 'Paz',
@@ -44,37 +46,38 @@ class JefeSeeder extends Seeder
             'email_verified_at' => now(),
             'created_at' => now(),
             'updated_at' => now(),
-            'password' => Hash::make('prueba123456789')
+            'password' => Hash::make('password')
         ]);
 
-        $user_2 = User::find(2);
-        DB::table('jefes')->insert([
-            'user_id' => $user_2->id,
+        Jefe::create([
+            'user_id' => $jefeDID->id,
             'titulo' => 'Ing',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
-        $user_2->assignRole('jefe');
+        $jefeDID->assignRole('jefe');
 
-        DB::table('users')->insert([ //3
+        $jefeRedesSeguridad = User::create([ //3
             'name' => 'Rafael',
             'apellido_paterno' => 'Lopez',
             'apellido_materno' => 'Perez',
-            'email' => 'rafa@gmail.com',
+            'email' => 'rafael@ingenieria.unam.edu',
             'email_verified_at' => now(),
             'created_at' => now(),
             'updated_at' => now(),
-            'password' => Hash::make('prueba123456789')
+            'password' => Hash::make('password')
         ]);
 
-        $user_3 = User::find(3);
-
-        DB::table('jefes')->insert([
-            'user_id' => $user_3->id,
+        Jefe::create([
+            'user_id' => $jefeRedesSeguridad->id,
             'titulo' => 'Ing',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        $user_3->assignRole('jefe');
+        $jefeRedesSeguridad->assignRole('jefe');
 
-        DB::table('users')->insert([ //4
+        $coordinador = User::create([ //4
             'name' => 'Ibeth Graciela',
             'apellido_paterno' => 'Flores',
             'apellido_materno' => 'Muñoz',
@@ -82,18 +85,36 @@ class JefeSeeder extends Seeder
             'email_verified_at' => now(),
             'created_at' => now(),
             'updated_at' => now(),
-            'password' => Hash::make('ibeth_flores')
+            'password' => Hash::make('password')
         ]);
 
-        $user_4 = User::find(4);
-
-        DB::table('jefes')->insert([
-            'user_id' => $user_4->id,
+        Jefe::create([
+            'user_id' => $coordinador->id,
             'titulo' => 'Ing',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        $user_4->assignRole('jefe', 'coordinador');
+        $coordinador->assignRole('coordinador');
 
+        $jefeSalas = User::create([ // 5
+            'name' => 'Cruz Sergio',
+            'apellido_paterno' => 'Aguilar',
+            'apellido_materno' => 'Díaz',
+            'email' => 'cruz.aguilar@ingenieria.unam.edu',
+            'email_verified_at' => now(),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'password' => Hash::make('password')
+        ]);
 
+        Jefe::create([
+            'user_id' => $jefeSalas->id,
+            'titulo' => 'Ing',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $jefeSalas->assignRole('jefe');
     }
 }

@@ -45,7 +45,7 @@
             Finalizados
         </x-side-bar-link>
         {{-- ESTADISTICAS - unicamente accesible por jefe de dsa y coordinador   --}}
-        @hasanyrole('jefe_dsa|coordinador')
+        @hasanyrole('dsa|coordinador')
             <p class="font-bold text-sm text-gray-400 mt-4 px-4">
                 Administrador
             </p>

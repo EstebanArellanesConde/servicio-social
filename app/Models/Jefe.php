@@ -13,6 +13,7 @@ class Jefe extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
+    protected $table = 'jefes';
     /**
      * The attributes that are mass assignable.
      *

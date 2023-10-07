@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Departamento;
+use App\Models\Jefe;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,39 +17,72 @@ class DepartamentoSeeder extends Seeder
      */
     public function run()
     {
+        // obtener jefes
+        $userDSAId = User::where('email', '=', 'bety@ingenieria.unam.edu')->first()->id;
+        $jefeDSA = Jefe::where('user_id', '=', $userDSAId)->first();
+
+        $userDIDId = User::where('email', '=', 'chary.barragan@ingenieria.unam.edu')->first()->id;
+        $jefeDID = Jefe::where('user_id', '=', $userDIDId)->first();
+
+        $userDSCId = User::where('email', '=', 'rafael@ingenieria.unam.edu')->first()->id;
+        $jefeDSC = Jefe::where('user_id', '=', $userDSCId)->first();
+
+        $userSalasId = User::where('email', '=', 'cruz.aguilar@ingenieria.unam.edu')->first()->id;
+        $jefeSalas = Jefe::where('user_id', '=', $userSalasId)->first();
+
+
         // DSA 1
-        DB::table('departamentos')->insert([
+        Departamento::create([
             'departamento' => 'Departamento de Servicios Académicos',
             'abreviatura_departamento' => 'DSA',
-            'jefe_id' => 1,
+            'jefe_id' => $jefeDSA->id,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         // DID 2
-        DB::table('departamentos')->insert([
+        Departamento::create([
             'departamento' => 'Departamento de Investigación y Desarrollo',
             'abreviatura_departamento' => 'DID',
-            'jefe_id' => 2,
+            'jefe_id' => $jefeDID->id,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         // DSC 3
-        DB::table('departamentos')->insert([
+        Departamento::create([
             'departamento' => 'Departamento de Seguridad en Cómputo',
             'abreviatura_departamento' => 'DSC',
-            'jefe_id' => 3,
+            'jefe_id' => $jefeDSC->id,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         // DROS 4
-        DB::table('departamentos')->insert([
+        Departamento::create([
             'departamento' => 'Departamento de Redes y Operación de Servidores',
             'abreviatura_departamento' => 'DROS',
-            'jefe_id' => 3,
+            'jefe_id' => $jefeDSC->id,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         // Salas 5
-        DB::table('departamentos')->insert([
+        Departamento::create([
             'departamento' => 'Salas',
             'abreviatura_departamento' => 'Salas',
-            'jefe_id' => 4,
+            'jefe_id' => $jefeSalas->id,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // PC Puma
+        Departamento::create([
+            'departamento' => 'PC PUMA',
+            'abreviatura_departamento' => 'PCPUMA',
+            'jefe_id' => $jefeDSA->id,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }
