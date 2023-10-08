@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('carreras', function (Blueprint $table) {
+        Schema::create('municipio', function (Blueprint $table) {
             $table->id();
-            $table->string('clave_carrera')->unique();
-            $table->string('carrera')->unique();
-            $table->foreignId('division_id')->references('id')->on('divisiones')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->timestamps();
+            $table->string('nombre');
+            $table->unsignedBigInteger('estado_id');
+            $table->foreign('estado_id')
+                ->references('id')
+                ->on('estado_mexico')
+                ->onDelete('restrict')
+                ->onUpdate('cascade');
         });
     }
 
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('carreras');
+        Schema::dropIfExists('municipio');
     }
 };

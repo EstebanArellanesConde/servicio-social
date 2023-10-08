@@ -19,17 +19,19 @@ class ColoniaSeeder extends Seeder
         $estados = json_decode($file, true);
 
         foreach ($estados as $estado => $municipios){
+            $estadoId = DB::table('estado_mexico')->insertGetId([
+                'nombre' => $estado,
+            ]);
             foreach ($municipios as $municipio => $colonias){
-                DB::table('municipios')->insert([
-                    'estado' => $estado,
-                    'municipio' => $municipio
+                $municipioId = DB::table('municipio')->insertGetId([
+                    'nombre' => $municipio,
+                    'estado_id' => $estadoId,
                 ]);
-                $municipioId = DB::table('municipios')->where('municipio', '=', $municipio)->first('id')->id;
                 foreach ($colonias as $colonia){
-                    DB::table('colonias')->insert([
-                        'id_municipio' => $municipioId,
+                    DB::table('colonia')->insert([
+                        'municipio_id' => $municipioId,
+                        'nombre' => $colonia['colonia'],
                         'codigo_postal' => $colonia['codigo_postal'],
-                        'colonia' => $colonia['colonia'],
                     ]);
                 }
             }

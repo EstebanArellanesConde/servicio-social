@@ -46,7 +46,8 @@ class AlumnoFactory extends Factory
             'escuela_id' => $this->faker->numberBetween(1, 119),
             'carrera_id' => $this->faker->optional(0.7)->numberBetween(1,16),
             'departamento_id' => $departamento_id,
-            'estado_id' => $this->faker->numberBetween(1,4)
+            'estado_id' => $this->faker->numberBetween(1,4),
+            'fecha_estado' => now(),
         ];
     }
 }

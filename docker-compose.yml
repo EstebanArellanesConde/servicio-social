@@ -29,19 +29,19 @@ services:
             - mailpit
             - selenium
     pgsql:
-        image: postgres:15
+        image: 'postgres:15'
         container_name: pgsql
         restart: unless-stopped
         expose:
             - 5432
         ports:
-            - ${DB_PORT:-5432}:5432
+            - '${DB_PORT:-5432}:5432'
         volumes:
-            - sail-psql:/docker-entrypoint-initdb.d/
+            - 'sail-psql:/docker-entrypoint-initdb.d/'
         environment:
-            POSTGRES_USER: ${DB_USERNAME:-homestead}
-            POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
-            POSTGRES_DB: ${DB_DATABASE:-homestead}
+            POSTGRES_USER: '${DB_USERNAME:-homestead}'
+            POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+            POSTGRES_DB: '${DB_DATABASE:-homestead}'
         networks:
             - sail
     pgadmin:
@@ -49,12 +49,12 @@ services:
         container_name: pgadmin
         restart: always
         ports:
-            - ${PGADMIN_PORT_DB:-8080}:80
+            - '${PGADMIN_PORT_DB:-8080}:80'
         depends_on:
             - pgsql
         environment:
-            PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
-            PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+            PGADMIN_DEFAULT_EMAIL: '${PGADMIN_EMAIL}'
+            PGADMIN_DEFAULT_PASSWORD: '${PGADMIN_PASSWORD}'
         networks:
             - sail
     redis:
@@ -115,4 +115,6 @@ volumes:
     sail-redis:
         driver: local
     sail-meilisearch:
+        driver: local
+    sail-pgsql:
         driver: local

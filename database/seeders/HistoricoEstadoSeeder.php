@@ -15,10 +15,9 @@ class HistoricoEstadoSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('historico_estado')->insert([
+        DB::table('historico_estado_alumno')->insert([
             'fecha_estado' => now(),
             'estado_id' => 1,
-            'departamento_id' => 1,
             'alumno_id' => 1
         ]);
 

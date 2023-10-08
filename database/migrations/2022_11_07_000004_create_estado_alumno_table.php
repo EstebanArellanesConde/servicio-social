@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('estados', function (Blueprint $table) {
+        Schema::create('estado_alumno', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('estado');
-            $table->date('fecha_estado');
+            $table->string('nombre');
+            $table->text('descripcion')->nullable();
+            $table->boolean('activo');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estado');
+        Schema::dropIfExists('estado_alumno');
     }
 };

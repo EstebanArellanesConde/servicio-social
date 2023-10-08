@@ -54,7 +54,9 @@ class AlumnoSeeder extends Seeder
             'fecha_fin' => '2023-01-01',
             'pertenencia_unica' => 1,
             'departamento_id' => 2,
-            'estado_id' => 1,
+            'fecha_estado' => now(),
+            'estado_id' => 5,
+            'domicilio_id' => 1,
         ]);
 
         User::find($alumno_1->id)->assignRole('alumno');
