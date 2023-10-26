@@ -76,6 +76,10 @@ class Alumno extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Escuela::class);
     }
 
+    public function carrera(){
+        return $this->belongsTo(Carrera::class);
+    }
+
     public function departamento(){
         return $this->belongsTo(Departamento::class);
     }

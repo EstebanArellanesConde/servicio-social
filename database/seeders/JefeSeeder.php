@@ -39,8 +39,8 @@ class JefeSeeder extends Seeder
         $jefeDSA->assignRole('jefe', 'dsa');
 
         $jefeDID = User::create([ //2
-            'name' => 'Chary',
-            'apellido_paterno' => 'Barragan',
+            'name' => 'María del Rosario',
+            'apellido_paterno' => 'Barragán',
             'apellido_materno' => 'Paz',
             'email' => 'chary.barragan@ingenieria.unam.edu',
             'email_verified_at' => now(),
@@ -51,7 +51,7 @@ class JefeSeeder extends Seeder
 
         Jefe::create([
             'user_id' => $jefeDID->id,
-            'titulo' => 'Ing',
+            'titulo' => 'M. E.',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

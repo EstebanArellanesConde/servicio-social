@@ -73,6 +73,51 @@ class ExportController extends Controller{
         }
     }
 
+    public function formatFecha($fecha){
+        $fechaInicioNoFormat = Carbon::create($fecha);
+        return $fechaInicioNoFormat->day . ' de ' .
+               $fechaInicioNoFormat->monthName . ' de ' .
+               $fechaInicioNoFormat->year;
+    }
+
+    public function cartaAceptacion($id){
+        $alumno = Alumno::find($id);
+        $nombreCompleto = $alumno->user->name . ' ' .
+                          $alumno->user->apellido_paterno . ' ' .
+                          $alumno->user->apellido_materno;
+        $numeroCuenta = $alumno->numero_cuenta;
+        $carrera = $alumno->carrera->carrera;
+        $duracionMeses = $alumno->duracion_servicio;
+        $fechaInicio = $this->formatFecha($alumno->fecha_inicio);
+        $fechaFin = $this->formatFecha($alumno->fecha_fin);
+        $horasSemanales = $alumno->duracion_servicio == 6 ? 20 : 10;
+        $horaInicio = Carbon::create($alumno->hora_inicio)->format('H:i');
+        $horaFin = Carbon::create($alumno->hora_fin)->format('H:i');
+        $jefe = $alumno->departamento->jefe;
+        $jefeDepartamento = $jefe->titulo . ' ' .
+                            $jefe->user->name . ' ' .
+                            $jefe->user->apellido_paterno . ' ' .
+                            $jefe->user->apellido_materno;
+
+        $fechaHoy = $this->formatFecha(now());
+
+        $pdf = PDF::loadView('exports.jefe.pdf.carta_aceptacion',[
+            'nombreCompleto' => $nombreCompleto,
+            'numeroCuenta' => $numeroCuenta,
+            'carrera' => $carrera,
+            'duracionMeses' => $duracionMeses,
+            'fechaInicio' => $fechaInicio,
+            'fechaFin' => $fechaFin,
+            'horasSemanales' => $horasSemanales,
+            'horaInicio' => $horaInicio,
+            'horaFin' => $horaFin,
+            'jefeDepartamento' => $jefeDepartamento,
+            'fechaHoy' => $fechaHoy,
+        ])
+            ->setPaper('letter');
+        return $pdf->stream();
+    }
+
     public function store(Request $request){
         // almacenamos todos los datos
         $data = $request->all();

@@ -9,4 +9,8 @@ class Departamento extends Model
 {
     use HasFactory;
     protected $table = 'departamentos';
+
+    public function jefe(){
+        return $this->belongsTo(Jefe::class);
+    }
 }

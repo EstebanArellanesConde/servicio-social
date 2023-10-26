@@ -175,8 +175,10 @@ class RegistrarAlumno extends Component
                 'hora_fin' => $filteredData['hora_fin'],
                 'pertenencia_unica' => $filteredData["pertenencia_unica"],
                 'departamento_id' => $filteredData['departamento_id'],
-                'estado_id' => "3", // estado pendiente
+                'fecha_estado' => now(),
+                'estado_id' => 3,
             ]);
+
 
             DB::commit();
             $user->assignRole('alumno');
