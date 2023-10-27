@@ -36,7 +36,12 @@
             <tr>
                 <td rowspan="3">
                     <picture>
-                        <img class="unica_logo" src="data:image/png;base64,<?php echo base64_encode(file_get_contents(base_path('public/assets/img/unica.png'))); ?>" width="250" height="120">
+                        <img
+                            class="unica_logo"
+                            src="data:image/png;base64,<?php echo base64_encode(file_get_contents(base_path('public/assets/img/unica.png'))); ?>"
+                            width="250"
+                            height="120"
+                        >
                     </picture>
                 </td>
 
@@ -67,7 +72,7 @@
             <thead class="table__campos">
                 <tr>
                         <th>
-                            ID
+
                         </th>
                     @foreach($columnas as $columna)
                         <th>
@@ -86,9 +91,24 @@
                                 {{ $rowCounter }}
                             </td>
                         @foreach($alumno->toArray() as $clave => $valor)
-                            <td>
-                                {{ $valor }}
-                            </td>
+                            @if(strtolower($clave) === "nombre")
+                                <td style="text-align: left; max-width: 12em">
+                                    {{ $valor }}
+                                </td>
+                            @elseif(strtolower($clave) === "numero_cuenta" && $valor == null)
+                                <td>
+                                    S/N
+                                </td>
+                            @elseif($valor == null)
+                                <td>
+                                    S/D
+                                </td>
+                            @else
+                                <td>
+                                    {{ $valor }}
+                                </td>
+                            @endif
+
                         @endforeach
                     </tr>
                     @php

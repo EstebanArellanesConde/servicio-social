@@ -26,21 +26,23 @@ class ExportController extends Controller{
     {
         $this->columnasPermitidas = [
             'ID' => 'alumnos.id',
-            'Curp' => 'curp',
+            'Nombre' => "CONCAT(users.apellido_paterno, ' ', users.apellido_materno, ' ', users.name) as nombre",
+            'Departamento' => 'departamentos.abreviatura_departamento',
+            'Procedencia' => "(CASE WHEN escuelas.is_unam = true THEN 'UNAM' ELSE 'EXTERNO' END) as procedencia",
+            'Curp' => 'alumnos.curp',
             'Correo Electrónico' => 'users.email',
-            'Fecha Nacimiento' => 'fecha_nacimiento',
+            'Fecha Nacimiento' => 'alumnos.fecha_nacimiento',
             'Sexo' => 'sexo',
-            'Teléfono Celular' => 'telefono_celular',
-            'Teléfono Alternativo' => 'telefono_alternativo',
-            'Número Cuenta' => 'numero_cuenta',
-            'Créditos' => 'creditos_pagados',
-            'Avance' => 'avance_porcentaje',
-            'Promedio' => 'promedio',
+            'Teléfono Celular' => 'alumnos.telefono_celular',
+            'Teléfono Alternativo' => 'alumnos.telefono_alternativo',
+            'Número Cuenta' => 'alumnos.numero_cuenta',
+            'Créditos' => 'alumnos.creditos_pagados',
+            'Avance' => 'alumnos.avance_porcentaje',
+            'Promedio' => 'alumnos.promedio',
             'Escuela' => 'escuelas.escuela',
             'Fecha Inicio' => 'alumnos.fecha_inicio',
             'Fecha Fin' => 'alumnos.fecha_fin',
             'Carrera' => 'carreras.carrera',
-            'Departamento' => 'abreviatura_departamento',
         ];
 
         $this->filtrosPermitidos = [
@@ -59,10 +61,9 @@ class ExportController extends Controller{
         ];
 
         $this->columnasDefault = [
-            'Apellido Paterno' => 'users.apellido_paterno',
-            'Apellido Materno' => 'users.apellido_materno',
-            'Nombre' => 'users.name',
-            'Departamento' => 'abreviatura_departamento',
+            'Nombre' => $this->columnasPermitidas['Nombre'],
+            'Procedencia' => $this->columnasPermitidas['Procedencia'],
+            'Departamento' => $this->columnasPermitidas['Departamento'],
         ];
 
         // obtener todos los departamentos y agregarlo como filtro

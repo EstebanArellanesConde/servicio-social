@@ -151,10 +151,6 @@
                             <x-input-label for="check_promedio" :value="__('Promedio')"/>
                         </div>
                         <div class="{{ $checkboxContainerClasses }}">
-                            <x-checkbox name="procedencia" class="{{ $checkboxClasses }}" id="check_procedencia"/>
-                            <x-input-label for="check_procedencia" :value="__('Procedencia')"/>
-                        </div>
-                        <div class="{{ $checkboxContainerClasses }}">
                             <x-checkbox name="escuela" class="{{ $checkboxClasses }}" id="check_escuela" checked/>
                             <x-input-label for="check_escuela" :value="__('Escuela')"/>
                         </div>
