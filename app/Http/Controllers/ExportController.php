@@ -16,17 +16,15 @@ use function Pest\Laravel\instance;
 
 class ExportController extends Controller{
 
-    public $allowHeadings;
-
-    public $filtros;
-    public $camposSeleccionados;
-    public $filtrosSeleccionados;
-    public $alumnosFiltrados;
+    public $columnasPermitidas;
+    public $filtrosPermitidos;
     public $nombreResponsable;
+    public $abreviaturaDepartamento;
+    public $columnasDefault;
 
     public function __construct()
     {
-        $this->allowHeadings = [
+        $this->columnasPermitidas = [
             'ID' => 'alumnos.id',
             'Curp' => 'curp',
             'Correo Electrónico' => 'users.email',
@@ -38,7 +36,6 @@ class ExportController extends Controller{
             'Créditos' => 'creditos_pagados',
             'Avance' => 'avance_porcentaje',
             'Promedio' => 'promedio',
-            'Procedencia' => 'is_unam',
             'Escuela' => 'escuelas.escuela',
             'Fecha Inicio' => 'alumnos.fecha_inicio',
             'Fecha Fin' => 'alumnos.fecha_fin',
@@ -46,7 +43,7 @@ class ExportController extends Controller{
             'Departamento' => 'abreviatura_departamento',
         ];
 
-        $this->filtros = [
+        $this->filtrosPermitidos = [
             'sexo' => [
                 'hombre' => null,
                 'mujer' => null,
@@ -61,19 +58,18 @@ class ExportController extends Controller{
 
         ];
 
+        $this->columnasDefault = [
+            'Apellido Paterno' => 'users.apellido_paterno',
+            'Apellido Materno' => 'users.apellido_materno',
+            'Nombre' => 'users.name',
+            'Departamento' => 'abreviatura_departamento',
+        ];
 
+        // obtener todos los departamentos y agregarlo como filtro
         $departamentos = Departamento::all()->pluck('abreviatura_departamento')->toArray();
-
         foreach ($departamentos as $departamento){
-            $this->filtros[] = $departamento;
+            $this->filtrosPermitidos[] = $departamento;
         }
-
-        $this->camposSeleccionados = [
-        ];
-        $this->filtrosSeleccionados = [
-        ];
-
-        $this->alumnosFiltrados = [];
     }
 
     public function store(Request $request){
@@ -81,26 +77,27 @@ class ExportController extends Controller{
         $data = $request->all();
         $defaultFilename='alumnos';
 
-        $nombreResponsable = auth()->user()->name . ' ' .
+        // Nombre completo del responsable
+        $this->nombreResponsable = auth()->user()->name . ' ' .
                              auth()->user()->apellido_paterno . ' ' .
                              auth()->user()->apellido_materno;
 
-        $jefeId = $this->getJefeByUserId(auth()->user()->id)
-                       ->id;
-        $abreviaturaDepartamento = $this->getDepartamentoByJefe($jefeId)
-                                        ->abreviatura_departamento;
 
-        $selectedHeadings = $this->getSelectedHeadings($data);
-        $selectedSexos = $this->getSelectedSexos($data);
-        $selectedDepartamentos = $this->getSelectedDepartamentos($data);
-        $selectedProcedencias = $this->getSelectedProcedencias($data);
 
-        $alumnos = new AlumnosExport($selectedHeadings);
+        $columnasSeleccionadas = $this->getSelectedColumnas($data);
+        $sexosSeleccionados = $this->getSelectedSexos($data);
+        $departamentosSeleccionados = $this->getSelectedDepartamentos($data);
+        $procedenciasSeleccionadas = $this->getSelectedProcedencias($data);
+
+        $alumnos = new AlumnosExport($columnasSeleccionadas);
+
+        $jefeId = $this->getJefeByUserId(auth()->user()->id)->id;
+        $this->abreviaturaDepartamento = $this->getDepartamentoByJefeId($jefeId)->abreviatura_departamento;
 
         $alumnos
-            ->forSexo($selectedSexos)
-            ->forDepartamento($selectedDepartamentos)
-            ->forProcedencia($selectedProcedencias);
+            ->forSexo($sexosSeleccionados)
+            ->forDepartamento($departamentosSeleccionados)
+            ->forProcedencia($procedenciasSeleccionadas);
 
 
         if($data['filetype'] === "pdf"){
@@ -109,12 +106,17 @@ class ExportController extends Controller{
                 [
                     'columnas' => $alumnos->heading,
                     'alumnos' => $alumnos->query()->get(),
-                    'nombreResponsable' => $nombreResponsable,
-                    'abreviaturaDepartamento' => $abreviaturaDepartamento,
+                    'nombreResponsable' => $this->nombreResponsable,
+                    'abreviaturaDepartamento' => $this->abreviaturaDepartamento,
                 ],
-            )
-                ->setPaper('letter', $data['orientacion'] === 'landscape' ? 'landscape' : 'portrait')
-            ;
+            )->setPaper('letter', $data['orientacion'] === 'landscape' ? 'landscape' : 'portrait');
+
+            /**
+             * Agregar footer con
+             * - Fecha
+             * - Numero de pagina
+             * - Codigo de departamento (control de calidad)
+             */
             $pdf->render();
             $canvas = $pdf->getCanvas();
             $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
@@ -139,6 +141,7 @@ class ExportController extends Controller{
                 $canvas->text($pageWidth - $codigoDocumentoWidth - 40, $pageHeight - 20, $codigoDocumento, $font, $size, $color);
             });
 
+            // abrir pdf en nueva pestaña
             return $pdf->stream();
         }
         else if (
@@ -158,7 +161,7 @@ class ExportController extends Controller{
         }
     }
 
-    public function getDepartamentoByJefe($jefeId){
+    public function getDepartamentoByJefeId($jefeId){
         return DB::table('jefes')
                 ->join('departamentos', 'jefes.id', '=', 'departamentos.jefe_id')
                 ->where('departamentos.jefe_id', '=', $jefeId)
@@ -173,22 +176,25 @@ class ExportController extends Controller{
     }
 
 
-    public function getSelectedHeadings($userData){
-        $filterHeadings = [
-            // valores por defecto de columnas
-            'ID' => $this->allowHeadings['ID'],
-        ];
+    /**
+     * Permite obtener los campos seleccionados por el
+     * usuario en el modal de exportar jefe
+     * @param $userData datos de la vista, contiene los campos seleccionados y filtros
+     * @return array
+     */
+    public function getSelectedColumnas($userData){
+        $filterColumnas = $this->columnasDefault;
 
         foreach($userData as $key => $value){
             $keyWithoutDashAndCapitalize = ucwords(str_replace('_', ' ', $key));
-            // Verificar si se puede aplicar como columna
-            if (in_array($keyWithoutDashAndCapitalize, array_keys($this->allowHeadings))){
+            // Verificar si se puede aplicar como columna a partir de las columnas permitidas
+            if (in_array($keyWithoutDashAndCapitalize, array_keys($this->columnasPermitidas))){
                 // agregar a las columnas seleccionadas por el usuario
-                $filterHeadings[$keyWithoutDashAndCapitalize] = $this->allowHeadings[$keyWithoutDashAndCapitalize];
+                $filterColumnas[$keyWithoutDashAndCapitalize] = $this->columnasPermitidas[$keyWithoutDashAndCapitalize];
             }
         }
 
-        return $filterHeadings;
+        return $filterColumnas;
     }
 
 
@@ -223,7 +229,7 @@ class ExportController extends Controller{
     }
 
     /**
-     * Obtiene si se seleccionado un filtro de procedencia
+     * Obtiene si se selecciono un filtro de procedencia
      * y los compara con los valores que si son posibles
      * @param $userData
      * @return array

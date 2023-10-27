@@ -74,25 +74,14 @@
 
             {{-- CAMPOS REQUERIDOS --}}
             <div x-data="{ open: false }" class="rounded-md shadow-md p-3">
-                <div class="flex justify-between">
+                <div x-on:click="open = !open" class="flex justify-between cursor-pointer">
                     <h2 class="text-lg">
                         Campos Requeridos
                     </h2>
-                    {{-- OPCIONES GENERALES --}}
-                    <fieldset class="flex gap-5 justify-end w-1/2">
-                        <div class="{{ $checkboxContainerClasses }}">
-                            <input name="radio_campos" id="radio_campos_default" type="radio" value="campos_default" checked/>
-                            <x-input-label for="radio_campos_default" :value="__('Por Defecto')"/>
-                        </div>
-                        <div class="{{ $checkboxContainerClasses }}">
-                            <input name="radio_campos" id="radio_campos_all" type="radio" value="campos_todos"/>
-                            <x-input-label for="radio_campos_all" :value="__('Todos')"/>
-                        </div>
-                    </fieldset>
-                    <svg x-on:click="open = !open" x-show="!open" x-transition xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <svg x-show="!open" x-transition xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
                     </svg>
-                    <svg x-on:click="open = !open" x-show="open" x-transition xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <svg x-show="open" x-transition xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
                     </svg>
                 </div>
@@ -183,15 +172,6 @@
                         </div>
                     </x-jefe.filtros>
 
-                    <x-jefe.filtros>
-                        <x-slot:title>
-                            UNICA
-                        </x-slot:title>
-                        <div class="{{ $checkboxContainerClasses }}">
-                            <x-checkbox name="departamento" class="{{ $checkboxClasses }}" id="check_departamento" checked/>
-                            <x-input-label for="check_departamento" :value="__('Departamento')"/>
-                        </div>
-                    </x-jefe.filtros>
                 </div>
             </div>
 
