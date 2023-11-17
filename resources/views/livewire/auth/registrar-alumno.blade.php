@@ -3,8 +3,8 @@
     <div class="mt-4 md:flex md:space-x-2">
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Nombre(s)')" />
-            <x-text-input id="name" wire:model.lazy="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" autofocus />
+            <x-input-label for="nombre" :value="__('Nombre(s)')" />
+            <x-text-input id="nombre" wire:model.lazy="nombre" class="block mt-1 w-full" type="text" name="nombre" :value="old('nombre')" autofocus />
         </div>
 
         <!-- Apellido Paterno -->
@@ -20,7 +20,7 @@
         </div>
     </div>
     <div>
-        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
         <x-input-error :messages="$errors->get('apellido_paterno')" class="mt-2" />
         <x-input-error :messages="$errors->get('apellido_materno')" class="mt-2" />
     </div>

@@ -26,7 +26,7 @@
             <div class="flex flex-col justify-center items-center p-6 space-y-4 bg-white dark:bg-gray-800 overflow-hidden shadow-sm md:place-items-stretch md:h-auto sm:rounded-lg">
 
                 <div class="flex flex-col items-center md:justify-between md:flex-row text-gray-900 dark:text-gray-100">
-                    <h2 class="text-2xl pb-2 md:pb-0 md:text-xl font-bold">{{ auth()->user()->name }}</h2>
+                    <h2 class="text-2xl pb-2 md:pb-0 md:text-xl font-bold">{{ auth()->user()->nombre }}</h2>
                     <div class="status_container flex flex-col md:flex-row items-center gap-2">
                         <h2 class="text-xl">Estado</h2>
                         @if($alumno->getEstado() == "PENDIENTE")

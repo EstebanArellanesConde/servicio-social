@@ -12,16 +12,19 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('jefes', function (Blueprint $table) {
+        Schema::create('departamento', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo');
+            $table->string('departamento');
+            $table->string('abreviatura_departamento');
 
-            $table->unsignedBigInteger('user_id')->unique();
-            $table->foreign('user_id')
+            $table->unsignedBigInteger('jefe_id');
+
+            $table->foreign('jefe_id')
                 ->references('id')
-                ->on('users')
+                ->on('jefe')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+
             $table->timestamps();
         });
     }
@@ -33,6 +36,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('jefe_departamento');
+        Schema::dropIfExists('departamento');
     }
 };

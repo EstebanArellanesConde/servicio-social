@@ -26,9 +26,6 @@
         height: 100px;
     }
 
-    .table{
-    }
-
     </style>
 </head>
 <body>
@@ -99,11 +96,11 @@
                                 <td>
                                     S/N
                                 </td>
-                            @elseif($valor == null)
+                            @elseif($valor == null && $clave !== "domicilio")
                                 <td>
                                     S/D
                                 </td>
-                            @else
+                            @elseif ($valor !== null)
                                 <td>
                                     {{ $valor }}
                                 </td>

@@ -16,7 +16,7 @@ class AlumnoSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->insert([ //1
-            'name' => 'Luis Angel',
+            'nombre' => 'Luis Angel',
             'apellido_paterno' => 'Quintana',
             'apellido_materno' => 'Mora',
             'email' => 'luis.quintana@gmail.com',
@@ -27,7 +27,7 @@ class AlumnoSeeder extends Seeder
         ]);
 
         $alumno_1 = DB::table('users')->where('email', 'luis.quintana@gmail.com')->first();
-        DB::table('alumnos')->insert([
+        DB::table('alumno')->insert([
             'user_id' => $alumno_1->id,
             'numero_cuenta' => 319183817,
             // Alumno datos

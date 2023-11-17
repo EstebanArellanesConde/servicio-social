@@ -1,4 +1,8 @@
-@extends('layouts.jefe')
+@extends('layouts.jefe', ['title' => 'Rechazados'])
+
+@section('options')
+    <x-jefe.opciones />
+@endsection
 
 @section('main')
     <div class="top"></div>
@@ -27,7 +31,7 @@
                     @else
                         <td>{{ $alumno->numero_cuenta }}</td>
                     @endif
-                    <td>{{ $alumno->user->apellido_paterno . ' ' . $alumno->user->apellido_materno . ' ' . $alumno->user->name }}</td>
+                    <td>{{ $alumno->user->apellido_paterno . ' ' . $alumno->user->apellido_materno . ' ' . $alumno->user->nombre }}</td>
                     <td>{{ $alumno->fecha_inicio }}</td>
                     <td>{{ $alumno->fecha_fin }}</td>
                     <td>Nunca fue Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam assumenda autem beatae enim, eum expedita fugiat itaque iusto laboriosam necessitatibus nostrum obcaecati, odio ratione sapiente temporibus tenetur unde voluptates?</td>
@@ -50,7 +54,7 @@
                             <button
                                 type="button"
                                 class="btn-accion text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm ml-6 px-4 py-1.5"
-                                onclick="aceptar('{{$alumno->id}}', '{{$alumno->user->apellido_paterno}} {{ $alumno->user->apellido_materno }} {{ $alumno->user->name }}')"
+                                onclick="aceptar('{{$alumno->id}}', '{{$alumno->user->apellido_paterno}} {{ $alumno->user->apellido_materno }} {{ $alumno->user->nombre }}')"
                             >
                                 Alta
                             </button>
@@ -64,7 +68,7 @@
                             <div class="grid xl:grid-cols-3">
                                 <div class="pt-4 px-6">
                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre(s)</label>
-                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->user->name }}" disabled>
+                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->user->nombre }}" disabled>
                                 </div>
                                 <div class="pt-4 px-6">
                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Paterno</label>
@@ -128,7 +132,7 @@
                                 </div>
                                 <div class="pt-5 px-6">
                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Departamento</label>
-                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->departamento->abreviatura_departamento}}" disabled>
+                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->abreviatura_departamento}}" disabled>
                                 </div>
                             </div>
                             <div class="pt-5 px-6">

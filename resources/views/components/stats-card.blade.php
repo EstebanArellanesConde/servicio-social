@@ -8,9 +8,6 @@
         <p class="font-bold text-4xl">
             {{ $count }}
         </p>
-        <p class="mt-2 text-gray-600 font-light">
-            {{ $departamento }}
-        </p>
     </div>
     <div>
             {{ $icon }}

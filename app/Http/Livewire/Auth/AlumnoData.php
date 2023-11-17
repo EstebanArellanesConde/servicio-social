@@ -96,7 +96,7 @@ class AlumnoData
     }
 
     public function normalize(){
-        $this->data['name'] = strtolower(trim($this->data["name"]));
+        $this->data['nombre'] = strtolower(trim($this->data["nombre"]));
         $this->data['apellido_paterno'] =  trim($this->data['apellido_paterno']);
         $this->data['apellido_materno'] = trim($this->data["apellido_materno"]);
         $this->data['email'] = strtolower(trim($this->data["email"]));

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Departamento extends Model
 {
     use HasFactory;
-    protected $table = 'departamentos';
+    protected $table = 'departamento';
 
     public function jefe(){
         return $this->belongsTo(Jefe::class);

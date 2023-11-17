@@ -1,5 +1,5 @@
 {{-- Verifica si es alumno o jefe para mostrar el sidebar indicado --}}
-@extends( (auth()->user()->hasRole('jefe') ? 'layouts.jefe' : 'layouts.alumno') )
+@extends( (auth()->user()->hasRole('jefe') ? 'layouts.jefe' : 'layouts.alumno'), ['title' => ''] )
 
 @section('main')
     <div>
@@ -17,8 +17,8 @@
                         </div>
                     </div>
                 @endrole
-                @if(auth()->user()->alumno->hasEstado("ACEPTADO SIN DATOS"))
-                    @role('alumno')
+                @role('alumno')
+                    @if(auth()->user()->alumno->hasEstado("ACEPTADO SIN DATOS"))
                     {{-- ALERTA --}}
                     <x-alert type="warn">
                         <x-slot:title>
@@ -37,8 +37,8 @@
                             </livewire:alumno.formulario-domicilio>
                         </div>
                     </div>
-                    @endrole
-                @endif
+                    @endif
+                @endrole
                     <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                         <div class="max-w-xl">
                             @include('profile.partials.update-password-form')

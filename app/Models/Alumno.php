@@ -16,6 +16,8 @@ class Alumno extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
+    protected $table = 'alumno';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -102,16 +104,22 @@ class Alumno extends Authenticatable implements MustVerifyEmail
 
     protected function direccion(): Attribute
     {
-        $calle = $this->domicilio->calle;
-        $numeroExterno = $this->domicilio->numero_externo;
-        $codigoPostal = $this->domicilio->colonia->codigo_postal;
-        $colonia = $this->domicilio->colonia->nombre;
-        $municipio = $this->domicilio->colonia->municipio->nombre;
-        $estado = $this->domicilio->colonia->municipio->estado->nombre;
-        return Attribute::make(
-            get: fn (mixed $value, array $attributes) => $calle . ' ' . $numeroExterno . ' ' . $codigoPostal . ' ' .
-                                                         $colonia . ' ' . $municipio . ' ' . $estado
-        );
+        try {
+            $calle = $this->domicilio->calle;
+            $numeroExterno = $this->domicilio->numero_externo;
+            $codigoPostal = $this->domicilio->colonia->codigo_postal;
+            $colonia = $this->domicilio->colonia->nombre;
+            $municipio = $this->domicilio->colonia->municipio->nombre;
+            $estado = $this->domicilio->colonia->municipio->estado->nombre;
+            return Attribute::make(
+                get: fn(mixed $value, array $attributes) => $calle . ' ' . $numeroExterno . ' ' . $codigoPostal . ' ' .
+                    $colonia . ' ' . $municipio . ' ' . $estado
+            );
+        } catch (\ErrorException $ex){
+            return Attribute::make(
+                get: fn(mixed $value, array $attributes) => ''
+            );
+        }
     }
 
     public function setEstado(string $estado)

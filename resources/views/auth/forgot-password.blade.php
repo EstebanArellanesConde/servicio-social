@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('Si olvidate tu contraseña ingresa el correo con el que te registraste, te enviaremos un correo para restablecerla.') }}
+        {{ __('Si olvidaste tu contraseña ingresa el correo con el que te registraste, te enviaremos un correo para restablecerla.') }}
     </div>
 
     <!-- Session Status -->

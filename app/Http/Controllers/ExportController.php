@@ -25,24 +25,24 @@ class ExportController extends Controller{
     public function __construct()
     {
         $this->columnasPermitidas = [
-            'ID' => 'alumnos.id',
-            'Nombre' => "CONCAT(users.apellido_paterno, ' ', users.apellido_materno, ' ', users.name) as nombre",
-            'Departamento' => 'departamentos.abreviatura_departamento',
-            'Procedencia' => "(CASE WHEN escuelas.is_unam = true THEN 'UNAM' ELSE 'EXTERNO' END) as procedencia",
-            'Curp' => 'alumnos.curp',
+            'ID' => 'alumno.id',
+            'Nombre' => "CONCAT(users.apellido_paterno, ' ', users.apellido_materno, ' ', users.nombre) as nombre",
+            'Departamento' => 'departamento.abreviatura_departamento',
+            'Procedencia' => "(CASE WHEN escuela.is_unam = true THEN 'UNAM' ELSE 'EXTERNO' END) as procedencia",
+            'Curp' => 'alumno.curp',
             'Correo Electrónico' => 'users.email',
-            'Fecha Nacimiento' => 'alumnos.fecha_nacimiento',
+            'Fecha Nacimiento' => 'alumno.fecha_nacimiento',
             'Sexo' => 'sexo',
-            'Teléfono Celular' => 'alumnos.telefono_celular',
-            'Teléfono Alternativo' => 'alumnos.telefono_alternativo',
-            'Número Cuenta' => 'alumnos.numero_cuenta',
-            'Créditos' => 'alumnos.creditos_pagados',
-            'Avance' => 'alumnos.avance_porcentaje',
-            'Promedio' => 'alumnos.promedio',
-            'Escuela' => 'escuelas.escuela',
-            'Fecha Inicio' => 'alumnos.fecha_inicio',
-            'Fecha Fin' => 'alumnos.fecha_fin',
-            'Carrera' => 'carreras.carrera',
+            'Teléfono Celular' => 'alumno.telefono_celular',
+            'Teléfono Alternativo' => 'alumno.telefono_alternativo',
+            'Número Cuenta' => 'alumno.numero_cuenta',
+            'Créditos' => 'alumno.creditos_pagados',
+            'Avance' => 'alumno.avance_porcentaje',
+            'Promedio' => 'alumno.promedio',
+            'Escuela' => 'escuela.escuela',
+            'Fecha Inicio' => 'alumno.fecha_inicio',
+            'Fecha Fin' => 'alumno.fecha_fin',
+            'Carrera' => 'carrera.carrera',
         ];
 
         $this->filtrosPermitidos = [
@@ -82,7 +82,7 @@ class ExportController extends Controller{
 
     public function cartaAceptacion($id){
         $alumno = Alumno::find($id);
-        $nombreCompleto = $alumno->user->name . ' ' .
+        $nombreCompleto = $alumno->user->nombre . ' ' .
                           $alumno->user->apellido_paterno . ' ' .
                           $alumno->user->apellido_materno;
         $numeroCuenta = $alumno->numero_cuenta;
@@ -95,13 +95,13 @@ class ExportController extends Controller{
         $horaFin = Carbon::create($alumno->hora_fin)->format('H:i');
         $jefe = $alumno->departamento->jefe;
         $jefeDepartamento = $jefe->titulo . ' ' .
-                            $jefe->user->name . ' ' .
+                            $jefe->user->nombre . ' ' .
                             $jefe->user->apellido_paterno . ' ' .
                             $jefe->user->apellido_materno;
 
         $fechaHoy = $this->formatFecha(now());
 
-        $pdf = PDF::loadView('exports.jefe.pdf.carta_aceptacion',[
+        $pdf = PDF::loadView('exports.jefe.pdf.formatos.ss02_carta_aceptacion',[
             'nombreCompleto' => $nombreCompleto,
             'numeroCuenta' => $numeroCuenta,
             'carrera' => $carrera,
@@ -118,13 +118,85 @@ class ExportController extends Controller{
         return $pdf->stream();
     }
 
+
+    public function solicitudInicio($id){
+        $alumno = Alumno::find($id);
+        $nombreCompleto = $alumno->user->nombre . ' ' .
+            $alumno->user->apellido_paterno . ' ' .
+            $alumno->user->apellido_materno;
+        $numeroCuenta = $alumno->numero_cuenta;
+        $carrera = $alumno->carrera->carrera;
+        $duracionMeses = $alumno->duracion_servicio;
+        $fechaInicio = $this->formatFecha($alumno->fecha_inicio);
+        $fechaFin = $this->formatFecha($alumno->fecha_fin);
+        $horasSemanales = $alumno->duracion_servicio == 6 ? 20 : 10;
+        $horaInicio = Carbon::create($alumno->hora_inicio)->format('H:i');
+        $horaFin = Carbon::create($alumno->hora_fin)->format('H:i');
+        $jefe = $alumno->departamento->jefe;
+        $jefeDepartamento = $jefe->titulo . ' ' .
+            $jefe->user->nombre . ' ' .
+            $jefe->user->apellido_paterno . ' ' .
+            $jefe->user->apellido_materno;
+
+        $fechaHoy = $this->formatFecha(now());
+        $domicilio = $alumno->domicilio;
+        $direccion =  $domicilio->calle . ', ' .
+                      $domicilio->numero_externo . ' Col ' .
+                      $domicilio->colonia->nombre . ', ' .
+                      $domicilio->colonia->codigo_postal;
+        $telefono = $alumno->telefono_alternativo;
+        $celular = $alumno->telefono_celular;
+        $correo = $alumno->user->email;
+
+        Carbon::setLocale('es');
+        setlocale(LC_ALL, 'es_MX');
+        $fechaNacimientoObject = Carbon::create($alumno->fecha_nacimiento);
+        $fechaNacimiento = $fechaNacimientoObject->format('d') . '-' .
+                           $fechaNacimientoObject->monthName . '-' .
+                           $fechaNacimientoObject->format('Y');
+
+        $claveCarrera = $alumno->carrera->clave_carrera;
+
+        $creditosPagados = $alumno->creditos_pagados;
+        $avancePorcentaje = $alumno->avance_porcentaje;
+
+
+        $pdf = PDF::loadView('exports.jefe.pdf.formatos.ss01_solicitud_inicio',[
+            'alumno' => $alumno,
+            'nombreCompleto' => $nombreCompleto,
+            'numeroCuenta' => $numeroCuenta,
+            'carrera' => $carrera,
+            'duracionMeses' => $duracionMeses,
+            'fechaInicio' => $fechaInicio,
+            'fechaFin' => $fechaFin,
+            'horasSemanales' => $horasSemanales,
+            'horaInicio' => $horaInicio,
+            'horaFin' => $horaFin,
+            'jefeDepartamento' => $jefeDepartamento,
+            'jefe' => $jefe,
+            'fechaHoy' => $fechaHoy,
+            'domicilio' => $domicilio,
+            'direccion' => $direccion,
+            'celular' => $celular,
+            'telefono' => $telefono,
+            'correo' => $correo,
+            'fechaNacimiento' => $fechaNacimiento,
+            'claveCarrera' => $claveCarrera,
+            'creditosPagados' => $creditosPagados,
+            'avancePorcentaje' => $avancePorcentaje,
+        ])
+            ->setPaper('letter');
+        return $pdf->stream();
+    }
+
     public function store(Request $request){
         // almacenamos todos los datos
         $data = $request->all();
+
         $defaultFilename='alumnos';
 
         // Nombre completo del responsable
-        $this->nombreResponsable = auth()->user()->name . ' ' .
+        $this->nombreResponsable = auth()->user()->nombre . ' ' .
                              auth()->user()->apellido_paterno . ' ' .
                              auth()->user()->apellido_materno;
 
@@ -208,16 +280,16 @@ class ExportController extends Controller{
     }
 
     public function getDepartamentoByJefeId($jefeId){
-        return DB::table('jefes')
-                ->join('departamentos', 'jefes.id', '=', 'departamentos.jefe_id')
-                ->where('departamentos.jefe_id', '=', $jefeId)
+        return DB::table('jefe')
+                ->join('departamento', 'jefe.id', '=', 'departamento.jefe_id')
+                ->where('departamento.jefe_id', '=', $jefeId)
                 ->first();
     }
 
     public function getJefeByUserId($userId){
         return DB::table('users')
-            ->join('jefes', 'jefes.user_id', '=', 'users.id')
-            ->where('jefes.user_id', '=', $userId)
+            ->join('jefe', 'jefe.user_id', '=', 'users.id')
+            ->where('jefe.user_id', '=', $userId)
             ->first();
     }
 
@@ -259,9 +331,11 @@ class ExportController extends Controller{
         return $filterSexos;
     }
 
+
+
     public function getSelectedDepartamentos($userData){
         $filterDepartamentos = [];
-        $possibleValues = ['DSA', 'DID', 'DSC', 'DROS', 'Salas'];
+        $possibleValues = $this->getDepartamentosArray();
 
         foreach($userData as $key => $value){
             // Verificar si se puede aplicar como columna
@@ -272,6 +346,20 @@ class ExportController extends Controller{
         }
 
         return $filterDepartamentos;
+    }
+
+    public function getDepartamentosArray(){
+        $departamentosArray = [];
+        $departamentos = Departamento::query()
+            ->select('departamento.abreviatura_departamento')
+            ->get()
+        ;
+
+        foreach($departamentos->toArray() as $departamento){
+            $departamentosArray[] = $departamento['abreviatura_departamento'];
+        }
+
+        return $departamentosArray;
     }
 
     /**

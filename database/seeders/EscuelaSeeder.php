@@ -20,7 +20,7 @@ class EscuelaSeeder extends Seeder
         $escuelas = json_decode($file, false);
 
         // agrega a facultad de ingeniería con el id 1
-        DB::table('escuelas')->insert([
+        DB::table('escuela')->insert([
             'escuela' => "FACULTAD DE INGENIERIA (UNAM)",
             'is_unam' => true,
             'created_at' => Carbon::now(),
@@ -29,7 +29,7 @@ class EscuelaSeeder extends Seeder
 
         // agregar escuelas del json
         for ($i = 0; $i < count($escuelas); $i++){
-            DB::table('escuelas')->insert([
+            DB::table('escuela')->insert([
                 'escuela' => $escuelas[$i],
                 'is_unam' => true,
                 'created_at' => Carbon::now(),

@@ -13,18 +13,13 @@ class Jefe extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
-    protected $table = 'jefes';
+    protected $table = 'jefe';
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'apellido_paterno',
-        'apellido_materno',
-        'email',
-        'password',
     ];
 
     /**
@@ -49,4 +44,22 @@ class Jefe extends Authenticatable implements MustVerifyEmail
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function departamento($departamento){
+        return $this->hasMany(Departamento::class)
+            ->where('departamento.abreviatura_departamento', '=', $departamento)
+            ->first()
+            ;
+    }
+
+    public function departamentos(){
+        return $this->hasMany(Departamento::class);
+    }
+
+    public function abreviaturaDepartamentos(){
+        return $this->hasMany(Departamento::class)
+            ->select('departamento.abreviatura_departamento')
+        ;
+    }
+
 }

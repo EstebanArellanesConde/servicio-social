@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('carreras', function (Blueprint $table) {
+        Schema::create('periodo', function (Blueprint $table) {
             $table->id();
-            $table->string('clave_carrera')->unique();
-            $table->string('carrera')->unique();
-            $table->foreignId('division_id')->references('id')->on('divisiones')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->string('periodo', 7);
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('carreras');
+        Schema::dropIfExists('periodo');
     }
 };

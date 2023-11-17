@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('divisiones', function (Blueprint $table) {
+        Schema::create('escuela', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('abreviatura');
-            $table->string('subdivision')->nullable();
-            $table->string('titulo_coordinador');
-            $table->string('coordinador_servicio_social');
+            $table->string('escuela');
+            $table->boolean("is_unam");
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('divisiones');
+        Schema::dropIfExists('escuela');
     }
 };

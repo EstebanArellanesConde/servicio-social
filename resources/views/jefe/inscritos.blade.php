@@ -1,4 +1,8 @@
-@extends('layouts.jefe')
+@extends('layouts.jefe', ['title' => 'Inscritos'])
+
+@section('options')
+    <x-jefe.opciones />
+@endsection
 
 @section('main')
     <div class="top"></div>
@@ -27,13 +31,13 @@
                     @else
                         <td>{{ $alumno->numero_cuenta }}</td>
                     @endif
-                    <td>{{ $alumno->user->apellido_paterno . ' ' . $alumno->user->apellido_materno . ' ' . $alumno->user->name }}</td>
+                    <td>{{ $alumno->user->apellido_paterno . ' ' . $alumno->user->apellido_materno . ' ' . $alumno->user->nombre }}</td>
                     <td>{{ $alumno->fecha_inicio }}</td>
                     <td>{{ $alumno->fecha_fin }}</td>
                     <td>{{ $alumno->escuela->escuela }}</td>
                     <td>
                         <div class="grid grid-flow-col gap-2 w-full">
-                            <button type="button" class="btn-accion text-white bg-indigo-500 hover:bg-indigo-600 font-medium rounded-lg text-sm px-2.5 py-1.5" onclick="finalizar('{{$alumno->id}}', '{{$alumno->user->apellido_paterno}} {{ $alumno->user->apellido_materno }} {{ $alumno->user->name }}')">
+                            <button type="button" class="btn-accion text-white bg-indigo-500 hover:bg-indigo-600 font-medium rounded-lg text-sm px-2.5 py-1.5" onclick="finalizar('{{$alumno->id}}', '{{$alumno->user->apellido_paterno}} {{ $alumno->user->apellido_materno }} {{ $alumno->user->nombre }}')">
                                 Finalizar
                             </button>
                             <button
@@ -53,7 +57,7 @@
                             <button
                                 type="button"
                                 class="btn-accion text-white bg-red-500 hover:bg-red-600 font-medium rounded-lg text-sm ml-6 px-4 py-1.5"
-                                onclick="baja('{{$alumno->id}}', '{{$alumno->user->apellido_paterno}} {{ $alumno->user->apellido_materno }} {{ $alumno->user->name }}')"
+                                onclick="baja('{{$alumno->id}}', '{{$alumno->user->apellido_paterno}} {{ $alumno->user->apellido_materno }} {{ $alumno->user->nombre }}')"
                             >
                                 Baja
                             </button>
@@ -67,7 +71,7 @@
                             <div class="grid xl:grid-cols-3">
                                 <div class="pt-4 px-6">
                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre(s)</label>
-                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->user->name }}" disabled>
+                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->user->nombre }}" disabled>
                                 </div>
                                 <div class="pt-4 px-6">
                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Paterno</label>
@@ -131,7 +135,7 @@
                                 </div>
                                 <div class="pt-5 px-6">
                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Departamento</label>
-                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->departamento->abreviatura_departamento}}" disabled>
+                                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" value="{{ $alumno->abreviatura_departamento}}" disabled>
                                 </div>
                             </div>
                             <div class="pt-5 px-6">

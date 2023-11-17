@@ -32,10 +32,10 @@
     @endif
 
     <div>
-        <h2 class="font-bold">
+        <h2 class="text-2xl font-bold">
             {{ $title }}
         </h2>
-        <p class="text-sm font-light">
+        <p class="text-xl font-light">
             {{ $message }}
         </p>
 

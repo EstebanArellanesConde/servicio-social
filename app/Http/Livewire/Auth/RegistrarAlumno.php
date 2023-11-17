@@ -23,7 +23,7 @@ use Livewire\Component;
 class RegistrarAlumno extends Component
 {
     public $message;
-    public $name;
+    public $nombre;
     public $apellido_paterno;
     public $apellido_materno;
     public $email;
@@ -66,13 +66,13 @@ class RegistrarAlumno extends Component
     {
          return [
             // Usuario
-            'name' => ['required', 'string', 'max:255', new NombreRule()],
+            'nombre' => ['required', 'string', 'max:255', new NombreRule()],
             'apellido_paterno' => ['required', 'string', 'max:255', new NombreRule()],
             'apellido_materno' => ['required', 'string', 'max:255', new NombreRule()],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::min(8)->mixedCase()->numbers()->symbols()],
             // Alumno
-            'curp' => ['required', 'unique:alumnos,curp', new CurpRule()],
+            'curp' => ['required', 'unique:alumno,curp', new CurpRule()],
             'sexo' => ['required', "in:H,M,O"],
             'telefono_alternativo' => 'required|digits:10',
             'telefono_celular' => 'required|digits:10',
@@ -87,7 +87,7 @@ class RegistrarAlumno extends Component
             'escuela' => ['required_if:procedencia,0'],
             'carrera' => ['required_if:procedencia,1'],
             'escuela_text' => ['required_if:procedencia,2', new EscuelaExternaRule()],
-            'numero_cuenta' => ['required_without:escuela_text', 'unique:alumnos,numero_cuenta' ,'digits:9', 'nullable'],
+            'numero_cuenta' => ['required_without:escuela_text', 'unique:alumno,numero_cuenta' ,'digits:9', 'nullable'],
             'creditos_pagados' => ['required_unless:procedencia,2', 'numeric', 'min:1', 'nullable'],
             'avance_porcentaje' => ['required_unless:procedencia,2', 'numeric', 'max:100', 'nullable'],
         ];
@@ -115,7 +115,7 @@ class RegistrarAlumno extends Component
     public function updated($propertyName)
     {
        $this->validateOnly($propertyName, [
-            'name' => ['required', 'string', 'max:255', new NombreRule()],
+            'nombre' => ['required', 'string', 'max:255', new NombreRule()],
             'apellido_paterno' => ['required', 'string', 'max:255', new NombreRule()],
             'apellido_materno' => ['required', 'string', 'max:255', new NombreRule()],
             'curp' => [new CurpRule()],
@@ -132,6 +132,11 @@ class RegistrarAlumno extends Component
             'aviso_de_privacidad' => ['accepted'],
         ]);
     }
+
+    public function transformNametoSave($cadena){
+        return ucwords(trim($cadena));
+    }
+
 
     public function store()
     {
@@ -150,19 +155,19 @@ class RegistrarAlumno extends Component
 
         try{
             $user = User::create([
-                'name' => trim($filteredData["name"]),
-                'apellido_paterno' => trim($filteredData['apellido_paterno']),
-                'apellido_materno' => trim($filteredData["apellido_materno"]),
-                'email' => strtolower(trim($filteredData["email"])),
+                'nombre' => $this->transformNametoSave($filteredData["nombre"]),
+                'apellido_paterno' => $this->transformNametoSave($filteredData['apellido_paterno']),
+                'apellido_materno' => $this->transformNametoSave($filteredData["apellido_materno"]),
+                'email' => trim($filteredData["email"]),
                 'password' => Hash::make($filteredData["password"]),
             ]);
 
             $alumno = Alumno::create([
                 'user_id' => $user["id"],
                 'numero_cuenta' => $filteredData['numero_cuenta'],
-                'curp' => $filteredData["curp"],
+                'curp' => strtoupper($filteredData["curp"]),
                 'fecha_nacimiento' => $filteredData['fecha_nacimiento'],
-                'sexo' => $filteredData["sexo"],
+                'sexo' => strtoupper($filteredData["sexo"]),
                 'telefono_alternativo' => $filteredData["telefono_alternativo"],
                 'telefono_celular' => $filteredData["telefono_celular"],
                 'escuela_id' => $filteredData['escuela'],

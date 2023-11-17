@@ -19,7 +19,7 @@ class JefeSeeder extends Seeder
     {
         // DSA
         $jefeDSA = User::create([
-            'name' => 'Beatriz',
+            'nombre' => 'Beatriz',
             'apellido_paterno' => 'Barrera',
             'apellido_materno' => 'Hernández',
             'email' => 'bety@ingenieria.unam.edu',
@@ -32,6 +32,8 @@ class JefeSeeder extends Seeder
         Jefe::create([
             'user_id' => $jefeDSA->id,
             'titulo' => 'Ing',
+            'cargo' => 'Jefa del Departamento de Servicios Académicos',
+            'telefono' => '5556220925',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -39,7 +41,7 @@ class JefeSeeder extends Seeder
         $jefeDSA->assignRole('jefe', 'dsa');
 
         $jefeDID = User::create([ //2
-            'name' => 'María del Rosario',
+            'nombre' => 'María del Rosario',
             'apellido_paterno' => 'Barragán',
             'apellido_materno' => 'Paz',
             'email' => 'chary.barragan@ingenieria.unam.edu',
@@ -52,13 +54,15 @@ class JefeSeeder extends Seeder
         Jefe::create([
             'user_id' => $jefeDID->id,
             'titulo' => 'M. E.',
+            'cargo' => 'Jefa del Departamento de Investigación y Desarrollo',
+            'telefono' => '5556220925',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         $jefeDID->assignRole('jefe');
 
         $jefeRedesSeguridad = User::create([ //3
-            'name' => 'Rafael',
+            'nombre' => 'Rafael',
             'apellido_paterno' => 'Lopez',
             'apellido_materno' => 'Perez',
             'email' => 'rafael@ingenieria.unam.edu',
@@ -71,6 +75,8 @@ class JefeSeeder extends Seeder
         Jefe::create([
             'user_id' => $jefeRedesSeguridad->id,
             'titulo' => 'Ing',
+            'cargo' => 'Jefe del Departamento de Seguridad en Cómputo',
+            'telefono' => '5556220925',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -78,7 +84,7 @@ class JefeSeeder extends Seeder
         $jefeRedesSeguridad->assignRole('jefe');
 
         $coordinador = User::create([ //4
-            'name' => 'Ibeth Graciela',
+            'nombre' => 'Ibeth Graciela',
             'apellido_paterno' => 'Flores',
             'apellido_materno' => 'Muñoz',
             'email' => 'ibethfm@ingenieria.unam.edu',
@@ -91,6 +97,8 @@ class JefeSeeder extends Seeder
         Jefe::create([
             'user_id' => $coordinador->id,
             'titulo' => 'Ing',
+            'cargo' => 'Coordinadora',
+            'telefono' => '5556220925',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -98,7 +106,7 @@ class JefeSeeder extends Seeder
         $coordinador->assignRole('coordinador');
 
         $jefeSalas = User::create([ // 5
-            'name' => 'Cruz Sergio',
+            'nombre' => 'Cruz Sergio',
             'apellido_paterno' => 'Aguilar',
             'apellido_materno' => 'Díaz',
             'email' => 'cruz.aguilar@ingenieria.unam.edu',
@@ -111,6 +119,8 @@ class JefeSeeder extends Seeder
         Jefe::create([
             'user_id' => $jefeSalas->id,
             'titulo' => 'Ing',
+            'cargo' => 'Jefe de Salas de Computo',
+            'telefono' => '5556220925',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

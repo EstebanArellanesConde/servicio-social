@@ -11,39 +11,41 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('alumnos', function (Blueprint $table) {
+        Schema::create('alumno', function (Blueprint $table) {
             $table->id();
-            $table->integer('numero_cuenta')->unique()->unsigned()->nullable();
             $table->string('curp', 18)->unique();
 
             $table->date('fecha_nacimiento');
-            $table->string('sexo');
+            $table->string('sexo', 1);
 
-            $table->string('telefono_alternativo');
-            $table->string('telefono_celular');
+            $table->string('telefono_alternativo', 18);
+            $table->string('telefono_celular', 18);
+
+            $table->decimal('promedio', $precision=4, $scale=2)->unsigned();
+            // duración en meses
+            $table->unsignedSmallInteger('duracion_servicio');
+
+            $table->time('hora_inicio');
+            $table->time('hora_fin');
 
 
+            $table->boolean('pertenencia_unica');
+
+            $table->dateTime('fecha_estado');
+
+            // interno facultad de ingenieria
+            $table->integer('numero_cuenta')->unique()->unsigned()->nullable();
             // Puede ser null si no pertenence a la FI
             $table->date('fecha_ingreso_facultad')->nullable();
 
             // Son null cuando no son de la UNAM
-            $table->integer('creditos_pagados')->unsigned()->nullable();
-            $table->integer('avance_porcentaje')->unsigned()->nullable();
-
-            // 4 dígitos, 2 de ellos son decimales
-            $table->decimal('promedio', $precision=4, $scale=2)->unsigned();
-            $table->integer('duracion_servicio')->unsigned();
-
-            $table->time('hora_inicio');
-            $table->time('hora_fin');
+            $table->unsignedSmallInteger('creditos_pagados')->nullable();
+            $table->decimal('avance_porcentaje', $precision=5, $scale=2)->unsigned()->nullable();
 
             // null ya que se asigna despues de registrarse
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
 
-            $table->boolean('pertenencia_unica');
-
-            $table->dateTime('fecha_estado');
             $table->unsignedBigInteger('estado_id');
             $table->foreign('estado_id')
                 ->references('id')
@@ -54,27 +56,15 @@ return new class extends Migration
             $table->unsignedBigInteger('escuela_id');
             $table->foreign('escuela_id')
                 ->references('id')
-                ->on('escuelas')
+                ->on('escuela')
                 ->onDelete('restrict')
                 ->onUpdate('cascade');
-
-            // interno facultad de ingenieria
-            /* diseno de nueva tabla */
-            //$table->boolean('interno'); // ya no necesario si se registra la escuela el id 1
-            $table->unsignedBigInteger('carrera_id')->nullable();
-            $table->foreign('carrera_id')
-                ->references('id')
-                ->on('carreras')
-                ->onDelete('restrict')
-                ->onUpdate('cascade');
-
 
             // valor por defecto el DSA en caso de que no haya colocado departamento
             $table->unsignedBigInteger('departamento_id')->default(1);
-
             $table->foreign('departamento_id')
                 ->references('id')
-                ->on('departamentos')
+                ->on('departamento')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
@@ -93,6 +83,13 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
+            $table->unsignedBigInteger('carrera_id')->nullable();
+            $table->foreign('carrera_id')
+                ->references('id')
+                ->on('carrera')
+                ->onDelete('restrict')
+                ->onUpdate('cascade');
+
             $table->timestamps();
         });
     }
@@ -102,6 +99,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('alumnos');
+        Schema::dropIfExists('alumno');
     }
 };

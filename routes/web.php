@@ -28,12 +28,14 @@ Route::middleware(['auth', 'verified', 'role:jefe'])->prefix('jefe')->group(func
     Route::get('/rechazados', [JefeController::class, 'rechazados'])->name('jefe.rechazados');
     Route::get('/finalizados', [JefeController::class, 'finalizados'])->name('jefe.finalizados');
     Route::get('/estadisticas', [JefeController::class, 'estadisticas'])->name('jefe.estadisticas')->middleware(['role:dsa|coordinador']);
+    Route::get('/config', [JefeController::class, 'configuracion'])->name('jefe.configuracion')->middleware(['role:dsa|coordinador']);
     Route::get('/pendiente/{id}', [JefeController::class, 'pendiente'])->name('jefe.pendiente');
     Route::get('/aceptar/{id}', [JefeController::class, 'aceptar'])->name('jefe.aceptar');
     Route::get('/rechazar/{id}', [JefeController::class, 'rechazar'])->name('jefe.rechazar');
     Route::get('/finalizar/{id}', [JefeController::class, 'finalizar'])->name('jefe.finalizar');
     Route::post('/download', [ExportController::class, 'store'])->name('jefe.download');
     Route::post('/download/carta_aceptacion/{id}', [ExportController::class, 'cartaAceptacion'])->name('jefe.carta')->middleware(['role:dsa|coordinador']);
+    Route::post('/download/solicitud_inicio/{id}', [ExportController::class, 'solicitudInicio'])->name('jefe.solicitud_inicio')->middleware(['role:dsa|coordinador']);
 });
 
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
