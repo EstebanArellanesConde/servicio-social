@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Jefe;
 
-use App\Enums\AlumnoEstado;
+use App\Enums\EstadoAlumno;
 use App\Models\Alumno;
 use App\Models\Departamento;
 use Livewire\Component;
@@ -41,10 +41,10 @@ class Estadisticas extends Component
     public function mount(){
         $this->departamento_abreviatura = 'all';
         $this->departamentos = Departamento::all('departamento', 'abreviatura_departamento');
-        $this->pendientes = $this->getNumeroDeAlumnosByEstadoId(AlumnoEstado::PENDIENTE);
-        $this->incritos = $this->getNumeroDeAlumnosByEstadoId(AlumnoEstado::ACEPTADO);
-        $this->rechazados = $this->getNumeroDeAlumnosByEstadoId(AlumnoEstado::RECHAZADO);
-        $this->finalizados = $this->getNumeroDeAlumnosByEstadoId(AlumnoEstado::FINALIZADO);
+        $this->pendientes = $this->getNumeroDeAlumnosByEstadoId(EstadoAlumno::PENDIENTE);
+        $this->incritos = $this->getNumeroDeAlumnosByEstadoId(EstadoAlumno::ACEPTADO);
+        $this->rechazados = $this->getNumeroDeAlumnosByEstadoId(EstadoAlumno::RECHAZADO);
+        $this->finalizados = $this->getNumeroDeAlumnosByEstadoId(EstadoAlumno::FINALIZADO);
     }
 
     public function show(){

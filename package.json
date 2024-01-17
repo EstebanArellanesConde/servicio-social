@@ -19,6 +19,8 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@alpinejs/focus": "^3.13.3",
+        "pdfobject": "^2.2.12",
         "sweetalert2": "^11.7.28"
     }
 }

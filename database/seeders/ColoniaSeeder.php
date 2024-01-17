@@ -36,5 +36,9 @@ class ColoniaSeeder extends Seeder
                 }
             }
         }
+
+        // cambiar México por Estado de México
+        EstadoMexico::where('nombre', 'México')->update(['nombre' => 'Estado de México' ]);
+
     }
 }

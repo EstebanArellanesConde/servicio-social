@@ -37,7 +37,8 @@
                     <td>{{ $alumno->escuela->escuela }}</td>
                     <td>
                         <div class="grid grid-flow-col gap-2 w-full">
-                            <button type="button" class="btn-accion text-white bg-indigo-500 hover:bg-indigo-600 font-medium rounded-lg text-sm px-2.5 py-1.5" onclick="finalizar('{{$alumno->id}}', '{{$alumno->user->apellido_paterno}} {{ $alumno->user->apellido_materno }} {{ $alumno->user->nombre }}')">
+                            <button type="button" class="btn-accion text-white bg-indigo-500 hover:bg-indigo-600 font-medium rounded-lg text-sm px-2.5 py-1.5"
+                                onclick="jefe.finalizar('{{$alumno->id}}', '{{$alumno->user->apellido_paterno}} {{ $alumno->user->apellido_materno }} {{ $alumno->user->nombre }}')">
                                 Finalizar
                             </button>
                             <button
@@ -57,7 +58,7 @@
                             <button
                                 type="button"
                                 class="btn-accion text-white bg-red-500 hover:bg-red-600 font-medium rounded-lg text-sm ml-6 px-4 py-1.5"
-                                onclick="baja('{{$alumno->id}}', '{{$alumno->user->apellido_paterno}} {{ $alumno->user->apellido_materno }} {{ $alumno->user->nombre }}')"
+                                onclick="jefe.baja('{{$alumno->id}}', '{{$alumno->user->apellido_paterno}} {{ $alumno->user->apellido_materno }} {{ $alumno->user->nombre }}')"
                             >
                                 Baja
                             </button>

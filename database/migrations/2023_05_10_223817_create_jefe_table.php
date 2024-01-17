@@ -15,7 +15,7 @@ return new class extends Migration {
         Schema::create('jefe', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
-            $table->string('cargo');
+            $table->longText('cargo');
             $table->string('telefono');
             $table->unsignedBigInteger('user_id')->unique();
             $table->foreign('user_id')

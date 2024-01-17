@@ -20,12 +20,13 @@ class AlumnoController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function reportes()
     {
-        //
+        $alumno = Alumno::firstWhere("user_id", auth()->user()->id);
+
+        return view('alumno.reportes', [
+            'alumno' => $alumno,
+        ]);
     }
 
     /**

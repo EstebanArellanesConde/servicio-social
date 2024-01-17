@@ -2,6 +2,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use HighSolutions\EloquentSequence\Sequence;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,8 +15,12 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Alumno extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, Sequence;
 
+    /**
+     * @var \App\Enums\Departamento|mixed
+     */
+    public mixed $departamento_id;
     protected $table = 'alumno';
 
     /**
@@ -30,6 +35,7 @@ class Alumno extends Authenticatable implements MustVerifyEmail
         'curp',
         'fecha_nacimiento',
         'sexo',
+        'genero',
         'telefono_alternativo',
         'telefono_celular',
         'escuela_id',
@@ -70,6 +76,16 @@ class Alumno extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function sequence(){
+        return [
+            'group' => 'clave_dgose_id',
+            'fieldName' => 'num_alumno',
+            'orderFrom1' => true,
+            'notUpdateOnDelete' => true,
+            'disableTimestamps' => false
+        ];
+    }
+
     public function user(){
         return $this->belongsTo(User::class);
     }
@@ -100,6 +116,10 @@ class Alumno extends Authenticatable implements MustVerifyEmail
 
     public function domiclio(){
         return $this->hasOne(Domicilio::class);
+    }
+
+    public function reportes(){
+        return $this->hasMany(Reporte::class);
     }
 
     protected function direccion(): Attribute

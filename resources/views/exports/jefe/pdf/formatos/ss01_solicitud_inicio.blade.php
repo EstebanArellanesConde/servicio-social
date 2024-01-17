@@ -8,25 +8,30 @@
     <style>
         @page{
             padding: 0;
-            margin: 1.3cm 1.3cm 0.5cm 1.3cm;
+            margin: 1.3cm 1.3cm 0.2cm 1.3cm;
         }
 
         @font-face {
+            font-family: 'Arial';
+            src: url({{ storage_path("fonts/arial/arial.ttf") }}) format("truetype");
+            font-weight: normal;
         }
-
-        html{
-            font-size: 12px;
-            line-height: 0.3cm;
+        @font-face {
+            font-family: 'Arial';
+            src: url({{ storage_path("fonts/arial/arial_bold.ttf") }}) format("truetype");
+            font-weight: bold;
         }
 
         body{
+            /*font-family: 'Arial';*/
+            font-size: 9pt;
             width: 100%;
             text-align: center;
         }
 
         header{
-            line-height: 10px;
-            font-size: 14px;
+            font-size: 14pt;
+            font-weight: bold;
         }
 
         .datos__titulo{
@@ -34,9 +39,8 @@
             text-transform: uppercase;
         }
 
-
         .datos__container{
-            border: black 1px solid;
+            border: black 1px outset;
             width: 100%;
         }
 
@@ -65,18 +69,13 @@
         }
 
         .solicito{
-            font-size: 18px;
+            font-size: 14pt;
             text-align: left;
         }
 
         .firmas{
             margin: 0 auto;
         }
-
-        /*table, th, td {*/
-        /*    border: 1px solid black;*/
-        /*    border-collapse: collapse;*/
-        /*}*/
 
         .firmas table {
             width: 100%;
@@ -86,8 +85,15 @@
             text-align: center;
         }
 
+        .coordinador{
+        }
+
         footer{
             text-align: right;
+            position: absolute;
+
+            bottom: 0;
+            right: 0;
         }
 
 
@@ -98,58 +104,59 @@
 <div class="container">
 
 <header>
-    <h2>
+    <p>
         Facultad de Ingeniería
-    </h2>
-    <h2>
+    </p>
+    <p>
         Departamento de Administración Escolar
-    </h2>
-    <h2>
+    </p>
+    <p> </p>
+    <p>
         Solicitud de Autorización de Prestación del
-    </h2>
-    <h2>
+    </p>
+    <p>
         Servicio Social e Información Estadística
-    </h2>
+    </p>
 </header>
 <main>
     <section class="datos">
-        <h3 class="datos__titulo">
+        <p class="datos__titulo">
             DATOS DEL ALUMNO
-        </h3>
+        </p>
         <table class="datos__container">
             <tr>
                 <td class="datos__dato" colspan="4">
-                    <span class="datos__dato-key">Nombre: </span><span class="datos__dato-value">{{ $nombreCompleto }}</span>
+                    <span class="datos__dato-key">Nombre: </span><span class="datos__dato-value">{{ Helper::capitalize($nombreCompleto) }}</span>
                 </td>
             </tr>
             <tr>
                 <td class="datos__dato" colspan="4">
-                    <span class="datos__dato-key">Dirección: </span><span class="datos__dato-value">{{ $direccion }}</span>
+                    <span class="datos__dato-key">Dirección: </span><span class="datos__dato-value">{{ Helper::capitalize($direccion) }}</span>
                 </td>
             </tr>
             <tr>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">Colonia: </span><span class="datos__dato-value">{{ $domicilio->colonia->nombre }}</span>
+                    <span class="datos__dato-key">Colonia: </span><span class="datos__dato-value">{{ Helper::capitalize($domicilio->colonia->nombre) }}</span>
                 </td>
                 <td class="datos__dato" colspan="2">
-                    <span class="datos__dato-key">Alcaldía (municipio): </span><span class="datos__dato-value">{{ $domicilio->colonia->municipio->nombre }}</span>
+                    <span class="datos__dato-key">Delegación (municipio): </span><span class="datos__dato-value">{{ Helper::capitalize($domicilio->colonia->municipio->nombre) }}</span>
                 </td>
             </tr>
             <tr>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">CP: </span><span id="cp_value" class="datos__dato-value">{{ $domicilio->colonia->codigo_postal }}</span>
-                    <span class="datos__dato-key">Estado: </span><span class="datos__dato-value">{{ $domicilio->colonia->municipio->estado->nombre }}</span>
+                    <span class="datos__dato-key">CP: </span><span id="cp_value" class="datos__dato-value">{{ Helper::capitalize($domicilio->colonia->codigo_postal) }}</span>
+                    <span class="datos__dato-key">Estado: </span><span class="datos__dato-value">{{ Helper::capitalize($domicilio->colonia->municipio->estado->nombre) }}</span>
                 </td>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">Teléfono: </span><span class="datos__dato-value">{{ $telefono }}</span>
+                    <span class="datos__dato-key">Teléfono: </span><span class="datos__dato-value">{{ $alumno->telefono_alternativo }}</span>
                 </td>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">Celular: </span><span class="datos__dato-value">{{ $celular }}</span>
+                    <span class="datos__dato-key">Celular: </span><span class="datos__dato-value">{{ $alumno->telefono_celular }}</span>
                 </td>
             </tr>
             <tr>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">e-mail: </span><span class="datos__dato-value">{{ $correo }}</span>
+                    <span class="datos__dato-key">e-mail: </span><span class="datos__dato-value">{{ $alumno->user->email }}</span>
                 </td>
                 <td class="datos__dato">
                     <span class="datos__dato-key">Fecha de nacimiento: </span><span class="datos__dato-value">{{ $fechaNacimiento }}</span>
@@ -161,21 +168,21 @@
                     <span class="datos__dato-key">Número de cuenta: </span><span class="datos__dato-value">{{ $numeroCuenta }}</span>
                 </td>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">Fecha de ingreso: </span><span class="datos__dato-value"></span>
+                    <span class="datos__dato-key">Ingreso a la F.I.: </span><span class="datos__dato-value"></span>
                 </td>
             </tr>
             <br>
             <tr>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">Clave de la carrera: </span><span class="datos__dato-value">{{ $claveCarrera }}</span>
+                    <span class="datos__dato-key">Clave de la carrera: </span><span class="datos__dato-value">{{ $alumno->carrera->clave_carrera }}</span>
                 </td>
             </tr>
             <tr>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">Número de créditos pagados: </span><span class="datos__dato-value">{{ $creditosPagados }}</span>
+                    <span class="datos__dato-key">Número de créditos pagados: </span><span class="datos__dato-value">{{ $alumno->creditos_pagados }}</span>
                 </td>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">Avance: </span><span class="datos__dato-value">{{ $avancePorcentaje }}%</span>
+                    <span class="datos__dato-key">Avance: </span><span class="datos__dato-value">{{ $alumno->avance_porcentaje }}%</span>
                 </td>
                 <td class="datos__dato">
                     <span class="datos__dato-key">Promedio: </span><span class="datos__dato-value">{{ $alumno->promedio }}</span>
@@ -187,7 +194,7 @@
                     <span class="datos__dato-key">Fecha de inicio: </span><span class="datos__dato-value">{{ $fechaInicio }}</span>
                 </td>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">Duración en: </span><span class="datos__dato-value">{{ $alumno->duracion_servicio }} meses</span>
+                    <span class="datos__dato-key">Duración en meses: </span><span class="datos__dato-value">{{ $alumno->duracion_servicio }}</span>
                 </td>
                 <td class="datos__dato">
                     <span class="datos__dato-key">Horas/semana: </span><span class="datos__dato-value">{{ $horasSemanales }}</span>
@@ -195,17 +202,17 @@
             </tr>
             <tr>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">Forma de remuneración: </span><span class="datos__dato-value">6</span>
+                    <span class="datos__dato-key">Forma de remuneración: </span><span class="datos__dato-value">{{ App::FORMATOS['SS01']['FORMA_REMUNERACION'] }}</span>
                 </td>
                 <td class="datos__dato">
                     <span class="datos__dato-key">Percepción mensual: $__________</span><span class="datos__dato-value"></span>
                 </td>
                 <td class="datos__dato">
-                    @if($alumno->sexo === 'O' || $alumno->sexo === 'M')
-                        {{-- Si es femenino u otro --}}
+                    @if($alumno->sexo === 'M')
+                        {{-- Si es mujer --}}
                         <span class="datos__dato-key">Género: M/<span class="datos__dato-value">F</span></span>
                     @else
-                        {{-- Si masculino --}}
+                        {{-- Si es hombre --}}
                         <span class="datos__dato-key">Género: <span class="datos__dato-value">M</span>/F</span>
                     @endif
                 </td>
@@ -226,72 +233,72 @@
         </table>
     </section>
     <section class="datos">
-        <h3 class="datos__titulo">
+        <p class="datos__titulo">
             DATOS DE LA DEPENDENCIA
-        </h3>
+        </p>
         <table class="datos__container">
             <tr>
                 <td class="datos__dato" colspan="4">
-                    <span class="datos__dato-key">Nombre de la dependencia: </span><span class="datos__dato-value">UNAM</span>
+                    <span class="datos__dato-key">Nombre de la dependencia: </span><span class="datos__dato-value">{{ App::DATOS_DEPENDENCIA['NOMBRE'] }}</span>
                 </td>
             </tr>
             <tr>
                 <td class="datos__dato" colspan="4">
-                    <span class="datos__dato-key">Subdirección o Departamento: </span><span class="datos__dato-value">FACULTAD DE INGENIERÍA</span>
+                    <span class="datos__dato-key">Subdirección o Departamento: </span><span class="datos__dato-value">{{ App::DATOS_DEPENDENCIA['DEPARTAMENTO'] }}</span>
                 </td>
             </tr>
             <tr>
                 <td class="datos__dato" colspan="2">
-                    <span class="datos__dato-key">Oficina o Sección: </span><span class="datos__dato-value">UNIDAD DE SERVICIOS DE CÓMPUTO ACADÉMICO (UNICA)</span>
+                    <span class="datos__dato-key">Oficina o Sección: </span><span class="datos__dato-value">{{ App::DATOS_DEPENDENCIA['OFICINA'] }}</span>
                 </td>
             </tr>
             <tr>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">Dirección: </span><span class="datos__dato-value">CIRCUITO EXTERIOR S/N</span>
+                    <span class="datos__dato-key">Dirección: </span><span class="datos__dato-value">{{ App::DATOS_DEPENDENCIA['DIRECCION'] }}</span>
                 </td>
                 <td class="datos__dato" colspan="2">
-                    <span class="datos__dato-key">Colonia: </span><span class="datos__dato-value">CIUDAD UNIVERSITARIA</span>
+                    <span class="datos__dato-key">Colonia: </span><span class="datos__dato-value">{{ App::DATOS_DEPENDENCIA['COLONIA'] }}</span>
                 </td>
             </tr>
             <tr>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">CP: </span><span id="cp_value" class="datos__dato-value">04510</span>
+                    <span class="datos__dato-key">CP: </span><span id="cp_value" class="datos__dato-value">{{ App::DATOS_DEPENDENCIA['CP'] }}</span>
                 </td>
                 <td>
-                    <span class="datos__dato-key">Estado: </span><span class="datos__dato-value">COYOACAN</span>
+                    <span class="datos__dato-key">Delegación(Municipio): <span class="datos__dato-value">{{ App::DATOS_DEPENDENCIA['MUNICIPIO'] }}</span>
                 </td>
             </tr>
             <tr>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">Estado: </span><span id="cp_value" class="datos__dato-value">MÉXICO D.F.</span>
+                    <span class="datos__dato-key">Estado: </span><span id="cp_value" class="datos__dato-value">{{ App::DATOS_DEPENDENCIA['ESTADO'] }}</span>
                 </td>
                 <td>
-                    <span class="datos__dato-key">Teléfono: </span><span class="datos__dato-value">56220951</span>
+                    <span class="datos__dato-key">Teléfono: </span><span class="datos__dato-value">{{ App::DATOS_DEPENDENCIA['TELEFONO'] }}</span>
                 </td>
             </tr>
         </table>
     </section>
     <section class="datos">
-        <h3 class="datos__titulo">
+        <p class="datos__titulo">
             DATOS DEL PROGRAMA
-        </h3>
+        </p>
         <table class="datos__container">
             <tr>
                 <td class="datos__dato">
                     <span class="datos__dato-key">Nombre del programa: </span><span class="datos__dato-value">CAPACITACIÓN EN CÓMPUTO</span>
                 </td>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">Clave DGOSE: </span><span class="datos__dato-value">2023-12/81-9</span>
+                    <span class="datos__dato-key">Clave DGOSE: </span><span class="datos__dato-value">{{ $claveDGOSE }}</span>
                 </td>
             </tr>
             <tr>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">Nombre del responsable del Programa: </span><span class="datos__dato-value">ING. ENRIQUE BARRANCO VITE</span>
+                    <span class="datos__dato-key">Nombre del responsable del Programa: </span><span class="datos__dato-value">{{ App::RESPONSABLE_PROGRAMA['NOMBRE_COMPLETO'] }}</span>
                 </td>
             </tr>
             <tr>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">Nombre del jefe inmediato: </span><span class="datos__dato-value">{{ $jefeDepartamento }}</span>
+                    <span class="datos__dato-key">Nombre del jefe inmediato: </span><span class="datos__dato-value">{{ $jefeInmediato }}</span>
                 </td>
             </tr>
             <tr>
@@ -309,7 +316,7 @@
             </tr>
             <tr>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">Tipo de programa: </span><span class="datos__dato-value">3</span>
+                    <span class="datos__dato-key">Tipo de programa: </span><span class="datos__dato-value">{{ App::DATOS_PROGRAMA['TIPO_PROGRAMA'] }}</span>
                 </td>
             </tr>
             <tr>
@@ -321,6 +328,9 @@
             </tr>
         </table>
     </section>
+    <p>
+
+    </p>
     <section class="solicito">
         <p>
             Solicito se me autorice cumplir con la prestación del servicio social en el programa
@@ -334,7 +344,7 @@
         <table>
             <tr>
                 <td>
-                    Ciudad Universitaria, Cd. Mx. a {{ $fechaHoy }}
+                    {{App::DATOS_DEPENDENCIA['ESTADO']}}. a {{ $fechaHoy }}
                 </td>
                 <td>
                     Válido a partir del {{ $fechaHoy }}
@@ -351,28 +361,31 @@
             </tr>
             <tr>
                 <td>
-                    _______________________________________________________
+                    <p>____________________________________</p>
                 </td>
                 <td>
-                    _______________________________________________________
+                    <p>____________________________________</p>
                 </td>
             </tr>
-            <tr>
+            <tr class="coordinador">
                 <td>
                     <span class="bold">
                         {{ $nombreCompleto }}
                     </span>
                 </td>
                 <td rowspan="3">
-                    <span class="bold">
-                        Lic. Angélica Gutiérrez Vázquez.
-                    </span>
-                    <br>
-                    Coordinadora del Servicio Social de la
-                    <br>
-                    División de Ingeniería Eléctrica
-                    <br>
-                    Facultad de Ingeniería, UNAM
+                    <p class="bold">
+                        {{ $division->getNombreCoordinadorSS() }}
+                    </p>
+                    <p>
+                        Coordinador{{ $division->coordinador_ss_genero === 'F' ? 'a' : '' }} del Servicio Social de la
+                    </p>
+                    <p>
+                        {{ $division->nombre }}
+                    </p>
+                    <p>
+                        Facultad de Ingeniería, UNAM.
+                    </p>
                 </td>
             </tr>
         </table>

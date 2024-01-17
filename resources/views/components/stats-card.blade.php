@@ -1,5 +1,5 @@
 <div
-    {{ $attributes->merge(['class' => 'card flex items-center justify-between bg-white rounded-r-lmmd shadow-md w-1/4 border-l-4 p-4 space-y-2']) }}
+    {{ $attributes->merge(['class' => 'card flex items-center justify-between bg-white dark:bg-gray-900 rounded-r-lmmd shadow-md w-1/4 border-l-4 p-4 space-y-2']) }}
 >
     <div>
         <p class="text-lg">

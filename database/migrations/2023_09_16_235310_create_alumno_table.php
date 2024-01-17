@@ -1,5 +1,8 @@
 <?php
 
+use App\Enums\Departamento;
+use App\Models\ClaveDGOSE;
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,10 +16,12 @@ return new class extends Migration
     {
         Schema::create('alumno', function (Blueprint $table) {
             $table->id();
+
             $table->string('curp', 18)->unique();
 
             $table->date('fecha_nacimiento');
             $table->string('sexo', 1);
+            $table->string('genero', 1);
 
             $table->string('telefono_alternativo', 18);
             $table->string('telefono_celular', 18);
@@ -61,7 +66,7 @@ return new class extends Migration
                 ->onUpdate('cascade');
 
             // valor por defecto el DSA en caso de que no haya colocado departamento
-            $table->unsignedBigInteger('departamento_id')->default(1);
+            $table->unsignedBigInteger('departamento_id')->default(Departamento::Salas);
             $table->foreign('departamento_id')
                 ->references('id')
                 ->on('departamento')
@@ -74,7 +79,6 @@ return new class extends Migration
                 ->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-
 
             $table->unsignedBigInteger('domicilio_id')->nullable();
             $table->foreign('domicilio_id')
@@ -90,6 +94,14 @@ return new class extends Migration
                 ->onDelete('restrict')
                 ->onUpdate('cascade');
 
+            $table->unsignedBigInteger('clave_dgose_id')->nullable();
+            $table->foreign('clave_dgose_id')
+                ->references('anio')
+                ->on('clave_dgose')
+                ->onDelete('restrict')
+                ->onUpdate('cascade');
+
+            $table->integer('num_alumno')->unsigned();
             $table->timestamps();
         });
     }

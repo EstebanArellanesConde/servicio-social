@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Alumno;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,21 +20,22 @@ class AlumnoSeeder extends Seeder
             'nombre' => 'Luis Angel',
             'apellido_paterno' => 'Quintana',
             'apellido_materno' => 'Mora',
-            'email' => 'luis.quintana@gmail.com',
+            'email' => 'guest@guest.com',
             'email_verified_at' => now(),
             'created_at' => now(),
             'updated_at' => now(),
             'password' => Hash::make('password')
         ]);
 
-        $alumno_1 = DB::table('users')->where('email', 'luis.quintana@gmail.com')->first();
-        DB::table('alumno')->insert([
+        $alumno_1 = DB::table('users')->where('email', 'guest@guest.com')->first();
+        Alumno::create([
             'user_id' => $alumno_1->id,
             'numero_cuenta' => 319183817,
             // Alumno datos
             'curp' => 'QUML030126HMCNRSA5',
             'fecha_nacimiento' => '2003-06-01',
             'sexo' => 'H',
+            'genero' => 'M',
 
             'telefono_alternativo' => '5588414988',
             'telefono_celular' => '5523052838',
@@ -57,6 +59,7 @@ class AlumnoSeeder extends Seeder
             'fecha_estado' => now(),
             'estado_id' => 5,
             'domicilio_id' => 1,
+            'clave_dgose_id' => 2023,
         ]);
 
         User::find($alumno_1->id)->assignRole('alumno');

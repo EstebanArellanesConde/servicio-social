@@ -46,12 +46,26 @@
             class="block mt-1 w-full"
             wire:model.lazy="sexo"
         >
-            <option selected>Seleccione el sexo</option>
+            <option selected>Seleccione su sexo</option>
             <option id="sexo_mujer" value="H">Hombre</option>
             <option id="sexo_hombre" value="M">Mujer</option>
-            <option id="sexo_otro" value="O">Otro</option>
         </x-select-input>
         <x-input-error :messages="$errors->get('sexo')" class="mt-2" />
+    </div>
+
+    <div class="mt-4">
+        <x-input-label for="genero" :value="__('Género')" />
+        <x-select-input
+            id="genero"
+            class="block mt-1 w-full"
+            wire:model.lazy="genero"
+        >
+            <option selected>Seleccione su género</option>
+            <option id="genero_mujer" value="M">Masculino</option>
+            <option id="genero_hombre" value="F">Femenino</option>
+            <option id="genero_otro" value="O">Otro</option>
+        </x-select-input>
+        <x-input-error :messages="$errors->get('genero')" class="mt-2" />
     </div>
 
     <!-- Email -->

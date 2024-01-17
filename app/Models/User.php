@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Helpers\Helper;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -48,5 +49,19 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function alumno(){
         return $this->hasOne(Alumno::class, 'user_id', 'id');
+    }
+
+    public function getNombreCompleto(){
+        return Helper::concatenarNombre($this->nombre,
+            $this->apellido_paterno,
+            $this->apellido_materno
+        );
+    }
+
+    public function getNombreCompletoPorApellido(){
+        return Helper::concatenarNombre( $this->apellido_paterno,
+            $this->apellido_materno,
+            $this->nombre
+        );
     }
 }

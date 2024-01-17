@@ -24,13 +24,16 @@ class AlumnoFactory extends Factory
             $departamento_id = 1;
         }
 
+        $user = User::factory()->create();
+        $user->assignRole('alumno');
 
         return [
-            'user_id' => User::factory()->create()->id,
+            'user_id' => $user->id,
             'numero_cuenta' => $this->faker->numberBetween(310000000, 410000000),
             'curp' => $this->faker->regexify("[A-Z]{18}"),
             'fecha_nacimiento' => $this->faker->dateTimeBetween('1970-01-01', '2005-01-01'),
-            'sexo' => $this->faker->randomElement(['H', 'M', 'O']),
+            'sexo' => $this->faker->randomElement(['H', 'M']),
+            'genero' => $this->faker->randomElement(['M', 'F', 'O']),
             'telefono_alternativo' => $this->faker->phoneNumber(),
             'telefono_celular' => $this->faker->phoneNumber(),
             'fecha_ingreso_facultad' => $this->faker->dateTimeBetween('1990-01-01', '2023-06-01'),
@@ -48,6 +51,7 @@ class AlumnoFactory extends Factory
             'departamento_id' => $departamento_id,
             'estado_id' => $this->faker->numberBetween(1,4),
             'fecha_estado' => now(),
+            'clave_dgose_id' => 2023,
         ];
     }
 }

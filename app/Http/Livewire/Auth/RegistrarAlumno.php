@@ -32,6 +32,7 @@ class RegistrarAlumno extends Component
     public $curp;
     public $numero_cuenta;
     public $sexo;
+    public $genero;
     public $telefono_alternativo;
     public $telefono_celular;
     public $creditos_pagados;
@@ -73,7 +74,8 @@ class RegistrarAlumno extends Component
             'password' => ['required', 'confirmed', Rules\Password::min(8)->mixedCase()->numbers()->symbols()],
             // Alumno
             'curp' => ['required', 'unique:alumno,curp', new CurpRule()],
-            'sexo' => ['required', "in:H,M,O"],
+            'sexo' => ['required', "in:H,M"],
+            'genero' => ['required', "in:M,F,O"],
             'telefono_alternativo' => 'required|digits:10',
             'telefono_celular' => 'required|digits:10',
             'procedencia' => 'required',
@@ -168,6 +170,7 @@ class RegistrarAlumno extends Component
                 'curp' => strtoupper($filteredData["curp"]),
                 'fecha_nacimiento' => $filteredData['fecha_nacimiento'],
                 'sexo' => strtoupper($filteredData["sexo"]),
+                'genero' => strtoupper($filteredData["genero"]),
                 'telefono_alternativo' => $filteredData["telefono_alternativo"],
                 'telefono_celular' => $filteredData["telefono_celular"],
                 'escuela_id' => $filteredData['escuela'],

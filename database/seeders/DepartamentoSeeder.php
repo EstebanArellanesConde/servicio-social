@@ -18,10 +18,10 @@ class DepartamentoSeeder extends Seeder
     public function run()
     {
         // obtener jefes
-        $userDSAId = User::where('email', '=', 'bety@ingenieria.unam.edu')->first()->id;
+        $userDSAId = User::where('email', '=', 'admin@admin.com')->first()->id;
         $jefeDSA = Jefe::where('user_id', '=', $userDSAId)->first();
 
-        $userDIDId = User::where('email', '=', 'chary.barragan@ingenieria.unam.edu')->first()->id;
+        $userDIDId = User::where('email', '=', 'jefe@jefe.com')->first()->id;
         $jefeDID = Jefe::where('user_id', '=', $userDIDId)->first();
 
         $userDSCId = User::where('email', '=', 'rafael@ingenieria.unam.edu')->first()->id;

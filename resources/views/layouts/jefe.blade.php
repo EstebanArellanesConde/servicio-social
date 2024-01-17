@@ -13,15 +13,6 @@
         <p class="font-bold text-sm text-gray-400 mt-4 px-4">
             Alumnos
         </p>
-        <x-side-bar-link
-            :href="route('jefe.index')"
-            :active="request()->routeis('jefe.index')"
-        >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd" />
-            </svg>
-            Pendientes
-        </x-side-bar-link>
         <x-side-bar-link :href="route('jefe.inscritos')" :active="request()->routeis('jefe.inscritos')">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                 <path d="M11.644 1.59a.75.75 0 01.712 0l9.75 5.25a.75.75 0 010 1.32l-9.75 5.25a.75.75 0 01-.712 0l-9.75-5.25a.75.75 0 010-1.32l9.75-5.25z" />
@@ -44,11 +35,23 @@
             </svg>
             Finalizados
         </x-side-bar-link>
+        <p class="font-bold text-sm text-gray-400 mt-4 px-4">
+            Reportes
+        </p>
+        <x-side-bar-link :href="route('jefe.reportes')" :active="request()->routeis('jefe.reportes')">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+            </svg>
+            Por Revisar
+        </x-side-bar-link>
+
         {{-- ESTADISTICAS - unicamente accesible por jefe de dsa y coordinador   --}}
-        @hasanyrole('dsa|coordinador')
+        @can('ver estadisticas', 'configurar')
             <p class="font-bold text-sm text-gray-400 mt-4 px-4">
                 Administrador
             </p>
+        @endcan
+        @can('ver estadisticas')
             <x-side-bar-link :href="route('jefe.estadisticas')" :active="request()->routeis('jefe.estadisticas')">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path fill-rule="evenodd" d="M2.25 13.5a8.25 8.25 0 018.25-8.25.75.75 0 01.75.75v6.75H18a.75.75 0 01.75.75 8.25 8.25 0 01-16.5 0z" clip-rule="evenodd" />
@@ -56,13 +59,15 @@
                 </svg>
                 Estadísticas
             </x-side-bar-link>
+        @endcan
+        @can('configurar')
             <x-side-bar-link :href="route('jefe.configuracion')" :active="request()->routeis('jefe.configuracion')">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
                 </svg>
                 Configuración
             </x-side-bar-link>
-       @endhasanyrole
+        @endcan
     </x-sidebar>
     <main class="w-full overflow-x-auto">
         <div class="py-6">
@@ -70,7 +75,7 @@
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div id="recipients" class="p-6 space-y-5 text-gray-900 dark:text-gray-100">
                         <div class="flex justify-between">
-                            <h3 class="text-2xl font-bold tracking-wider text-gray-700">
+                            <h3 class="text-2xl font-bold tracking-wider text-gray-700 dark:text-white">
                                 {{ $title }}
                             </h3>
                             @yield('options')
@@ -94,69 +99,11 @@
 @endsection
 
 @push("scripts")
-    <!-- jQuery -->
-    <script rel="preload" type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js" as="script"></script>
-
-    <!--Datatables -->
+    <!-- Datatables -->
     <script rel="preload" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" as="script"></script>
     <script rel="preload" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js" as="script"></script>
-    <script rel="preload" type="text/javascript" language="javascript" src="https://cdn.datatables.net/plug-ins/1.12.1/filtering/type-based/accent-neutralise.js" as="script"></script>
+    <script rel="preload" type="text/javascript"  src="https://cdn.datatables.net/plug-ins/1.12.1/filtering/type-based/accent-neutralise.js" as="script"></script>
 
-    <script>
-
-        function finalizar(id, nombre){
-            Swal.fire({
-                title: `¿Seguro que deseas finalizar el servicio del alumno ${nombre}?`,
-                text: "Se colocará en la sección de Finalizados",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, seguro',
-                cancelButtonText: 'Cancelar',
-                focusCancel: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = `/jefe/finalizar/${id}`;
-                }
-            })
-        }
-
-        function aceptar(id, nombre){
-            Swal.fire({
-                title: `¿Seguro que deseas aceptar al alumno ${nombre}?`,
-                text: "Se colocará en la sección de inscritos",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, seguro',
-                cancelButtonText: 'Cancelar',
-                focusCancel: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = `/jefe/aceptar/${id}`;
-                }
-            })
-        }
-
-        function baja(id, nombre){
-            Swal.fire({
-                title: `¿Seguro que deseas dar de baja al alumno ${nombre}?`,
-                text: "Se colocará en la sección de rechazados",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, seguro',
-                cancelButtonText: 'Cancelar',
-                focusCancel: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = `/jefe/rechazar/${id}`;
-                }
-            })
-        }
-    </script>
+    @vite(['resources/js/jefe.js'])
 @endpush
 

@@ -9,4 +9,5 @@ class EstadoMexico extends Model
 {
     use HasFactory;
     protected $table = "estado_mexico";
+    public $timestamps = false;
 }

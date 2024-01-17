@@ -153,7 +153,7 @@
                 SECRETARÍA GENERAL
                 UNIDAD DE SERVICIOS DE
                 CÓMPUTO ACADÉMICO
-                FING/SG/UNICA/SS/083/2023
+                FING/SG/UNICA/SS/{{ $numAlumno }}/{{ $currentYear }}
             </th>
         </tr>
     </table>
@@ -162,10 +162,10 @@
     <section class="director">
         <div class="director__mensaje">
             <span>
-                DR. JOSÉ ANTONIO HERNÁNDEZ ESPRIÚ
+                {{ App::DIRECTOR['NOMBRE'] }}
             </span>
             <span>
-                Director
+                Director{{ App::DIRECTOR['GENERO'] === 'F' ? 'a' : '' }}
             </span>
             <span>
                 Facultad de Ingeniería, UNAM
@@ -201,7 +201,7 @@
             Me permito informar a usted nuestra conformidad para que el C. <span class="nombre">{{ $nombreCompleto }}</span>, con número de cuenta <span class="bold" id="numero_cuenta">{{ $numeroCuenta }}</span>, de
             la carrera <span class="bold" id="carrera">{{ $carrera }}</span>, que se imparte en la Facultad a su digno cargo, preste su Servicio Social en esta
             Dependencia durante un período de <span class="bold" id="duracion_meses">{{ $duracionMeses }} meses</span>, a partir del <span class="bold" id="fecha_inicio">{{ $fechaInicio }}</span> al <span class="bold" id="fecha_fin">{{ $fechaFin }}</span>, colaborando <span class="bold" id="horas_semana">{{ $horasSemanales }}</span>
-            horas a la semana, con horario de <span class="bold" id="horario">{{ $horaInicio }}-{{ $horaFin }}hrs</span>, en el programa de trabajo Capacitación en Cómputo número <span class="bold" id="numero_programa">2023-12/81-9</span>,
+            horas a la semana, con horario de <span class="bold" id="horario">{{ $horaInicio }}-{{ $horaFin }}hrs</span>, en el programa de trabajo {{ Helper::capitalize(App::DATOS_PROGRAMA['NOMBRE']) }} número <span class="bold" id="numero_programa">{{ $claveDGOSE }}</span>,
             desarrollando las siguientes actividades fundamentales:
         </p>
         <ul class="lista_actividades">
@@ -229,7 +229,7 @@
             <p>
                 Siendo responsable del programa el <span id="responsable">Ing. Enrique Barranco Vite</span> y quien supervisará directamente las actividades del prestador el
                 <br>
-                <span id="jefe_departamento">{{ $jefeDepartamento }}</span>
+                <span id="jefe_departamento">{{ $jefeInmediato }}</span>
             </p>
         </div>
     </section>
@@ -246,9 +246,9 @@
 
     <section class="firmas">
         <div class="firma__responsable">
-            <img width="120" class="firma__responsable-imagen" src="data:image/png;base64,<?php echo base64_encode(file_get_contents(base_path('resources/img/firma_responsable.png'))); ?>">
+            <img width="120" class="firma__responsable-imagen" src="data:image/png;base64,<?php echo base64_encode(file_get_contents(base_path($jefeUNICAFirmaPath))); ?>">
             <p class="upper bold" id="firma__responsable-nombre">
-                ING. ENRIQUE BARRANCO VITE
+                {{ App::RESPONSABLE_PROGRAMA['NOMBRE_COMPLETO'] }}
             </p>
             <p class="cpp">
                 c.c.p. Alumno

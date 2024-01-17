@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\AlumnoEstado;
+use App\Enums\EstadoAlumno;
+use App\Enums\EstadoReporte;
 use App\Models\Departamento;
 use App\Models\Jefe;
 use App\Models\Alumno;
+use App\Models\Reporte;
 
 class JefeController extends Controller
 {
@@ -14,27 +16,11 @@ class JefeController extends Controller
      * desde el constructor, es por eso que lo he declarado
      * en cada método
      */
-    public function index()
-    {
-        $jefe = $this->getJefeByUserId(auth()->user()->id);
-        $departamentosJefe = $this->getJefeDepartamentos($jefe);
-        $alumnosPendientes = $this->getAlumnos(AlumnoEstado::PENDIENTE, $departamentosJefe);
-        // todos los departamentos (abreviaturas)
-        $departamentos = Departamento::all();
-
-        return view('jefe.index', [
-            'alumnosPendientes' => $alumnosPendientes,
-            'departamentos' => $departamentos,
-        ]);
-    }
-
-
-
 
     public function inscritos(){
         $jefe = $this->getJefeByUserId(auth()->user()->id);
         $departamentos = $this->getJefeDepartamentos($jefe);
-        $alumnosInscritos = $this->getAlumnos(AlumnoEstado::ACEPTADO, $departamentos);
+        $alumnosInscritos = $this->getAlumnos(EstadoAlumno::ACEPTADO, $departamentos);
 
         return view('jefe.inscritos', ['alumnosInscritos' => $alumnosInscritos]);
     }
@@ -42,7 +28,7 @@ class JefeController extends Controller
     public function rechazados(){
         $jefe = $this->getJefeByUserId(auth()->user()->id);
         $departamentos = $this->getJefeDepartamentos($jefe);
-        $alumnosRechazados = $this->getAlumnos(AlumnoEstado::RECHAZADO, $departamentos);
+        $alumnosRechazados = $this->getAlumnos(EstadoAlumno::RECHAZADO, $departamentos);
 
         return view('jefe.rechazados', ['alumnosRechazados' => $alumnosRechazados]);
     }
@@ -50,9 +36,32 @@ class JefeController extends Controller
     public function finalizados(){
         $jefe = $this->getJefeByUserId(auth()->user()->id);
         $departamentos = $this->getJefeDepartamentos($jefe);
-        $alumnosFinalizados = $this->getAlumnos(AlumnoEstado::FINALIZADO, $departamentos);
+        $alumnosFinalizados = $this->getAlumnos(EstadoAlumno::FINALIZADO, $departamentos);
 
         return view('jefe.finalizados', ['alumnosFinalizados' => $alumnosFinalizados]);
+    }
+
+    public function reportes(){
+        $jefe = $this->getJefeByUserId(auth()->user()->id);
+        $departamentos = $this->getJefeDepartamentos($jefe);
+
+        $reportes = Reporte::where('reporte.estado_id', EstadoReporte::REVISION)
+            ->join('alumno', 'alumno.id', 'reporte.alumno_id')
+            ->join('departamento', 'departamento.id', 'alumno.departamento_id')
+            ->where(function ($query) use ($departamentos) {
+                foreach ($departamentos as $departamento)
+                {
+                    $query->orWhere('departamento.abreviatura_departamento', $departamento);
+                }
+            })
+            ->select('reporte.*')
+            ->get()
+        ;
+
+
+        return view('jefe.reportes', [
+            'reportes' => $reportes
+        ]);
     }
 
     public function estadisticas(){
@@ -96,20 +105,20 @@ class JefeController extends Controller
         return $alumnos;
     }
     public function pendiente($id){
-        $this->cambiarEstadoAlumno($id, AlumnoEstado::PENDIENTE);
+        $this->cambiarEstadoAlumno($id, EstadoAlumno::PENDIENTE);
         return redirect()->back();
     }
     public function aceptar($id){
-        $this->cambiarEstadoAlumno($id, AlumnoEstado::ACEPTADO);
+        $this->cambiarEstadoAlumno($id, EstadoAlumno::ACEPTADO);
         return redirect()->back();
     }
     public function rechazar($id){
-        $this->cambiarEstadoAlumno($id, AlumnoEstado::RECHAZADO);
+        $this->cambiarEstadoAlumno($id, EstadoAlumno::RECHAZADO);
         return redirect()->back();
     }
 
     public function finalizar($id){
-        $this->cambiarEstadoAlumno($id, AlumnoEstado::FINALIZADO);
+        $this->cambiarEstadoAlumno($id, EstadoAlumno::FINALIZADO);
         return redirect()->back();
     }
 

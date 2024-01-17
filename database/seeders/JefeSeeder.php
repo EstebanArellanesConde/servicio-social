@@ -22,7 +22,7 @@ class JefeSeeder extends Seeder
             'nombre' => 'Beatriz',
             'apellido_paterno' => 'Barrera',
             'apellido_materno' => 'Hernández',
-            'email' => 'bety@ingenieria.unam.edu',
+            'email' => 'admin@admin.com',
             'email_verified_at' => now(),
             'created_at' => now(),
             'updated_at' => now(),
@@ -38,13 +38,14 @@ class JefeSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        $jefeDSA->assignRole('jefe', 'dsa');
+        $jefeDSA->assignRole('jefe');
+        $jefeDSA->givePermissionTo(['ver estadisticas', 'configurar']);
 
         $jefeDID = User::create([ //2
             'nombre' => 'María del Rosario',
             'apellido_paterno' => 'Barragán',
             'apellido_materno' => 'Paz',
-            'email' => 'chary.barragan@ingenieria.unam.edu',
+            'email' => 'jefe@jefe.com',
             'email_verified_at' => now(),
             'created_at' => now(),
             'updated_at' => now(),
@@ -53,7 +54,7 @@ class JefeSeeder extends Seeder
 
         Jefe::create([
             'user_id' => $jefeDID->id,
-            'titulo' => 'M. E.',
+            'titulo' => 'M. E',
             'cargo' => 'Jefa del Departamento de Investigación y Desarrollo',
             'telefono' => '5556220925',
             'created_at' => now(),
@@ -94,16 +95,7 @@ class JefeSeeder extends Seeder
             'password' => Hash::make('password')
         ]);
 
-        Jefe::create([
-            'user_id' => $coordinador->id,
-            'titulo' => 'Ing',
-            'cargo' => 'Coordinadora',
-            'telefono' => '5556220925',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        $coordinador->assignRole('coordinador');
+        $coordinador->assignRole('jefe_documentacion');
 
         $jefeSalas = User::create([ // 5
             'nombre' => 'Cruz Sergio',

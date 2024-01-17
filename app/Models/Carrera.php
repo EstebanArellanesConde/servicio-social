@@ -10,4 +10,10 @@ class Carrera extends Model
     use HasFactory;
 
     protected $table = 'carrera';
+
+    public function division()
+    {
+        return $this->hasOne(Division::class, 'id', 'division_id');
+    }
+
 }

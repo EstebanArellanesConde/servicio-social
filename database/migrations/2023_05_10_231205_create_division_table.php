@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('abreviatura');
             $table->string('subdivision')->nullable();
-            $table->string('titulo_coordinador');
-            $table->string('coordinador_servicio_social');
+            $table->string('coordinador_ss_titulo');
+            $table->string('coordinador_ss_nombre');
+            $table->string('coordinador_ss_genero');
             $table->timestamps();
         });
     }

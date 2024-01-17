@@ -2,6 +2,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Helpers\Helper;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -62,4 +63,7 @@ class Jefe extends Authenticatable implements MustVerifyEmail
         ;
     }
 
+    public function getNombreCompletoConTitulo(){
+        return ucwords($this->titulo . ". " . $this->user->getNombreCompleto());
+    }
 }

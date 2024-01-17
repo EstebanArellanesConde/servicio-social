@@ -14,12 +14,14 @@
     @livewireStyles
 </head>
 <body class="font-sans antialiased">
-    <div class="flex-col min-h-screen bg-gray-100 dark:bg-gray-900 w-full md:flex md:flex-row md:min-h-screen">
+
+    <div
+        class="flex-col min-h-screen bg-gray-100 dark:bg-gray-900 w-full md:flex md:flex-row md:min-h-screen">
         @yield('content')
     </div>
     @livewireScripts
+    <!-- jQuery -->
+    <script rel="preload" type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js" as="script"></script>
     @stack("scripts")
-    {{-- Sweet Alert --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

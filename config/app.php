@@ -188,6 +188,9 @@ return [
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
+        'Helper' => App\Helpers\Helper::class,
+        'Alumno' => App\Models\Alumno::class,
+        'App' => App\app::class,
     ])->toArray(),
 
 ];
