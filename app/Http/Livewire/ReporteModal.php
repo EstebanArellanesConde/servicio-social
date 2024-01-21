@@ -100,7 +100,7 @@ class ReporteModal extends ModalComponent
             'division' =>  $alumno->carrera->division,
             'numeroReporte' => $numeroReporte,
             'claveDGOSE' => $data['claveDGOSE'],
-            'fechaInicio' => Carbon::create($alumno->fecha_inicio)->format('d/m/yy'),
+            'fechaInicio' => Carbon::create($alumno->fecha_inicio)->format('d/m/Y'),
             'fechaHoy' => $this->formatFecha(now()),
             'datos' => $datosPersonales,
             'actividades' => $this->actividades,
@@ -109,7 +109,11 @@ class ReporteModal extends ModalComponent
             ->setPaper($paperSize)
         ;
 
-        Storage::put('reportes/' . $alumno->id . $this->num_reporte . '.pdf', $pdf->download()->getOriginalContent());
+
+        $filename = $alumno->id . $this->num_reporte . '.pdf';
+        $path = 'reportes/' . $filename;
+
+        Storage::put($path, $pdf->download()->getOriginalContent());
 
         $reporte = Reporte::where('alumno_id', $alumno->id)
             ->where('num_reporte', $this->num_reporte)
@@ -117,11 +121,14 @@ class ReporteModal extends ModalComponent
 
         $reporte->update([
             'horas_bimestre_acumuladas' => $horasBimestre,
-            'path' => 'app/reportes/' . $alumno->id . $this->num_reporte . '.pdf',
+            'path' => 'app/' . $path,
             'estado_id' => EstadoReporte::REVISION,
         ]);
 
+        return redirect(request()->header('Referer'));
+
     }
+
 
     public function formatFecha($fecha){
         $fechaInicioNoFormat = Carbon::create($fecha);

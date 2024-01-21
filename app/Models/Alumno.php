@@ -99,7 +99,7 @@ class Alumno extends Authenticatable implements MustVerifyEmail
     }
 
     public function departamento(){
-        return $this->belongsTo(Departamento::class);
+        return $this->hasOne(Departamento::class, 'id', 'departamento_id');
     }
 
     public function domicilio(){

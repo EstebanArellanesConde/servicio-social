@@ -13,10 +13,6 @@ class EstadoReporteSeeder extends Seeder
     public function run(): void
     {
         EstadoReporte::create([
-            'nombre' => 'INICIAL',
-            'descripcion' => 'Se podrá crear el reporte una vez se solicite'
-        ]);
-        EstadoReporte::create([
             'nombre' => 'ESPERA',
             'descripcion' => 'Puedes generar tu reporte'
         ]);

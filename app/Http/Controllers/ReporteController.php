@@ -47,7 +47,9 @@ class ReporteController extends Controller
 
     public function download($id){
         $reporte = Reporte::find($id);
-        return Storage::download($reporte->path);
+        $filename = $reporte->alumno_id . $reporte->num_reporte . '.pdf';
+
+        return Storage::download('reportes/' . $filename, 'reporte_' . $reporte->num_reporte . '.pdf');
     }
 
     public function firmar(){

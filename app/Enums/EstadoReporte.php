@@ -4,10 +4,9 @@ namespace App\Enums;
 
 enum EstadoReporte: int
 {
-    case INICIAL = 1;
-    case ESPERA = 2;
-    case REVISION = 3;
-    case CORRECCION = 4;
+    case ESPERA = 1;
+    case REVISION = 2;
+    case CORRECCION = 3;
 
-    case ACEPTADO = 5;
+    case ACEPTADO = 4;
 }

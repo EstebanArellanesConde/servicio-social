@@ -23,9 +23,11 @@ class AlumnoController extends Controller
     public function reportes()
     {
         $alumno = Alumno::firstWhere("user_id", auth()->user()->id);
+        $reportes = $alumno->reportes->where('fecha_disponible_llenado', '<=', now());
 
         return view('alumno.reportes', [
             'alumno' => $alumno,
+            'reportes' => $reportes,
         ]);
     }
 

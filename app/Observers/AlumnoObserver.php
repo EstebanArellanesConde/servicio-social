@@ -6,6 +6,7 @@ use App\Enums\Departamento;
 use App\Enums\EstadoReporte;
 use App\Models\Alumno;
 use App\Models\Reporte;
+use Illuminate\Support\Carbon;
 
 class AlumnoObserver
 {
@@ -24,7 +25,7 @@ class AlumnoObserver
                 'alumno_id' => $alumno->id,
                 'horas_bimestre_acumuladas' => 0,
                 'path' => null,
-                'estado_id' => EstadoReporte::INICIAL
+                'estado_id' => EstadoReporte::ESPERA
             ]);
         }
 
@@ -42,6 +43,24 @@ class AlumnoObserver
         }
 
         return false;
+    }
+
+    public function updating(Alumno $alumno): void
+    {
+        /**
+         * Cuando se le asigna una fecha de inicio al alumno
+         * se debe actualizar las fechas de entrega a sus reportes bimestrales
+         */
+        $alumno->fecha_inicio;
+        $contadorBimestral = 2;
+        if($alumno->isDirty('fecha_inicio')){
+            // se debe usar paso por referencia par modificar la variable fuera del scope
+            $alumno->reportes->each(function($reporte) use($alumno, &$contadorBimestral){
+                $reporte->fecha_disponible_llenado = Carbon::create($alumno->fecha_inicio)->addMonths($contadorBimestral);
+                $reporte->save();
+                $contadorBimestral += 2;
+            });
+        }
     }
 
 

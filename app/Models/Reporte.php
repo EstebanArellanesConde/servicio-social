@@ -17,6 +17,7 @@ class Reporte extends Model
         'path',
         'estado_id',
         'observaciones',
+        'fecha_disponible_llenado',
     ];
 
     public function sequence(){

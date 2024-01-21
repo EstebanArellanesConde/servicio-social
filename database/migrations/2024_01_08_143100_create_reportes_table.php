@@ -33,6 +33,8 @@ return new class extends Migration
                 ->onDelete('restrict')
                 ->onUpdate('cascade');
 
+            $table->date('fecha_disponible_llenado')->nullable();
+
             $table->text('observaciones')->nullable();
 
             $table->timestamps();
