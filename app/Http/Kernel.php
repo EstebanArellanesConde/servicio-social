@@ -43,6 +43,13 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+
+        // conjunto para revisar si esta autenticado y verificado
+        'check_user' => [
+            'auth',
+            'verified',
+        ],
+
     ];
 
     /**

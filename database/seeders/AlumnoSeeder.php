@@ -59,7 +59,6 @@ class AlumnoSeeder extends Seeder
             'fecha_estado' => now(),
             'estado_id' => 5,
             'domicilio_id' => 1,
-            'clave_dgose_id' => 2023,
         ]);
 
         User::find($alumno_1->id)->assignRole('alumno');

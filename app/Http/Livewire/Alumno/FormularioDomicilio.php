@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Alumno;
 
+use App\Enums\EstadoAlumno;
 use App\Models\Alumno;
 use App\Models\Colonia;
 use App\Models\Domicilio;
@@ -20,8 +21,7 @@ class FormularioDomicilio extends Component
     public $colonia;
     public $municipio;
     public $estado;
-    public $fecha_inicio;
-    public $fecha_fin;
+
     protected $listeners = [
         'getDatosColonia'
     ];
@@ -32,8 +32,9 @@ class FormularioDomicilio extends Component
 
     public function getDatosColonia(){
         $this->colonias = Colonia::where('codigo_postal', '=', $this->codigo_postal)->get();
-        $this->municipio = strtoupper($this->colonias[0]->municipio->nombre);
-        $this->estado = strtoupper($this->colonias[0]->municipio->estado->nombre);
+        $this->colonia = $this->colonias[0]->id;
+        $this->municipio = $this->colonias[0]->municipio;
+        $this->estado = $this->colonias[0]->estado;
     }
 
     public function rules(){
@@ -42,8 +43,6 @@ class FormularioDomicilio extends Component
             'calle' => ['required'],
             'colonia' => ['required'],
             'numero_externo' => ['required'],
-            'fecha_inicio' => ['required'],
-            'fecha_fin' => ['required'],
         ];
     }
 
@@ -61,11 +60,10 @@ class FormularioDomicilio extends Component
 
             $alumno = Alumno::where('user_id', '=', auth()->user()->id)->first();
             $alumno->domicilio_id = $domicilio->id;
-            $alumno->fecha_inicio = $data['fecha_inicio'];
-            $alumno->fecha_fin = $data['fecha_fin'];
+            $alumno->estado_id = EstadoAlumno::ACEPTADO;
 
             $alumno->save();
-            $alumno->setEstado('ACEPTADO');
+
             DB::commit();
             return redirect(RouteServiceProvider::HOME . "alumno");
         }

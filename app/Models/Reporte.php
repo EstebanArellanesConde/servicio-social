@@ -18,6 +18,8 @@ class Reporte extends Model
         'estado_id',
         'observaciones',
         'fecha_disponible_llenado',
+        'alumno_id',
+        'horas_bimestre_acumuladas',
     ];
 
     public function sequence(){
@@ -31,10 +33,10 @@ class Reporte extends Model
     }
 
     public function estado(){
-        return $this->hasOne(EstadoReporte::class, 'id', 'estado_id');
+        return $this->belongsTo(EstadoReporte::class, 'id', 'estado_id');
     }
 
     public function alumno(){
-        return $this->hasOne(Alumno::class, 'id', 'alumno_id');
+        return $this->belongsTo(Alumno::class, 'id', 'alumno_id');
     }
 }

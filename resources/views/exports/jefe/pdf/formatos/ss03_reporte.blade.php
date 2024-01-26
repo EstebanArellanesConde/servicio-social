@@ -73,7 +73,7 @@
         <div>
             <p>
                 Me permito presentar a la consideración de usted, el {{ $numeroReporte }} Informe Bimestral de <br>
-                Actividades correspondientes al período comprendido del {{ $datos['periodo_inicio'] }} al {{ $datos['periodo_fin'] }}.
+                Actividades correspondientes al período comprendido del {{ $periodoInicio }} al {{ $periodoFin }}.
             </p>
         </div>
         <table class="main_table">
@@ -136,7 +136,7 @@
                     {{ $horasBimestre }} Horas
                 </td>
                 <td class="center horas main_td">
-                    320 Horas
+                    {{ $totalAcumuladas }} Horas
                 </td>
             </tr>
         </table>

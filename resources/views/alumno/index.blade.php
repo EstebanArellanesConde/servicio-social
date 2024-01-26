@@ -3,8 +3,7 @@
 @section('main')
     <div>
         <div class="max-w-7xl">
-
-            @if($alumno->hasEstado('aceptado sin datos'))
+            @if($alumno->estado_id == \App\Enums\EstadoAlumno::PREACEPTADO->value)
                 {{-- ALERTA --}}
                 <x-alert type="warn">
                     <x-slot:title>

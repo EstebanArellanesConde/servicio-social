@@ -16,8 +16,7 @@ class DomicilioSeeder extends Seeder
         DB::table('domicilio')->insert([
             'calle' => 'MIGUEL HIDALGO',
             'numero_externo' => 20,
-            'colonia_id' => 70850,
-
+            'colonia_id' => 2,
         ]);
     }
 }

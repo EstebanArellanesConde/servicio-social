@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Enums\Departamento;
 use App\Enums\EstadoReporte;
 use App\Models\Alumno;
+use App\Models\HistoricoEstadoAlumno;
 use App\Models\Reporte;
 use Illuminate\Support\Carbon;
 
@@ -61,6 +62,19 @@ class AlumnoObserver
                 $contadorBimestral += 2;
             });
         }
+
+        /**
+         * Cuando se cambia de estado se agrega al historico
+         */
+        if($alumno->isDirty('estado_id')){
+            $fecha = now();
+            $alumno->fecha_estado = $fecha;
+            HistoricoEstadoAlumno::create([
+                'fecha_estado' => $fecha,
+                'estado_id' => $alumno->estado_id,
+                'alumno_id' => $alumno->id,
+            ]);
+        }
     }
 
 
@@ -69,7 +83,6 @@ class AlumnoObserver
      */
     public function updated(Alumno $alumno): void
     {
-        //
     }
 
     /**

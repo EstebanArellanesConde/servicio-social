@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Models\Colonia;
 use App\Models\EstadoMexico;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\DocBlock\Tags\Throws;
+use Symfony\Component\HttpFoundation\File\Exception\NoFileException;
 
 class ColoniaSeeder extends Seeder
 {
@@ -15,30 +18,22 @@ class ColoniaSeeder extends Seeder
      */
     public static function run(): void
     {
-        $file = file_get_contents('database/seeders/domicilios.json');
-        $estados = json_decode($file, true);
+        $path = 'database/data/colonias.txt';
+        $csvFile = fopen(base_path($path), "r");
 
-        foreach ($estados as $estado => $municipios){
-            $estadoId = DB::table('estado_mexico')->insertGetId([
-                'nombre' => $estado,
+        while (($data = fgetcsv($csvFile, 2000, "|")) !== FALSE) {
+            Colonia::create([
+                "codigo_postal" => $data['0'],
+                "colonia" => $data['1'],
+                "municipio" => $data['3'],
+                "estado" => $data['4'],
             ]);
-            foreach ($municipios as $municipio => $colonias){
-                $municipioId = DB::table('municipio')->insertGetId([
-                    'nombre' => $municipio,
-                    'estado_id' => $estadoId,
-                ]);
-                foreach ($colonias as $colonia){
-                    DB::table('colonia')->insert([
-                        'municipio_id' => $municipioId,
-                        'nombre' => $colonia['colonia'],
-                        'codigo_postal' => $colonia['codigo_postal'],
-                    ]);
-                }
-            }
         }
 
-        // cambiar México por Estado de México
-        EstadoMexico::where('nombre', 'México')->update(['nombre' => 'Estado de México' ]);
+        fclose($csvFile);
 
+        // cambiar nombre de México a estado de méxico
+        Colonia::where('estado', '=', 'México')
+            ->update(['estado' => 'Estado de México']);
     }
 }

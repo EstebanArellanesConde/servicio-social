@@ -11,7 +11,11 @@ class ClaveDGOSE extends Model
 {
     use HasFactory;
     protected $table = 'clave_dgose';
-    protected $primaryKey = 'anio';
+
+    protected $fillable = [
+        'anio',
+        'clave'
+    ];
 
     public static function getClaveActiva() : string
     {
@@ -22,6 +26,18 @@ class ClaveDGOSE extends Model
 
         return ClaveDGOSE::where('anio', $currentYear)->first()->clave;
     }
+
+    public static function getClaveActivaId() : int
+    {
+        $currentYear = Carbon::now()->year;
+        if(!ClaveDGOSE::existsClaveActiva()){
+            throw new NoClaveDGOSEException("Aún no se registra una clave DGOSE para el año " . $currentYear);
+        }
+
+        return ClaveDGOSE::where('anio', $currentYear)->first()->anio;
+    }
+
+
 
     /**
      * Verifica si existe clave para iniciar los procesos de servicio del
@@ -39,5 +55,9 @@ class ClaveDGOSE extends Model
         }
 
         return true;
+    }
+
+    public function periodos(){
+        return $this->hasMany(Periodo::class, 'clave_dgose_id', 'id');
     }
 }

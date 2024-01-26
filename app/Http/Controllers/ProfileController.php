@@ -16,8 +16,20 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        if($request->user()->hasRole('alumno')) {
+            $layout = 'layouts.alumno';
+        } else if($request->user()->hasRole('jefe_documentacion')){
+            $layout = 'layouts.jefe_documentacion';
+        } else if($request->user()->hasRole('jefe')){
+            $layout = 'layouts.jefe';
+        } else {
+            return abort(403, 'Sin usuario autorizado');
+        }
+
+
         return view('profile.edit', [
             'user' => $request->user(),
+            'layout' => $layout
         ]);
     }
 

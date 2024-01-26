@@ -2,7 +2,6 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use HighSolutions\EloquentSequence\Sequence;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,12 +9,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\ModelStatus\HasStatuses;
 use Spatie\Permission\Traits\HasRoles;
 
 class Alumno extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, Sequence;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * @var \App\Enums\Departamento|mixed
@@ -76,22 +74,16 @@ class Alumno extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function sequence(){
-        return [
-            'group' => 'clave_dgose_id',
-            'fieldName' => 'num_alumno',
-            'orderFrom1' => true,
-            'notUpdateOnDelete' => true,
-            'disableTimestamps' => false
-        ];
-    }
-
     public function user(){
         return $this->belongsTo(User::class);
     }
 
     public function escuela(){
         return $this->belongsTo(Escuela::class);
+    }
+
+    public function servicio(){
+        return $this->hasOne(AlumnoServicio::class);
     }
 
     public function carrera(){

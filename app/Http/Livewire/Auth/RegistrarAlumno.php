@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Auth;
 
+use App\Enums\EstadoAlumno;
 use App\Models\Alumno;
 use App\Models\Carrera;
 use App\Models\Departamento;
@@ -126,7 +127,7 @@ class RegistrarAlumno extends Component
             'telefono_celular' => ["digits:10"],
             'hora_inicio' => ['required', new HoraInicioRule($this->hora_inicio, $this->duracion_servicio, $this->getHoraFin($this->hora_inicio, $this->duracion_servicio))],
             'hora_fin' => ['required'],
-            'password' => ['required', 'confirmed', Rules\Password::min(8)->mixedCase()->numbers()->symbols()],
+            'password' => ['required', Rules\Password::min(8)->mixedCase()->numbers()->symbols()],
             'procedencia' => 'required',
             'numero_cuenta' => ['required_without:escuela_text', 'digits:9', 'nullable'],
             'creditos_pagados' => ['required_unless:procedencia,2', 'numeric', 'min:1', 'nullable'],
@@ -184,7 +185,7 @@ class RegistrarAlumno extends Component
                 'pertenencia_unica' => $filteredData["pertenencia_unica"],
                 'departamento_id' => $filteredData['departamento_id'],
                 'fecha_estado' => now(),
-                'estado_id' => 3,
+                'estado_id' => EstadoAlumno::REGISTRADO,
             ]);
 
 

@@ -1,5 +1,5 @@
 {{-- Verifica si es alumno o jefe para mostrar el sidebar indicado --}}
-@extends( (auth()->user()->hasRole('jefe') ? 'layouts.jefe' : 'layouts.alumno'), ['title' => ''] )
+@extends( $layout, ['title' => ''] )
 
 @section('main')
     <div>
@@ -18,7 +18,7 @@
                     </div>
                 @endrole
                 @role('alumno')
-                    @if(auth()->user()->alumno->hasEstado("ACEPTADO SIN DATOS"))
+                    @if(auth()->user()->alumno->estado_id == \App\Enums\EstadoAlumno::PREACEPTADO->value)
                     {{-- ALERTA --}}
                     <x-alert type="warn">
                         <x-slot:title>

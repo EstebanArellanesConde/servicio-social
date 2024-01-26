@@ -16,17 +16,17 @@ class EstadoSeeder extends Seeder
     public function run()
     {
         DB::table('estado_alumno')->insert([ //1
-            'nombre' => 'ACEPTADO',
+            'nombre' => 'REGISTRADO',
             'activo' => true,
         ]);
 
         DB::table('estado_alumno')->insert([ //2
-            'nombre' => 'RECHAZO',
+            'nombre' => 'PREACEPTADO',
             'activo' => true,
         ]);
 
         DB::table('estado_alumno')->insert([ //3
-            'nombre' => 'PENDIENTE',
+            'nombre' => 'ACEPTADO',
             'activo' => true,
         ]);
 
@@ -36,7 +36,7 @@ class EstadoSeeder extends Seeder
         ]);
 
         DB::table('estado_alumno')->insert([ //4
-            'nombre' => 'ACEPTADO SIN DATOS',
+            'nombre' => 'RECHAZADO',
             'activo' => true,
         ]);
     }

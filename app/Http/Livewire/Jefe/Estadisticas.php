@@ -41,10 +41,7 @@ class Estadisticas extends Component
     public function mount(){
         $this->departamento_abreviatura = 'all';
         $this->departamentos = Departamento::all('departamento', 'abreviatura_departamento');
-        $this->pendientes = $this->getNumeroDeAlumnosByEstadoId(EstadoAlumno::PENDIENTE);
         $this->incritos = $this->getNumeroDeAlumnosByEstadoId(EstadoAlumno::ACEPTADO);
-        $this->rechazados = $this->getNumeroDeAlumnosByEstadoId(EstadoAlumno::RECHAZADO);
-        $this->finalizados = $this->getNumeroDeAlumnosByEstadoId(EstadoAlumno::FINALIZADO);
     }
 
     public function show(){
@@ -55,10 +52,7 @@ class Estadisticas extends Component
         $this->departamentos = Departamento::all('departamento', 'abreviatura_departamento');
         return view('livewire.jefe.estadisticas',[
             'departamentos' => $this->departamentos,
-            'pendientes' => $this->pendientes,
             'incritos' => $this->incritos,
-            'rechazados' => $this->rechazados,
-            'finalizados' => $this->finalizados,
         ]);
     }
 }

@@ -9,9 +9,13 @@ class Colonia extends Model
 {
     use HasFactory;
     protected $table = 'colonia';
+    public $timestamps = false;
 
-    public function municipio(){
-        return $this->hasOne(Municipio::class, 'id', 'municipio_id');
-    }
+    protected $fillable = [
+        'codigo_postal',
+        'colonia',
+        'municipio',
+        'estado'
+    ];
 
 }

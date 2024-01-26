@@ -13,7 +13,15 @@ return new class extends Migration
     {
         Schema::create('periodo', function (Blueprint $table) {
             $table->id();
-            $table->string('periodo', 7);
+
+            $table->unsignedBigInteger('clave_dgose_id');
+            $table->foreign('clave_dgose_id')
+                ->references('id')
+                ->on('clave_dgose')
+                ->onDelete('restrict')
+                ->onUpdate('cascade');
+
+            $table->string('periodo', 7)->unique();
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
             $table->timestamps();

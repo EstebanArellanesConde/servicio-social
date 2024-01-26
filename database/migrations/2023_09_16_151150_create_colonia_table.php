@@ -13,16 +13,13 @@ return new class extends Migration
     {
         Schema::create('colonia', function (Blueprint $table) {
             $table->id();
-            // agregar zero fill
-            $table->unsignedInteger('codigo_postal');
-            $table->string('nombre');
-            $table->unsignedBigInteger('municipio_id');
-            $table->foreign('municipio_id')
-                ->references('id')
-                ->on('municipio')
-                ->onDelete('restrict')
-                ->onUpdate('cascade');
+            $table->string('codigo_postal');
+            $table->string('colonia');
+            $table->string('municipio');
+            $table->string('estado');
 
+            $table->index('codigo_postal');
+            $table->index('estado');
         });
     }
 

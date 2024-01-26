@@ -94,14 +94,6 @@ return new class extends Migration
                 ->onDelete('restrict')
                 ->onUpdate('cascade');
 
-            $table->unsignedBigInteger('clave_dgose_id')->nullable();
-            $table->foreign('clave_dgose_id')
-                ->references('anio')
-                ->on('clave_dgose')
-                ->onDelete('restrict')
-                ->onUpdate('cascade');
-
-            $table->integer('num_alumno')->unsigned();
             $table->timestamps();
         });
     }

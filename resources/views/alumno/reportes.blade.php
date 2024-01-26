@@ -60,7 +60,7 @@
                             <x-slot:button>
                                 <x-primary-button
                                     class="text-center block w-full"
-                                    onclick="Livewire.emit('openModal', 'reporte-modal', {{ json_encode(['num_reporte' => $reporte->num_reporte ]) }} )"
+                                    onclick="Livewire.emit('openModal', 'alumno.reporte-modal', {{ json_encode(['num_reporte' => $reporte->num_reporte ]) }} )"
                                 >
                                     CREAR
                                 </x-primary-button>
@@ -68,7 +68,7 @@
                             @break
                         @case( \App\Enums\EstadoReporte::ACEPTADO->value)
                             <x-slot:button>
-                                <form action="{{ route('alumno.reportes.download', ['id' => $reporte->id]) }}">
+                                <form action="{{ route('alumno.reportes.download', ['reporte' => $reporte]) }}">
                                     <x-primary-button
                                         class="text-center block w-full"
                                     >
@@ -81,7 +81,7 @@
                             <x-slot:button>
                                 <x-primary-button
                                     class="text-center block w-full"
-                                    onclick="Livewire.emit('openModal', 'reporte-modal', {{ json_encode(['num_reporte' => $reporte->num_reporte ]) }} )"
+                                    onclick="Livewire.emit('openModal', 'alumno.reporte-modal', {{ json_encode(['num_reporte' => $reporte->num_reporte ]) }} )"
                                 >
                                     CREAR
                                 </x-primary-button>

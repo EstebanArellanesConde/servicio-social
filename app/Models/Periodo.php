@@ -9,4 +9,14 @@ class Periodo extends Model
 {
     use HasFactory;
     protected $table = 'periodo';
+    protected $fillable = [
+        'periodo',
+        'fecha_inicio',
+        'fecha_fin'
+    ];
+
+
+    public function claveDGOSE(){
+        return $this->hasOne(ClaveDGOSE::class);
+    }
 }

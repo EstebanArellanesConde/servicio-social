@@ -62,7 +62,7 @@
                             <option selected>Seleccione colonia</option>
                         @else
                             @foreach($colonias as $colonia)
-                                <option id="colonia_{{ $colonia->id }}" value="{{$colonia->id}}">{{ strtoupper($colonia->nombre) }}</option>
+                                <option id="colonia_{{ $colonia->id }}" value="{{$colonia->id}}">{{ $colonia->colonia }}</option>
                             @endforeach
                         @endif
                     </x-select-input>
@@ -96,46 +96,7 @@
 
         </div>
 
-        <div class="mt-4 space-y-4">
-            <header>
-                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                    {{ __('Actualizar Fechas') }}
-                </h2>
-
-                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    {{ __('Ingresa las fechas dadas por el encargado de tu servicio social') }}
-                </p>
-            </header>
-            <div>
-                <x-input-error :messages="$errors->get('fecha_inicio')" class="mt-2" />
-                <x-input-error :messages="$errors->get('fecha_fin')" class="mt-2" />
-            </div>
-            <div class="md:flex space-x-2">
-                <div class="w-1/4">
-                    <x-input-label for="fecha_inicio" :value="__('Fecha Inicio')" />
-                    <x-text-input
-                        wire:model.lazy="fecha_inicio"
-                        id="fecha_inicio"
-                        class="block mt-1 w-full"
-                        type="date"
-                        :value="old('fecha_inicio')"
-                    />
-                </div>
-                <div class="w-1/4">
-                    <x-input-label for="fecha_fin" :value="__('Fecha Fin')" />
-                    <x-text-input
-                        wire:model.lazy="fecha_fin"
-                        id="fecha_fin"
-                        class="block mt-1 w-full"
-                        type="date"
-                        :value="old('fecha_fin')"
-                    />
-                </div>
-            </div>
-        </div>
-
         <div class="flex items-center justify-between mt-4">
-
             <x-primary-button>
                 {{ __('Actualizar Datos') }}
             </x-primary-button>

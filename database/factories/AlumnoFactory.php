@@ -51,7 +51,6 @@ class AlumnoFactory extends Factory
             'departamento_id' => $departamento_id,
             'estado_id' => $this->faker->numberBetween(1,4),
             'fecha_estado' => now(),
-            'clave_dgose_id' => 2023,
         ];
     }
 }
