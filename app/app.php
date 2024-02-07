@@ -29,12 +29,12 @@ class app
     ];
 
     const RESPONSABLE_PROGRAMA = [
-        "NOMBRE_COMPLETO" => "ING. ENRIQUE BARRANCO VITE",
+        "NOMBRE_COMPLETO" => "ENRIQUE BARRANCO VITE",
         "TITULO" => "ING",
         "NOMBRE" => "ENRIQUE",
         "APELLIDO_PATERNO" => "BARRANCO",
         "APELLIDO_MATERNO" => "VITE",
-        "FIRMA_PATH" => "resources/img/firma_responsable.png",
+        "FIRMA_PATH" => "firmas/firma_responsable.png",
     ];
 
     const DIRECTOR = [
@@ -51,7 +51,7 @@ class app
     const NUMERO_ORDINAL = [
         "1" =>  "Primer",
         "2" =>  "Segundo",
-        "3" =>  "Tercero",
+        "3" =>  "Tercer",
         "4" =>  "Cuarto",
         "5" =>  "Quinto",
         "6" =>  "Sexto",

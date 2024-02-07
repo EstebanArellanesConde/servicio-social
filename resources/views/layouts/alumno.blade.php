@@ -16,9 +16,22 @@
             Reportes
         </x-side-bar-link>
     </x-sidebar>
-    <main class="w-full p-6">
-        @yield('main')
-    </main>
+    <div class="flex flex-col">
+
+        <main class="w-full p-6">
+            @if (session()->has('success'))
+                <div class="bg-green-500 text-white">
+                    <p>{{ session('success') }}</p>
+                </div>
+            @elseif($errors->any())
+                <div class="bg-red-500 text-white">
+                    <p>{{ $errors->first() }}</p>
+                </div>
+            @endif
+
+            @yield('main')
+        </main>
+    </div>
 @endsection
 
 @push('scripts')

@@ -60,7 +60,7 @@ class FormularioDomicilio extends Component
 
             $alumno = Alumno::where('user_id', '=', auth()->user()->id)->first();
             $alumno->domicilio_id = $domicilio->id;
-            $alumno->estado_id = EstadoAlumno::ACEPTADO;
+            $alumno->estado_id = EstadoAlumno::PREACEPTADO->value;
 
             $alumno->save();
 

@@ -18,13 +18,13 @@ class Reporte extends Model
         'estado_id',
         'observaciones',
         'fecha_disponible_llenado',
-        'alumno_id',
+        'alumno_servicio_id',
         'horas_bimestre_acumuladas',
     ];
 
     public function sequence(){
         return [
-            'group' => 'alumno_id',
+            'group' => 'alumno_servicio_id',
             'fieldName' => 'num_reporte',
             'orderFrom1' => true,
             'notUpdateOnDelete' => true,
@@ -33,10 +33,10 @@ class Reporte extends Model
     }
 
     public function estado(){
-        return $this->belongsTo(EstadoReporte::class, 'id', 'estado_id');
+        return $this->belongsTo(EstadoReporte::class);
     }
 
-    public function alumno(){
-        return $this->belongsTo(Alumno::class, 'id', 'alumno_id');
+    public function servicio(){
+        return $this->belongsTo(AlumnoServicio::class, 'alumno_servicio_id', 'id');
     }
 }

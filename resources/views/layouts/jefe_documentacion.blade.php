@@ -66,6 +66,7 @@
                                 </x-slot:message>
                             </x-alert>
                         @endif
+                        @yield('messages')
                         @yield('main')
                     </div>
                 </div>

@@ -20,7 +20,7 @@
             @foreach($reportes as $reporte)
                 @php
                     $reportes_modal_id = "modal_reporte_" . $reporte->id;
-                    $alumno = $reporte->alumno;
+                    $alumno = $reporte->servicio->alumno;
                 @endphp
                 <tr>
                     @if($alumno->numero_cuenta == null)
@@ -74,7 +74,7 @@
                                 <form action="{{ route('jefe.reportes.aceptar', ['id' => $reporte->id]) }}" method="POST">
                                     @method('PUT')
                                     @csrf
-                                    <canvas class="bg-white" onmouseout="saveSign()"></canvas>
+                                    <canvas style="border: solid 1px black;" class="bg-white rounded" onmouseout="saveSign()"></canvas>
                                     <input type="hidden" name="sign" id="sign">
                                     <x-primary-button
                                         class="text-xl">
@@ -110,7 +110,6 @@
 
         function showReporte(reporteId){
             let url = "{{route('jefe.reportes.show', '')}}"+"/"+reporteId;
-            console.log(url);
             PDFObject.embed(url, `#reporte_${reporteId}`, options);
         }
 

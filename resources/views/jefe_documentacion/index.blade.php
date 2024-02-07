@@ -1,9 +1,23 @@
 @extends('layouts.jefe_documentacion', ['title' => 'Pendientes'])
 
-@section('options')
-@endsection
-
 @section('main')
+    @if(isset($alumnos) && isset($clave_dgose))
+        @isset($clave_dgose)
+            <div class="border-l-4 border-sky-500 pl-2 flex items-center gap-4">
+                <p>
+                    CLAVE DGOSE: <span>{{ $clave_dgose }}</span>
+                </p>
+                <div class="rounded px-2 py-1 bg-sky-700 text-white">
+                    <p>
+                        ACTIVA
+                    </p>
+                </div>
+            </div>
+        @endisset
+    <div>
+        <x-input-error :messages="$errors->get('fecha_inicio')" class="mt-2" />
+        <x-input-error :messages="$errors->get('fecha_fin')" class="mt-2" />
+    </div>
     <div class="top"></div>
     <!--Contenedor de la tabla-->
     <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
@@ -158,11 +172,12 @@
                                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                                     {{ __('Asigne fecha de inicio y fin, se le asociará al alumno una clave DGOSE') }}
                                 </p>
+
+                                <p>
+                                    Duración de servicio del alumno: <span class="font-bold uppercase">{{$alumno->duracion_servicio}} meses</span>
+                                </p>
                             </div>
                             <div class="space-y-4">
-                                <div>
-                                    <x-input-error :messages="$errors->get('departamento')" class="mt-2" />
-                                </div>
                                 <div class="mt-4 md:flex md:space-x-2">
                                     <div class="w-full space-y-2">
                                         <x-input-label for="fecha_inicio" :value="__('Fecha Inicio')" />
@@ -194,5 +209,23 @@
 
     </div>
     <div class="bottom"></div>
-    <!--Contenedor de la tabla-->
+    @endif
+@endsection
+
+@section('messages')
+    @if(!isset($clave_dgose))
+        <x-alert type="error">
+            <x-slot:title>
+                No existe clave DGOSE activa para el año {{ now()->year }}
+            </x-slot:title>
+            <x-slot:message>
+                Para dar de alta a alumnos pendientes agrega una clave DGOSE para el año 2024
+            </x-slot:message>
+            <a href="{{ route('configuracion.index') }}">
+                <x-primary-button type="button">
+                    AGREGAR CLAVE
+                </x-primary-button>
+            </a>
+        </x-alert>
+    @endif
 @endsection

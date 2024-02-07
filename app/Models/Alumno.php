@@ -1,7 +1,6 @@
 <?php
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,17 +37,13 @@ class Alumno extends Authenticatable implements MustVerifyEmail
         'telefono_celular',
         'escuela_id',
         'carrera_id',
-        //'fecha_ingreso_facultad',
         'creditos_pagados',
         'avance_porcentaje',
-
         'promedio',
         'duracion_servicio',
-
         'hora_inicio',
         'hora_fin',
         'pertenencia_unica',
-
         'departamento_id',
         'domicilio_id',
         'estado_id',
@@ -113,6 +108,7 @@ class Alumno extends Authenticatable implements MustVerifyEmail
     public function reportes(){
         return $this->hasMany(Reporte::class);
     }
+
 
     protected function direccion(): Attribute
     {

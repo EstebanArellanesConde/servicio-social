@@ -227,7 +227,7 @@
 
         <div class="responsables">
             <p>
-                Siendo responsable del programa el <span id="responsable">Ing. Enrique Barranco Vite</span> y quien supervisará directamente las actividades del prestador el
+                Siendo responsable del programa el <span id="responsable">{{ $nombreConTituloResponsable }}</span> y quien supervisará directamente las actividades del prestador el
                 <br>
                 <span id="jefe_departamento">{{ $jefeInmediato }}</span>
             </p>
@@ -246,18 +246,18 @@
 
     <section class="firmas">
         <div class="firma__responsable">
-            <img width="120" class="firma__responsable-imagen" src="data:image/png;base64,<?php echo base64_encode(file_get_contents(base_path($jefeUNICAFirmaPath))); ?>">
+            <img width="120" class="firma__responsable-imagen" src="data:image/png;base64,{{ $base64FirmaResponsable }}">
             <p class="upper bold" id="firma__responsable-nombre">
-                {{ App::RESPONSABLE_PROGRAMA['NOMBRE_COMPLETO'] }}
+                {{ App::RESPONSABLE_PROGRAMA['TITULO'] }}. {{ App::RESPONSABLE_PROGRAMA['NOMBRE_COMPLETO'] }}
             </p>
             <p class="cpp">
                 c.c.p. Alumno
             </p>
             <div class="firma__jefe">
                 <div class="firma__jefe-container">
-                    <img width="120" id="cpp_firma_imagen" src="data:image/png;base64,<?php echo base64_encode(file_get_contents(base_path('resources/img/firma_ejemplo.png'))); ?>">
+                    <img width="120" id="cpp_firma_imagen" src="data:image/png;base64,{{ $base64RubricaJefeDirecto }}">
                     <div class="iniciales">
-                        EBV/MRBP/igfm
+                        {{ $rubricaIniciales }}
                     </div>
                 </div>
             </div>

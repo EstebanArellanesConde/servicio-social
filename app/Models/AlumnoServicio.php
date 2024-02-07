@@ -27,12 +27,25 @@ class AlumnoServicio extends Model
         ];
     }
 
-    public function claveDGOSE(){
-        return $this->hasOne(ClaveDGOSE::class, 'id', 'clave_dgose_id');
+    public function clave_dgose(){
+        return $this->belongsTo(ClaveDGOSE::class);
     }
 
 
     public function alumno(){
-        return $this->hasOne(Alumno::class, 'id', 'alumno_id');
+        return $this->belongsTo(Alumno::class);
+    }
+
+    public function solicitud_inicio(){
+        return $this->hasOne(SolicitudInicio::class);
+    }
+
+    public function carta_aceptacion(){
+        return $this->hasOne(CartaAceptacion::class);
+    }
+
+    public function reportes()
+    {
+        return $this->hasMany(Reporte::class);
     }
 }

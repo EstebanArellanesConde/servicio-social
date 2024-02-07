@@ -8,6 +8,13 @@
                 @role('jefe')
                     <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                         <div class="max-w-xl">
+                            <livewire:configuracion.edit-rubrica>
+
+                            </livewire:configuracion.edit-rubrica>
+                        </div>
+                    </div>
+                    <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                        <div class="max-w-xl">
                             @include('profile.partials.update-profile-information-form')
                         </div>
                     </div>
@@ -18,7 +25,7 @@
                     </div>
                 @endrole
                 @role('alumno')
-                    @if(auth()->user()->alumno->estado_id == \App\Enums\EstadoAlumno::PREACEPTADO->value)
+                    @if(auth()->user()->alumno->estado_id == \App\Enums\EstadoAlumno::REGISTRADO->value)
                     {{-- ALERTA --}}
                     <x-alert type="warn">
                         <x-slot:title>
@@ -26,14 +33,13 @@
                         </x-slot:title>
                         <x-slot:message>
                             Para continuar con el proceso del servicio social, es importante que ingreses tu
-                            domicilio y las fechas dadas por tu encargado de servicio social
+                            domicilio.
                         </x-slot:message>
                         <span class="text-sm italic">Nota: No es necesario que actualices tu contraseña</span>
                     </x-alert>
                     <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                         <div class="">
                             <livewire:alumno.formulario-domicilio>
-
                             </livewire:alumno.formulario-domicilio>
                         </div>
                     </div>

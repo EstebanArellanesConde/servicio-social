@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\EstadoAlumno;
 use App\Models\Alumno;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -57,10 +58,11 @@ class AlumnoSeeder extends Seeder
             'pertenencia_unica' => 1,
             'departamento_id' => 2,
             'fecha_estado' => now(),
-            'estado_id' => 5,
+            'estado_id' => EstadoAlumno::ACEPTADO,
             'domicilio_id' => 1,
         ]);
 
         User::find($alumno_1->id)->assignRole('alumno');
+
     }
 }

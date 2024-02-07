@@ -18,11 +18,10 @@ return new class extends Migration {
             $table->string('abreviatura_departamento');
 
             $table->unsignedBigInteger('jefe_id');
-
             $table->foreign('jefe_id')
                 ->references('id')
                 ->on('jefe')
-                ->onDelete('cascade')
+                ->onDelete('set null')
                 ->onUpdate('cascade');
 
             $table->timestamps();

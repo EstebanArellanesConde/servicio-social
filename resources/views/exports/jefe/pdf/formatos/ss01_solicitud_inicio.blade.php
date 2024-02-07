@@ -16,22 +16,18 @@
             src: url({{ storage_path("fonts/arial/arial.ttf") }}) format("truetype");
             font-weight: normal;
         }
-        @font-face {
-            font-family: 'Arial';
-            src: url({{ storage_path("fonts/arial/arial_bold.ttf") }}) format("truetype");
-            font-weight: bold;
-        }
 
         body{
-            /*font-family: 'Arial';*/
-            font-size: 9pt;
+            font-family: sans-serif;
             width: 100%;
             text-align: center;
+            line-height: 7pt;
+            font-size: 9pt;
         }
 
         header{
-            font-size: 14pt;
             font-weight: bold;
+            font-size: 12pt;
         }
 
         .datos__titulo{
@@ -69,8 +65,8 @@
         }
 
         .solicito{
-            font-size: 14pt;
             text-align: left;
+            font-size: 13pt;
         }
 
         .firmas{
@@ -83,9 +79,6 @@
 
         .firmas table td{
             text-align: center;
-        }
-
-        .coordinador{
         }
 
         footer{
@@ -110,7 +103,6 @@
     <p>
         Departamento de Administración Escolar
     </p>
-    <p> </p>
     <p>
         Solicitud de Autorización de Prestación del
     </p>
@@ -136,16 +128,16 @@
             </tr>
             <tr>
                 <td class="datos__dato">
-                    <span class="datos__dato-key">Colonia: </span><span class="datos__dato-value">{{ Helper::capitalize($domicilio->colonia->nombre) }}</span>
+                    <span class="datos__dato-key">Colonia: </span><span class="datos__dato-value">{{ Helper::capitalize($domicilio->colonia->colonia) }}</span>
                 </td>
                 <td class="datos__dato" colspan="2">
-                    <span class="datos__dato-key">Delegación (municipio): </span><span class="datos__dato-value">{{ Helper::capitalize($domicilio->colonia->municipio->nombre) }}</span>
+                    <span class="datos__dato-key">Delegación (municipio): </span><span class="datos__dato-value">{{ Helper::capitalize($domicilio->colonia->municipio) }}</span>
                 </td>
             </tr>
             <tr>
                 <td class="datos__dato">
                     <span class="datos__dato-key">CP: </span><span id="cp_value" class="datos__dato-value">{{ Helper::capitalize($domicilio->colonia->codigo_postal) }}</span>
-                    <span class="datos__dato-key">Estado: </span><span class="datos__dato-value">{{ Helper::capitalize($domicilio->colonia->municipio->estado->nombre) }}</span>
+                    <span class="datos__dato-key">Estado: </span><span class="datos__dato-value">{{ Helper::capitalize($domicilio->colonia->estado) }}</span>
                 </td>
                 <td class="datos__dato">
                     <span class="datos__dato-key">Teléfono: </span><span class="datos__dato-value">{{ $alumno->telefono_alternativo }}</span>
@@ -351,11 +343,16 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="espacio__firma">
                     {{-- Firma Alumno --}}
+                    <br>
+                    <br>
+                    <br>
                 </td>
-                <td>
+                <td class="espacio__firma">
                     {{-- Firma Coordinador del servicio social --}}
+                    <br>
+                    <br>
                     <br>
                 </td>
             </tr>

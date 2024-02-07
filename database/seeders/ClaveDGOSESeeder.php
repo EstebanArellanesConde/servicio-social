@@ -15,24 +15,26 @@ class ClaveDGOSESeeder extends Seeder
 
     public function run(): void
     {
+        $primerAnio = 2023;
+
         $clave = ClaveDGOSE::create([
-            'anio' => 2023,
-            'clave' => '2023-12/81-9',
+            'anio' => $primerAnio,
+            'clave' => $primerAnio . '-12/81-9',
         ]);
 
         $clave->periodos()->create([
-            'periodo' => '2023-2',
-            'fecha_inicio' => '2023-01-01',
-            'fecha_fin' => '2023-06-30',
+            'periodo' => $primerAnio . '-2',
+            'fecha_inicio' => $primerAnio . '-01-01',
+            'fecha_fin' => $primerAnio . '-06-30',
         ]);
 
         $clave->periodos()->create([
-            'periodo' => '2024-1',
-            'fecha_inicio' => '2024-07-01',
-            'fecha_fin' => '2024-12-31',
+            'periodo' => $primerAnio + 1 . '-1',
+            'fecha_inicio' => $primerAnio . '-07-01',
+            'fecha_fin' => $primerAnio . '-12-31',
         ]);
 
-        for($i = 2024; $i < 2050; $i++){
+        for($i = $primerAnio + 1; $i < 2050; $i++){
             $clave = ClaveDGOSE::create([
                 'anio' => $i,
             ]);

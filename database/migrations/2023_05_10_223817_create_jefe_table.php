@@ -23,6 +23,7 @@ return new class extends Migration {
                 ->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            $table->text('rubrica_url')->nullable();
             $table->timestamps();
         });
     }

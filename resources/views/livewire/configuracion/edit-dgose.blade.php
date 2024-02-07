@@ -23,7 +23,7 @@
         </header>
 
         <div>
-            <div>
+            <div class="text-black dark:text-white">
                 <x-input-warning :messages="$errors->get('no-clave')" class="mt-2" />
                 <x-input-error :messages="$errors->get('clave')" class="mt-2" />
             </div>

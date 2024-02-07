@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Alumno;
 use App\Enums\EstadoReporte;
 use App\Http\Controllers\Controller;
 use App\Models\Alumno;
+use App\Models\Jefe;
 use App\Models\Reporte;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +18,9 @@ class ReporteController extends Controller
      */
     public function index()
     {
+
         $alumno = Alumno::firstWhere("user_id", auth()->user()->id);
-        $reportes = $alumno->reportes->where('fecha_disponible_llenado', '<=', now());
+        $reportes = $alumno->servicio->reportes()->where('fecha_disponible_llenado', '<=', now())->get();
 
         return view('alumno.reportes', [
             'alumno' => $alumno,
@@ -28,16 +30,14 @@ class ReporteController extends Controller
 
     public function show(Reporte $reporte){
         // verificar que el reporte este disponible para descargar
-        if(Auth::user() && Auth::id() === $reporte->alumno->user->id &&
+        if(Auth::user() && Auth::id() === $reporte->servicio->alumno->user->id &&
             $reporte->estado_id === EstadoReporte::ACEPTADO->value
         )
         {
-            $filename = $reporte->alumno_id . $reporte->num_reporte . '.pdf';
-            return Storage::download('reportes/' . $filename, 'reporte_' . $reporte->num_reporte . '.pdf');
+            return Storage::download($reporte->path, 'reporte_' . $reporte->num_reporte . '.pdf');
         } else {
             return abort(404);
         }
-
     }
 
 

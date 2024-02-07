@@ -21,6 +21,7 @@ class Jefe extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
+        'rubrica_url',
     ];
 
     /**

@@ -2,7 +2,7 @@
 
 @section('main')
     @empty($reportes->toArray())
-        <div class="flex text-white justify-center items-center">
+        <div class="flex justify-center items-center">
             <p>
                 Se podrán generar tus reportes cada dos meses a partir de la fecha de inicio:
                 {{ \Illuminate\Support\Carbon::create($alumno->fecha_inicio)->format('d F Y') }}
@@ -18,7 +18,7 @@
                     </x-slot:title>
 
                     <x-slot:status>
-                        @switch($reporte->estado->id)
+                        @switch($reporte->estado_id)
                             @case(\App\Enums\EstadoReporte::ESPERA->value)
                                 <x-status type="info" class="text-sm rounded-md">
                                     EN {{ $reporte->estado->nombre }}

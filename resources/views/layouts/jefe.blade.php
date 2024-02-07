@@ -80,6 +80,7 @@
                             </h3>
                             @yield('options')
                         </div>
+                        @yield('messages')
                         @if (session()->has('success'))
                             <x-alert type="success">
                                 <x-slot:title>

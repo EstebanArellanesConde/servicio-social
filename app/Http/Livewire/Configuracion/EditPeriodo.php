@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Configuracion;
 use App\Models\Periodo;
 use Livewire\Component;
 
-class FormularioPeriodo extends Component
+class EditPeriodo extends Component
 {
     public $periodos;
     public $periodo;
@@ -43,7 +43,7 @@ class FormularioPeriodo extends Component
 
     public function render()
     {
-        return view('livewire.configuracion.formulario-periodo', [
+        return view('livewire.configuracion.edit-periodo', [
             'periodos' => $this->periodos,
         ]);
     }

@@ -3,10 +3,8 @@
 namespace App\Observers;
 
 use App\Enums\Departamento;
-use App\Enums\EstadoReporte;
 use App\Models\Alumno;
 use App\Models\HistoricoEstadoAlumno;
-use App\Models\Reporte;
 use Illuminate\Support\Carbon;
 
 class AlumnoObserver
@@ -16,20 +14,6 @@ class AlumnoObserver
      */
     public function created(Alumno $alumno): void
     {
-        $numReportesBimestrales = $alumno->duracion_servicio / 2;
-
-        // Cuando el reporte cambie de estado a REVISION se asignará
-        // valor a horas acumuladas y a path
-
-        for($i = 0; $i < $numReportesBimestrales; $i++){
-            Reporte::create([
-                'alumno_id' => $alumno->id,
-                'horas_bimestre_acumuladas' => 0,
-                'path' => null,
-                'estado_id' => EstadoReporte::ESPERA
-            ]);
-        }
-
         // cuando el alumno no es de unica se va directo a salas a realizar el servicio
         if (!$this->alumnoEsDeUnica($alumno)){
             $alumno->departamento_id = Departamento::Salas;
@@ -54,9 +38,9 @@ class AlumnoObserver
          */
         $alumno->fecha_inicio;
         $contadorBimestral = 2;
-        if($alumno->isDirty('fecha_inicio')){
+        if($alumno->isDirty('fecha_inicio') && $alumno->servicio->reportes){
             // se debe usar paso por referencia par modificar la variable fuera del scope
-            $alumno->reportes->each(function($reporte) use($alumno, &$contadorBimestral){
+            $alumno->servicio->reportes->each(function($reporte) use($alumno, &$contadorBimestral){
                 $reporte->fecha_disponible_llenado = Carbon::create($alumno->fecha_inicio)->addMonths($contadorBimestral);
                 $reporte->save();
                 $contadorBimestral += 2;
@@ -66,7 +50,7 @@ class AlumnoObserver
         /**
          * Cuando se cambia de estado se agrega al historico
          */
-        if($alumno->isDirty('estado_id')){
+        if($alumno->isDirty('estado_id')) {
             $fecha = now();
             $alumno->fecha_estado = $fecha;
             HistoricoEstadoAlumno::create([
@@ -74,6 +58,7 @@ class AlumnoObserver
                 'estado_id' => $alumno->estado_id,
                 'alumno_id' => $alumno->id,
             ]);
+
         }
     }
 

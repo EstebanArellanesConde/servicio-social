@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('reporte', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('alumno_id');
-            $table->foreign('alumno_id')
+            $table->unsignedBigInteger('alumno_servicio_id');
+            $table->foreign('alumno_servicio_id')
                 ->references('id')
-                ->on('alumno')
+                ->on('alumno_servicio')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->unsignedSmallInteger('num_reporte');
@@ -38,7 +38,7 @@ return new class extends Migration
             $table->text('observaciones')->nullable();
 
             $table->timestamps();
-            $table->index(['alumno_id', 'num_reporte']);
+            $table->index(['alumno_servicio_id', 'num_reporte']);
         });
     }
 

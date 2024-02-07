@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Auth;
 
 use App\Enums\EstadoAlumno;
+use App\Exceptions\NoClaveDGOSEException;
+use App\Helpers\Helper;
 use App\Models\Alumno;
 use App\Models\Carrera;
 use App\Models\Departamento;
@@ -147,6 +149,7 @@ class RegistrarAlumno extends Component
         $alumnoData = new AlumnoData($data);
         $filteredData = $alumnoData->getData();
 
+
         /* Crear transaccion si es que algo falla al registrar al alumno
          * y el usuario, en tal caso da un rollback borrando el registro
          * y posteriormente levanta la excepcion, este debe contener en
@@ -164,6 +167,7 @@ class RegistrarAlumno extends Component
                 'email' => trim($filteredData["email"]),
                 'password' => Hash::make($filteredData["password"]),
             ]);
+
 
             $alumno = Alumno::create([
                 'user_id' => $user["id"],
@@ -185,7 +189,7 @@ class RegistrarAlumno extends Component
                 'pertenencia_unica' => $filteredData["pertenencia_unica"],
                 'departamento_id' => $filteredData['departamento_id'],
                 'fecha_estado' => now(),
-                'estado_id' => EstadoAlumno::REGISTRADO,
+                'estado_id' => EstadoAlumno::REGISTRADO->value,
             ]);
 
 
@@ -200,7 +204,7 @@ class RegistrarAlumno extends Component
         catch (\Exception $e)
         {
             DB::rollBack();
-            dd($e);
+            throw $e;
         }
 
     }

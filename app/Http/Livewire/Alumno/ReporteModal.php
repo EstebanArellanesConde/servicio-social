@@ -12,6 +12,7 @@ use App\Models\Reporte;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use LivewireUI\Modal\ModalComponent;
 
 class ReporteModal extends ModalComponent
@@ -135,7 +136,8 @@ class ReporteModal extends ModalComponent
         $this->validar();
 
         $alumno = Alumno::where('user_id', auth()->user()->id)->first();
-        $reporte = Reporte::where('alumno_id', $alumno->id)
+
+        $reporte = $alumno->servicio->reportes()
             ->where('num_reporte', $this->num_reporte)
             ->whereIn('estado_id', [EstadoReporte::ESPERA->value, EstadoReporte::CORRECCION->value])
             ->where('fecha_disponible_llenado', '<=', now())
@@ -156,7 +158,7 @@ class ReporteModal extends ModalComponent
         $jefeInmediatoTemp =  $alumno->departamento->jefe;
         $data['jefeInmediato'] = $jefeInmediatoTemp->getNombreCompletoConTitulo();
 
-        $data['claveDGOSE'] = ClaveDGOSE::getClaveActiva();
+        $data['claveDGOSE'] = Helper::getClaveActiva();
 
         $numeroReporte = App::NUMERO_ORDINAL[strval($this->num_reporte)];
         $horasBimestre = $this->getHorasBimestre();
@@ -169,10 +171,10 @@ class ReporteModal extends ModalComponent
             ->format('d/m/Y')
         ;
 
-        $totalAcumuladas = Reporte::where('alumno_id', $alumno->id)
+        $totalAcumuladas = $alumno->servicio->reportes()
             ->where('estado_id', EstadoReporte::ACEPTADO)
             ->where('num_reporte', '<', $reporte->num_reporte)
-            ->groupBy('alumno_id')
+            ->groupBy('alumno_servicio_id')
             ->sum('horas_bimestre_acumuladas')
             + $horasBimestre
         ;
@@ -197,14 +199,14 @@ class ReporteModal extends ModalComponent
         ;
 
 
-        $filename = $alumno->id . $this->num_reporte . '.pdf';
+        $filename = Str::random(40) . '.pdf';
         $path = 'reportes/' . $filename;
 
         Storage::put($path, $pdf->download()->getOriginalContent());
 
         $reporte->update([
             'horas_bimestre_acumuladas' => $horasBimestre,
-            'path' => 'app/' . $path,
+            'path' => $path,
             'estado_id' => EstadoReporte::REVISION,
         ]);
 
