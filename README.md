@@ -73,7 +73,7 @@
 
    Debería verse algo así:
 
-   <img src="docs/img/docs/img/Screenshot_2024-10-06_15-22-12.png">
+   <img src="docs/img/Screenshot_2024-10-06_15-22-12.png">
 
 7. **Iniciar el servidor de desarrollo de Vite**
 
@@ -94,7 +94,7 @@
    sail artisan route:cache
    ```
    
-   <img src="docs/img/docs/img/Screenshot_2024-10-06_15-22-57.png">
+   <img src="docs/img/Screenshot_2024-10-06_15-22-57.png">
 
 ## Uso de Git Flow
 
