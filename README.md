@@ -1,5 +1,5 @@
 # Servicio Social
-Proyecto web. Login para la página de servicio social del DID de UNICA. Enlace de la pagina: https://XXXXXXXXX.com/index.php
+<!--Proyecto web. Login para la página de servicio social del DID de UNICA. Enlace de la pagina: https://XXXXXXXXX.com/index.php -->
 
 <img src="docs/img/login.png">
 
