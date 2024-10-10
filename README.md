@@ -449,3 +449,39 @@ Si la instalación se realiza correctamente, asegúrate de que el archivo `sail`
 ls vendor/bin
 ```
 
+### Error: `__dirname is not defined in ES module scope.`
+
+El error `__dirname is not defined in ES module scope.` ocurre porque en los módulos ES, la variable global `__dirname` no está disponible como lo está en los módulos `CommonJS`. Para solucionar esto, haz lo siguiente:
+
+1. **Usar `CommonJS`**
+
+Si encuentras que usar módulos ES es complicado para tu caso específico, puedes volver a `CommonJS` cambiando la extensión de tu archivo a `.cjs` o modificando tu `package.json` para especificar el tipo de módulo `CommonJS`.
+
+2: **Usar `import.meta.url`**
+
+Puedes usar `import.meta.url` para obtener la URL del módulo actual y luego convertirla en una ruta de directorio:
+
+```
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+console.log(__dirname); // Esto te dará el nombre del directorio
+```
+
+3: **Usar el `módulo path`**
+
+Puedes combinar el método de `import.meta.url` con el módulo `path`, como se mostró arriba, para obtener `__dirname`.
+
+```
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+console.log(`Directorio actual: ${__dirname}`);
+```
+Usar `import.meta.url` es la forma recomendada para obtener el nombre del directorio en módulos ES. Solo recuerda que este enfoque requiere `Node.js` versión 12 o superior con soporte para módulos ES.
